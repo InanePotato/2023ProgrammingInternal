@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - Door
   - Locked_Door
+  - PlayerSprite
   layers:
   - Default
   - TransparentFX

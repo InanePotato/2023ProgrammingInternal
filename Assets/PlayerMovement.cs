@@ -4,19 +4,33 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float walkSpeed = 4f;
+    [Header("Movement")]
+    public float walkSpeed = 1.2f;
     public float speedLimiter = 0.7f;
 
     float inputHorizontal;
     float inputVertical;
-
     Rigidbody2D rb;
+    SpriteRenderer childSpriteRenderer;
+
+
+    [Header("Animations")]
+    public AnimationState currentAnimationState;
+    public enum AnimationState { Idle, Walk, Damaged };
+
+    Animator animator;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Hello");
         rb = gameObject.GetComponent<Rigidbody2D>();
+        animator = gameObject.GetComponentInChildren<Animator>();
+
+        childSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
+
+        currentAnimationState = AnimationState.Idle;
+        animator.Play(currentAnimationState.ToString());
     }
 
     // Update is called once per frame
@@ -24,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
     {
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
-        Debug.Log(inputHorizontal + ", " + inputVertical);
     }
 
     private void FixedUpdate()
@@ -32,7 +45,43 @@ public class PlayerMovement : MonoBehaviour
         //rb.MovePosition(rb.position + new Vector2(inputHorizontal, inputVertical) * walkSpeed * Time.fixedDeltaTime);
         if (inputHorizontal != 0 || inputVertical != 0)
         {
+            if (inputHorizontal != 0 && inputVertical != 0)
+            {
+                inputHorizontal *= speedLimiter;
+                inputVertical *= speedLimiter;
+            }
+
             rb.velocity = new Vector2 (inputHorizontal * walkSpeed, inputVertical * walkSpeed);
+            ChangeAnimationState(AnimationState.Walk);
+
+            if (inputHorizontal < 0)
+            {
+                childSpriteRenderer.flipX = true;
+            }
+            else if (inputHorizontal > 0)
+            {
+                childSpriteRenderer.flipX = false;
+            }
         }
+        else
+        {
+            rb.velocity = new Vector2(0, 0);
+            ChangeAnimationState(AnimationState.Idle);
+        }
+    }
+
+    private void ChangeAnimationState(AnimationState newState)
+    {
+        //stop from changing if the same
+        if (newState == currentAnimationState)
+        {
+            return;
+        }
+
+        // changes animation
+        animator.Play(newState.ToString());
+
+        // sets new animation state
+        currentAnimationState = newState;
     }
 }
