@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8744182160298586368}
   - component: {fileID: 4187949635848513399}
+  - component: {fileID: 7905787268674138842}
   m_Layer: 0
   m_Name: Horizontal_Door
-  m_TagString: Locked_Door
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -4
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 6778f3b8b6212884483134238ad67de3, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -84,3 +85,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7905787268674138842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4826843474747700608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff99c74e10400a4eac7c932ea276659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  open: 0
+  locked: 1
+  doorType: 0
+  openSprite: {fileID: 21300000, guid: b29028096cb686a4699ee3a17819dcad, type: 2}
+  closedSprite: {fileID: 21300000, guid: 6778f3b8b6212884483134238ad67de3, type: 2}
