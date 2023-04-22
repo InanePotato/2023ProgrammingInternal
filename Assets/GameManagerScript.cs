@@ -5,9 +5,9 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     [Header("Keybinds")]
-    public KeyCode OpenMenu = KeyCode.Escape;
-    public KeyCode OpenInventory = KeyCode.I;
-    public KeyCode Interact = KeyCode.E;
+    public KeyCode OpenMenuKeybind = KeyCode.Escape;
+    public KeyCode OpenInventoryKeybind = KeyCode.I;
+    public KeyCode InteractKeybind = KeyCode.E;
 
     // Start is called before the first frame update
     void Start()

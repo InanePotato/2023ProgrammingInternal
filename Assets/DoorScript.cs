@@ -6,7 +6,6 @@ public class DoorScript : MonoBehaviour
 {
     [Header("Door Details")]
     public bool open = false;
-    public bool locked = true;
     SpriteRenderer spriteRenderer;
     BoxCollider2D doorCollider;
 
@@ -45,5 +44,11 @@ public class DoorScript : MonoBehaviour
             spriteRenderer.sprite = closedSprite;
             doorCollider.enabled = true;
         }
+    }
+
+    public void openDoor(bool isOpen)
+    {
+        open = isOpen;
+        changeSprite();
     }
 }
