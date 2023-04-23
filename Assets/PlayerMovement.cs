@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Game Manager")]
+    private GameObject gameManager;
+    private GameManagerScript gameManagerScript;
+
     [Header("Movement")]
     public float walkSpeed = 1.2f;
     public float speedLimiter = 0.7f;
@@ -24,13 +29,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.FindGameObjectsWithTag("GameController").First();
+        gameManagerScript = gameManager.GetComponent<GameManagerScript>();
+
         rb = gameObject.GetComponent<Rigidbody2D>();
-        animator = gameObject.GetComponentInChildren<Animator>();
-
-        childSpriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
-
-        currentAnimationState = AnimationState.Idle;
-        animator.Play(currentAnimationState.ToString());
     }
 
     // Update is called once per frame
@@ -83,5 +85,14 @@ public class PlayerMovement : MonoBehaviour
 
         // sets new animation state
         currentAnimationState = newState;
+    }
+
+    public void setPlayerSprite()
+    {
+        animator = gameManagerScript.playerSprite.GetComponent<Animator>();
+        childSpriteRenderer = gameManagerScript.playerSprite.GetComponent<SpriteRenderer>();
+
+        currentAnimationState = AnimationState.Idle;
+        animator.Play(currentAnimationState.ToString());
     }
 }

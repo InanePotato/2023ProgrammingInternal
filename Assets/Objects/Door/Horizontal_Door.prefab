@@ -142,5 +142,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerScript: {fileID: 0}
-  keyNeeded: 2
+  keyNeeded: 1
   interactionType: 0

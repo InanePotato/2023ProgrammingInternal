@@ -8,6 +8,7 @@ TagManager:
   - Door
   - Locked_Door
   - PlayerSprite
+  - Interactable
   layers:
   - Default
   - TransparentFX

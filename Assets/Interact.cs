@@ -7,7 +7,9 @@ using static Inventory;
 
 public class Interact : MonoBehaviour
 {
-    public GameManagerScript gameManagerScript;
+    [Header("Game Manager")]
+    private GameObject gameManager;
+    private GameManagerScript gameManagerScript;
 
     [Header("Keybinds")]
     private KeyCode interactKeybind;
@@ -28,6 +30,9 @@ public class Interact : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.FindGameObjectsWithTag("GameController").First();
+        gameManagerScript = gameManager.GetComponent<GameManagerScript>();
+
         playerObject = GameObject.FindGameObjectsWithTag("Player").First();
         playerInventory = playerObject.GetComponent<Inventory>();
 
@@ -46,6 +51,10 @@ public class Interact : MonoBehaviour
             {
                 DoorInteraction();
             }
+            else if (interactionType == InteractionType.Chest)
+            {
+                ChestInteraction();
+            }
         }
     }
 
@@ -61,7 +70,6 @@ public class Interact : MonoBehaviour
             if (playerInventory.checkHasItem((ItemNames)Enum.Parse(typeof(ItemNames), keyNeeded.ToString())))
             {
                 playerInventory.updateInventoryItemAmmount((ItemNames)Enum.Parse(typeof(ItemNames), keyNeeded.ToString()), -1);
-                Debug.Log("One key subtracted of type: " + keyNeeded);
 
                 Interacted = true;
                 gameObject.GetComponent<DoorScript>().openDoor(true);
@@ -70,6 +78,21 @@ public class Interact : MonoBehaviour
             {
                 Debug.Log("Can't open door, not enough keys of type: " + keyNeeded);
             }
+        }
+    }
+
+    private void ChestInteraction()
+    {
+        if (playerInventory.checkHasItem((ItemNames)Enum.Parse(typeof(ItemNames), keyNeeded.ToString())))
+        {
+            playerInventory.updateInventoryItemAmmount((ItemNames)Enum.Parse(typeof(ItemNames), keyNeeded.ToString()), -1);
+
+            Interacted = true;
+            gameObject.GetComponent<ChestScript>().openChest(true);
+        }
+        else
+        {
+            Debug.Log("Can't open chest, not enough keys of type: " + keyNeeded);
         }
     }
 

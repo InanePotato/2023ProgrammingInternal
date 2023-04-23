@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
@@ -49,7 +52,9 @@ public class Inventory : MonoBehaviour
         createInventoryItem(ItemNames.Diamond_Key, diamondKeySprite, false, false);
         createInventoryItem(ItemNames.Special_Key, specialKeySprite, false, false);
 
+        //updateInventoryItemAmmount(ItemNames.Wodden_Key, 2);
         updateInventoryItemAmmount(ItemNames.Silver_Key, 2);
+        //updateInventoryItemAmmount(ItemNames.Gold_Key, 2);
     }
 
     // Update is called once per frame
@@ -70,6 +75,7 @@ public class Inventory : MonoBehaviour
             if (Name == item.name)
             {
                 item.ammount += Ammount;
+                //Debug.Log("changed " + item.name + "by " + Ammount);
             }
         }
     }
