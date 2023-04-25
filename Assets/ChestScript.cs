@@ -113,7 +113,7 @@ public class ChestScript : MonoBehaviour
                 float Y = chestTransform.position.y + Random.Range(-lootSpawnOffsetY, lootSpawnOffsetY) - LOOT_SPAWN_DISTANCE_BELOW;
                 newItemDrop.transform.position = new Vector2(X, Y);
 
-                newItemDrop.GetComponent<ItemScript>().ammount = requiredLootItemAmmounts[randomId];
+                newItemDrop.GetComponent<ItemScript>().ammount = Random.Range(1, randomLootTableMaxAmmounts[randomId]);
             }
         }
         else

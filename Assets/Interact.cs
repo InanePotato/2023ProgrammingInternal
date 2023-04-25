@@ -45,7 +45,7 @@ public class Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(interactKeybind) && canInteract && !Interacted)
+        if (Input.GetKeyDown(interactKeybind) && canInteract && !Interacted && !gameManagerScript.gamePaused)
         {
             if (interactionType == InteractionType.Door)
             {

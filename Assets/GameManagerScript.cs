@@ -6,9 +6,12 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     [Header("Keybinds")]
-    public KeyCode OpenMenuKeybind = KeyCode.Escape;
-    public KeyCode OpenInventoryKeybind = KeyCode.I;
+    public KeyCode ToggleMenuKeybind = KeyCode.Escape;
+    public KeyCode ToggleInventoryKeybind = KeyCode.I;
     public KeyCode InteractKeybind = KeyCode.E;
+
+    [Header("Game Control")]
+    public bool gamePaused = false;
 
     [Header("Player")]
     public GameObject player;

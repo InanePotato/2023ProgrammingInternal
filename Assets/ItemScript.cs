@@ -17,7 +17,7 @@ public class ItemScript : MonoBehaviour
     [Header("Item Information")]
     public ItemNames itemName;
     public int ammount;
-    public int pickupCooldwon = 1;
+    private float pickupCooldwon = 0.2f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +35,7 @@ public class ItemScript : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject == playerObject)
         {
