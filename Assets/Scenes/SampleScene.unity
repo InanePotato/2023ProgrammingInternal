@@ -494,6 +494,14 @@ MonoBehaviour:
   diamondKeySprite: {fileID: 21300000, guid: d6f96f240f80e6b478b3ed7f317304bb, type: 3}
   specialKeySprite: {fileID: 21300000, guid: 82a0f3ce2832279499b03d63ecfa238a, type: 3}
   goldCoinSprite: {fileID: 21300000, guid: 32256c124bd9f0f48a3162624048f492, type: 3}
+  candy1RedSprite: {fileID: 21300000, guid: 893cbc68ef0a76b46ade76af30e2f49c, type: 3}
+  candy1BlueSprite: {fileID: 21300000, guid: 81df54ff4d35f444187724347771a505, type: 3}
+  candy1GreenSprite: {fileID: 21300000, guid: b955766feb74adc47991e7faa30ae4a4, type: 3}
+  candy1PurpleSprite: {fileID: 21300000, guid: eb226e3bc401b344198d4048ea724a6d, type: 3}
+  candy2RedSprite: {fileID: 21300000, guid: 6f8cbf16149cf2249a70c2bd43854108, type: 3}
+  candy2BlueSprite: {fileID: 21300000, guid: d6e2374e466dbdb40b4181acdd8300b1, type: 3}
+  candy2GreenSprite: {fileID: 21300000, guid: c121004091297f24ebafe005d0fa1721, type: 3}
+  candy2PurpleSprite: {fileID: 21300000, guid: 18852033886aa8044beca87d900f666e, type: 3}
 --- !u!4 &376942640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1444190318740788719, guid: c1186907bf489584ca9993314cbcb784, type: 3}

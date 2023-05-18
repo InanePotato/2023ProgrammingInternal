@@ -33,7 +33,15 @@ public class Inventory : MonoBehaviour
         Gold_Key,
         Diamond_Key,
         Special_Key,
-        Gold_Coin
+        Gold_Coin,
+        Candy1_Red,
+        Candy1_Blue,
+        Candy1_Green,
+        Candy1_Purple,
+        Candy2_Red,
+        Candy2_Blue,
+        Candy2_Green,
+        Candy2_Purple
     }
 
     public class InventoryItem
@@ -63,6 +71,14 @@ public class Inventory : MonoBehaviour
     public Sprite diamondKeySprite;
     public Sprite specialKeySprite;
     public Sprite goldCoinSprite;
+    public Sprite candy1RedSprite;
+    public Sprite candy1BlueSprite;
+    public Sprite candy1GreenSprite;
+    public Sprite candy1PurpleSprite;
+    public Sprite candy2RedSprite;
+    public Sprite candy2BlueSprite;
+    public Sprite candy2GreenSprite;
+    public Sprite candy2PurpleSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +93,14 @@ public class Inventory : MonoBehaviour
         createInventoryItem(ItemNames.Diamond_Key, diamondKeySprite, false, false);
         createInventoryItem(ItemNames.Special_Key, specialKeySprite, false, false);
         createInventoryItem(ItemNames.Gold_Coin, goldCoinSprite, false, false);
+        createInventoryItem(ItemNames.Candy1_Red, candy1RedSprite, false, false);
+        createInventoryItem(ItemNames.Candy1_Blue, candy1BlueSprite, false, false);
+        createInventoryItem(ItemNames.Candy1_Green, candy1GreenSprite, false, false);
+        createInventoryItem(ItemNames.Candy1_Purple, candy1PurpleSprite, false, false);
+        createInventoryItem(ItemNames.Candy2_Red, candy2RedSprite, false, false);
+        createInventoryItem(ItemNames.Candy2_Blue, candy2BlueSprite, false, false);
+        createInventoryItem(ItemNames.Candy2_Green, candy2GreenSprite, false, false);
+        createInventoryItem(ItemNames.Candy2_Purple, candy2PurpleSprite, false, false);
 
         //updateInventoryItemAmmount(ItemNames.Wodden_Key, 2);
         updateInventoryItemAmmount(ItemNames.Silver_Key, 4);
@@ -170,27 +194,30 @@ public class Inventory : MonoBehaviour
             int index = 0;
             foreach (InventoryItem item in inventoryItems)
             {
-                if (index >= numOfItemsPerRow)
+                if (item.name != ItemNames.Gold_Coin)
                 {
-                    spawnX = startX;
-                    spawnY -= (INVENTORY_DISPLAY_ITEM_HEIGHT + INVENTORY_DISPLAY_ITEM_SPAWN_GAP);
+                    if (index >= numOfItemsPerRow)
+                    {
+                        spawnX = startX;
+                        spawnY -= (INVENTORY_DISPLAY_ITEM_HEIGHT + INVENTORY_DISPLAY_ITEM_SPAWN_GAP);
+                    }
+
+                    GameObject newItem = Instantiate(inventoryDisplayItemPrefab);
+                    newItem.transform.SetParent(pnlInventory.transform);
+                    newItem.GetComponent<RectTransform>().localPosition = new Vector3(spawnX, spawnY, newItem.GetComponent<RectTransform>().localPosition.z);
+                    newItem.GetComponentsInChildren<Image>()[1].sprite = item.sprite;
+                    newItem.GetComponentInChildren<Text>().text = item.ammount.ToString();
+
+                    if (isKey(item))
+                    {
+
+                        newItem.GetComponentsInChildren<Transform>()[2].Rotate(Vector3.forward, 45);
+                    }
+
+                    inventoryDisplayItems.Add(newItem);
+
+                    spawnX += (INVENTORY_DISPLAY_ITEM_WIDTH + INVENTORY_DISPLAY_ITEM_SPAWN_GAP);
                 }
-
-                GameObject newItem = Instantiate(inventoryDisplayItemPrefab);
-                newItem.transform.SetParent(pnlInventory.transform);
-                newItem.GetComponent<RectTransform>().localPosition = new Vector3(spawnX, spawnY, newItem.GetComponent<RectTransform>().localPosition.z);
-                newItem.GetComponentsInChildren<Image>()[1].sprite = item.sprite;
-                newItem.GetComponentInChildren<Text>().text = item.ammount.ToString();
-
-                if (isKey(item))
-                {
-
-                    newItem.GetComponentsInChildren<Transform>()[2].Rotate(Vector3.forward, 45);
-                }
-
-                inventoryDisplayItems.Add(newItem);
-
-                spawnX += (INVENTORY_DISPLAY_ITEM_WIDTH + INVENTORY_DISPLAY_ITEM_SPAWN_GAP);
             }
         }
         else
