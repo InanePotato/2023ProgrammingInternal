@@ -4,18 +4,19 @@ using System.Linq;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static Inventory;
 using static UnityEditor.Progress;
 
 public class ChestScript : MonoBehaviour
 {
     [Header("Game Manager")]
-    private GameObject gameManager;
     private GameManagerScript gameManagerScript;
+
+    [Header("Dropped Item Prefab")]
+    private GameObject droppedItem;
 
     [Header("Chest Information")]
     public ChestType chestType;
-    private bool chestOpen = false;
+    public bool chestOpen = false;
     private SpriteRenderer chestSpriteRenderer;
     private Transform chestTransform;
     public float lootSpawnOffsetY;
@@ -25,13 +26,8 @@ public class ChestScript : MonoBehaviour
     public Sprite closedSprite;
 
     [Header("Required Loot")]
-    public List<GameObject> requiredLootItemObjects = new List<GameObject>();
+    public List<Item> requiredLootItemObjects = new List<Item>();
     public List<int> requiredLootItemAmmounts = new List<int>();
-
-    [Header("Random Loot")]
-    public int numberOfRandoms;
-    private List<GameObject> randomLootTableObjects = new List<GameObject>();
-    private List<int> randomLootTableMaxAmmounts = new List<int>();
 
     public class LootItem
     {
@@ -54,22 +50,14 @@ public class ChestScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.FindGameObjectsWithTag("GameController").First();
-        gameManagerScript = gameManager.GetComponent<GameManagerScript>();
+        // gets the game manager script
+        gameManagerScript = GameManagerScript.Instance;
 
+        // gets this objects renderer and transform components
         chestSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         chestTransform = gameObject.GetComponent<Transform>();
 
-        if (chestType == ChestType.SilverChest)
-        {
-            randomLootTableObjects = gameManagerScript.randomSilverLootTableObjects;
-            randomLootTableMaxAmmounts = gameManagerScript.randomSilverLootTableMaxAmmounts;
-        }
-        else
-        {
-            randomLootTableObjects = gameManagerScript.randomGoldLootTableObjects;
-            randomLootTableMaxAmmounts = gameManagerScript.randomGoldLootTableMaxAmmounts;
-        }
+        droppedItem = gameManagerScript.droppedItemPrefab;
     }
 
     // Update is called once per frame
@@ -80,17 +68,20 @@ public class ChestScript : MonoBehaviour
 
     public void openChest(bool isOpen)
     {
+        // sets the chest to be either open or closed
         chestOpen = isOpen;
 
+        // IF the chest is open
         if (chestOpen)
         {
+            // sets the approprite sprite
             chestSpriteRenderer.sprite = openSprite;
 
             // release/spawn in loot
             int count = 0;
-            foreach (GameObject item in requiredLootItemObjects)
+            foreach (Item item in requiredLootItemObjects)
             {
-                GameObject newItemDrop = Instantiate(item);
+                GameObject newItemDrop = Instantiate(droppedItem);
 
                 float X = chestTransform.position.x + Random.Range(-lootSpawnOffsetX, lootSpawnOffsetX);
                 float Y = chestTransform.position.y + Random.Range(-lootSpawnOffsetY, lootSpawnOffsetY) - LOOT_SPAWN_DISTANCE_BELOW;
@@ -98,22 +89,10 @@ public class ChestScript : MonoBehaviour
 
                 newItemDrop.transform.Rotate(Vector3.forward, Random.Range(-80, 80));
 
-                newItemDrop.GetComponent<ItemScript>().ammount = requiredLootItemAmmounts[count];
+                newItemDrop.GetComponent<ItemPickup>().item = item;
+                newItemDrop.GetComponent<ItemPickup>().ammount = requiredLootItemAmmounts[count];
 
                 count++;
-            }
-
-            for (int i = 0; i < numberOfRandoms; i++)
-            {
-                int randomId = Random.Range(0, randomLootTableObjects.Count());
-
-                GameObject newItemDrop = Instantiate(randomLootTableObjects[randomId]);
-
-                float X = chestTransform.position.x + Random.Range(-lootSpawnOffsetX, lootSpawnOffsetX);
-                float Y = chestTransform.position.y + Random.Range(-lootSpawnOffsetY, lootSpawnOffsetY) - LOOT_SPAWN_DISTANCE_BELOW;
-                newItemDrop.transform.position = new Vector2(X, Y);
-
-                newItemDrop.GetComponent<ItemScript>().ammount = Random.Range(1, randomLootTableMaxAmmounts[randomId]);
             }
         }
         else

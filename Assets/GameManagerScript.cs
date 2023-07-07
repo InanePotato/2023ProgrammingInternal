@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
+    public static GameManagerScript Instance;
+
     [Header("Keybinds")]
     public KeyCode ToggleMenuKeybind = KeyCode.Escape;
     public KeyCode ToggleInventoryKeybind = KeyCode.I;
@@ -18,16 +20,8 @@ public class GameManagerScript : MonoBehaviour
     public GameObject playerSprite;
     public PlayerSprites selectedPlayerSprite;
 
-    [Header("Level Spawns")]
-    public List<GameObject> objectsToSpawn;
-
-    [Header("Loot Tables - Silver")]
-    public List<GameObject> randomSilverLootTableObjects = new List<GameObject>();
-    public List<int> randomSilverLootTableMaxAmmounts = new List<int>();
-
-    [Header("Loot Tables - Gold")]
-    public List<GameObject> randomGoldLootTableObjects = new List<GameObject>();
-    public List<int> randomGoldLootTableMaxAmmounts = new List<int>();
+    [Header("Items")]
+    public GameObject droppedItemPrefab;
 
     public enum PlayerSprites
     {
@@ -41,9 +35,15 @@ public class GameManagerScript : MonoBehaviour
     public GameObject spritePrefab_KnightPink;
     public GameObject spritePrefab_KnightOriginal;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        // gets the player object
         player = GameObject.FindGameObjectsWithTag("Player").First();
 
         // sets instanciate to chosen player sprite
@@ -54,6 +54,7 @@ public class GameManagerScript : MonoBehaviour
         // adds sprite as a child of the player
         playerSprite.transform.parent = player.transform;
 
+        // sets the player with the correct sprite
         player.GetComponent<PlayerMovement>().setPlayerSprite();
     }
 

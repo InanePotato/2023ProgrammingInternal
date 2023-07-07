@@ -3,12 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static Inventory;
 
 public class Interact : MonoBehaviour
 {
     [Header("Game Manager")]
-    private GameObject gameManager;
     private GameManagerScript gameManagerScript;
 
     [Header("Keybinds")]
@@ -16,25 +14,22 @@ public class Interact : MonoBehaviour
 
     [Header("Player Information")]
     private GameObject playerObject;
-    private Inventory playerInventory;
 
     [Header("Interaction Information")]
-    public Keys keyNeeded = Keys.None;
+    public Item requiredItem;
     private bool canInteract;
     private bool Interacted;
     public InteractionType interactionType;
 
     public enum InteractionType { Door, Chest, Item };
-    public enum Keys { None, Wodden_Key, Silver_Key, Gold_Key, Diamond_Key, Special_Key };
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.FindGameObjectsWithTag("GameController").First();
-        gameManagerScript = gameManager.GetComponent<GameManagerScript>();
+        // gets the game manager script
+        gameManagerScript = GameManagerScript.Instance;
 
         playerObject = GameObject.FindGameObjectsWithTag("Player").First();
-        playerInventory = playerObject.GetComponent<Inventory>();
 
         interactKeybind = gameManagerScript.InteractKeybind;
 
@@ -60,39 +55,47 @@ public class Interact : MonoBehaviour
 
     private void DoorInteraction()
     {
-        if (keyNeeded == Keys.None)
+        if (requiredItem == null)
         {
             Interacted = true;
             gameObject.GetComponent<DoorScript>().openDoor(true);
         }
         else
         {
-            if (playerInventory.checkHasItem((ItemNames)Enum.Parse(typeof(ItemNames), keyNeeded.ToString())))
+            if (InventoryManager.Instance.GetItemDetails(requiredItem) != null)
             {
-                playerInventory.updateInventoryItemAmmount((ItemNames)Enum.Parse(typeof(ItemNames), keyNeeded.ToString()), -1);
+                InventoryManager.Instance.SubtractItemAmmount(requiredItem, 1);
 
                 Interacted = true;
                 gameObject.GetComponent<DoorScript>().openDoor(true);
             }
             else
             {
-                Debug.Log("Can't open door, not enough keys of type: " + keyNeeded);
+                Debug.Log("Can't open door");
             }
         }
     }
 
     private void ChestInteraction()
     {
-        if (playerInventory.checkHasItem((ItemNames)Enum.Parse(typeof(ItemNames), keyNeeded.ToString())))
+        if (!gameObject.GetComponent<ChestScript>().chestOpen)
         {
-            playerInventory.updateInventoryItemAmmount((ItemNames)Enum.Parse(typeof(ItemNames), keyNeeded.ToString()), -1);
+            if (requiredItem == null)
+            {
+                Interacted = true;
+                gameObject.GetComponent<ChestScript>().openChest(true);
+            }
+            if (InventoryManager.Instance.GetItemDetails(requiredItem) != null)
+            {
+                InventoryManager.Instance.SubtractItemAmmount(requiredItem, 1);
 
-            Interacted = true;
-            gameObject.GetComponent<ChestScript>().openChest(true);
-        }
-        else
-        {
-            Debug.Log("Can't open chest, not enough keys of type: " + keyNeeded);
+                Interacted = true;
+                gameObject.GetComponent<ChestScript>().openChest(true);
+            }
+            else
+            {
+                Debug.Log("Can't open chest");
+            }
         }
     }
 
