@@ -15,10 +15,11 @@ public class Item : ScriptableObject
     public Effects primaryEffect;
     public Effects secondaryEffect;
     public int ammount;
+    public bool equiped;
     
     public enum ItemType
     {
-        currency, key, armor, weapon, consumable, misc
+        currency, key, armor, weapon, consumable, misc, spell
     }
     public enum Effects
     {

@@ -106,6 +106,9 @@ public class InventoryManager : MonoBehaviour
                 // spwan in a new item display
                 GameObject newInventoryDisplayItem = Instantiate(InventoryItemDisplay, InventoryContent.transform);
 
+                // Assign the button's script the item that it is
+                newInventoryDisplayItem.GetComponent<InventoryDiaplayItemScript>().item = item;
+
                 // get the ammount variable for the display
                 var itemAmmount = newInventoryDisplayItem.transform.Find("Ammount").GetComponent<Text>();
                 // get the icon variable for the display
@@ -121,6 +124,11 @@ public class InventoryManager : MonoBehaviour
                     itemIcon.transform.Rotate(Vector3.forward, 45);
                 }
             }
+
+            foreach (Transform child in InventoryContentInformation.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
         else
         {
@@ -130,6 +138,62 @@ public class InventoryManager : MonoBehaviour
                 // destroy the game object
                 Destroy(item.gameObject);
             }
+        }
+    }
+
+    public void ChangeInventoryItemView(Item item)
+    {
+        // Item Image
+        var itemIcon = InventoryContentInformation.transform.Find("imgItemImage").GetComponent<Image>();
+        itemIcon.gameObject.SetActive(true);
+        itemIcon.sprite = item.sprite;
+
+        if (item.type == Item.ItemType.key)
+        {
+            //itemIcon.transform.Rotate(Vector3.forward, 45);
+            itemIcon.transform.eulerAngles = new Vector3(0, 0, 45);
+        }
+        else
+        {
+            itemIcon.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+
+        // Item Name
+        var itemName = InventoryContentInformation.transform.Find("txtItemName").GetComponent<Text>();
+        itemName.gameObject.SetActive(true);
+        itemName.text = item.itemName + " x" + item.ammount.ToString();
+
+        // Description
+        var itemDescription = InventoryContentInformation.transform.Find("txtItemDescription").GetComponent<Text>();
+        itemDescription.gameObject.SetActive(true);
+        itemDescription.text = item.description;
+
+        // Effects
+        var itemEffects = InventoryContentInformation.transform.Find("txtItemEffects").GetComponent<Text>();
+        itemEffects.gameObject.SetActive(true);
+        itemEffects.text = "Effects:" + Environment.NewLine
+                            + "- " + item.primaryEffect + Environment.NewLine
+                            + "- " + item.secondaryEffect;
+
+        // Equipabe
+        var itemEquipbtn = InventoryContentInformation.transform.Find("btnEquip");
+
+        if (item.type == Item.ItemType.weapon || item.type == Item.ItemType.armor || item.type == Item.ItemType.spell)
+        {
+            itemEquipbtn.gameObject.SetActive(true);
+
+            if (item.equiped)
+            {
+                itemEquipbtn.transform.GetChild(0).GetComponent<Text>().text = "Un-Equip";
+            }
+            else
+            {
+                itemEquipbtn.transform.GetChild(0).GetComponent<Text>().text = "Equip";
+            }
+        }
+        else
+        {
+            itemEquipbtn.gameObject.SetActive(false);
         }
     }
 
