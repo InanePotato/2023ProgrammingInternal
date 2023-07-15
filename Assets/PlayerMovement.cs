@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Game Manager")]
-    private GameObject gameManager;
     private GameManagerScript gameManagerScript;
 
     [Header("Movement")]
@@ -29,8 +28,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.FindGameObjectsWithTag("GameController").First();
-        gameManagerScript = gameManager.GetComponent<GameManagerScript>();
+        gameManagerScript = GameManagerScript.Instance;
 
         rb = gameObject.GetComponent<Rigidbody2D>();
     }
