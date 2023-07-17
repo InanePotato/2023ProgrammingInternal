@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameManagerScript.gamePaused)
+        if (!gameManagerScript.gamePaused && !gameManagerScript.gameOver)
         {
             inputHorizontal = Input.GetAxisRaw("Horizontal");
             inputVertical = Input.GetAxisRaw("Vertical");

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class GameManagerScript : MonoBehaviour
 
     [Header("Game Control")]
     public bool gamePaused = false;
+    public bool gameOver = false;
 
     [Header("Player")]
     public GameObject player;
@@ -22,6 +25,13 @@ public class GameManagerScript : MonoBehaviour
 
     [Header("Items")]
     public GameObject droppedItemPrefab;
+
+    [Header("UI")]
+    public GameObject mainCanvis;
+    private GameObject pnlPauseMenu;
+    private GameObject pnlTopGUI;
+    public GameObject txtMessageDisplayPrefab;
+    public float txtMessageDisplayTimeout = 2;
 
     public enum PlayerSprites
     {
@@ -56,11 +66,51 @@ public class GameManagerScript : MonoBehaviour
 
         // sets the player with the correct sprite
         player.GetComponent<PlayerMovement>().setPlayerSprite();
+
+        pnlPauseMenu = mainCanvis.transform.Find("PauseMenu").gameObject;
+        pnlTopGUI = mainCanvis.transform.Find("TopGUI").gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void EndGame(string reason)
+    {
+        // get rid of any pause that is on the game
+        TogglePauseScreen(false);
+
+        // set game over to true
+        gameOver = true;
+    }
+
+    public void TogglePauseScreen(bool showScreen)
+    {
+        if (!gameOver)
+        {
+            // Toggle game paused bool
+            gamePaused = showScreen;
+
+            // Hide all current popups
+            player.GetComponent<InventoryManager>().toggleInventory(false);
+
+            // Toggle visibility of pause button
+            pnlTopGUI.transform.Find("btnPause").gameObject.SetActive(!showScreen);
+
+            // Toggle visibility of pause UI panel
+            pnlPauseMenu.SetActive(showScreen);
+        }
+    }
+
+    public void DisplayMessage(string message, GameObject spawnOnObject, Color colour)
+    {
+        GameObject newMessage = Instantiate(txtMessageDisplayPrefab, spawnOnObject.transform);
+
+        newMessage.GetComponent<TextMesh>().text = message;
+        newMessage.GetComponent<TextMesh>().color = colour;
+
+        Destroy(newMessage, txtMessageDisplayTimeout);
     }
 }

@@ -53,7 +53,7 @@ public class InventoryManager : MonoBehaviour
     void Update()
     {
         // if the correct key for toggling the inventory view is pressed
-        if (Input.GetKeyDown(openInventoryKeybind))
+        if (Input.GetKeyDown(openInventoryKeybind) && !gameManagerScript.gameOver)
         {
             // toggle the inventory with the opposite of what it currently is
             toggleInventory(!inventoryOpen);
@@ -67,6 +67,29 @@ public class InventoryManager : MonoBehaviour
     /// <param name="isOpen"></param>
     public void toggleInventory(bool isOpen)
     {
+        if (gameManagerScript.gameOver)
+        {
+            // Make sure inventory is hidden
+            InventoryView.SetActive(false);
+            inventoryOpen = false;
+
+            // don't continue with this method
+            return;
+        }
+
+        if (Items.Count <= 0)
+        {
+            // Make sure inventory is hidden
+            InventoryView.SetActive(false);
+            inventoryOpen = false;
+
+            // Display empty message
+            gameManagerScript.DisplayMessage("Inventory Empty", gameManagerScript.player, Color.red);
+
+            // don't continue with this method
+            return;
+        }
+
         // the following 3 bools are determined by whether the inventory is opening or closing (the isOpen bool)
         // pause/play the game
         gameManagerScript.gamePaused = isOpen;
