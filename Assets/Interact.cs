@@ -71,6 +71,7 @@ public class Interact : MonoBehaviour
             }
             else
             {
+                gameManagerScript.DisplayMessage(requiredItem.itemName + " required", gameObject, Color.red);
                 Debug.Log("Can't open door");
             }
         }
@@ -85,17 +86,22 @@ public class Interact : MonoBehaviour
                 Interacted = true;
                 gameObject.GetComponent<ChestScript>().openChest(true);
             }
-            if (InventoryManager.Instance.GetItemDetails(requiredItem) != null)
-            {
-                InventoryManager.Instance.SubtractItemAmmount(requiredItem, 1);
-
-                Interacted = true;
-                gameObject.GetComponent<ChestScript>().openChest(true);
-            }
             else
             {
-                Debug.Log("Can't open chest");
+                if (InventoryManager.Instance.GetItemDetails(requiredItem) != null)
+                {
+                    InventoryManager.Instance.SubtractItemAmmount(requiredItem, 1);
+
+                    Interacted = true;
+                    gameObject.GetComponent<ChestScript>().openChest(true);
+                }
+                else
+                {
+                    gameManagerScript.DisplayMessage(requiredItem.itemName + " required", gameObject, Color.red);
+                    Debug.Log("Can't open chest");
+                }
             }
+            
         }
     }
 

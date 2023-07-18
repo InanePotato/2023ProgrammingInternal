@@ -55559,79 +55559,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750412437}
   m_CullTransparentMesh: 1
---- !u!1001 &782511743
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2610610278880867845, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_FontSize
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 2610610278880867845, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_CharacterSize
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2879370023423898792, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_Name
-      value: TextMessageDiaplay
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6620201465716229803, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
 --- !u!1 &800037795
 GameObject:
   m_ObjectHideFlags: 0
@@ -56434,6 +56361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6493213bdb31c541b568a5f8608d15a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraObject: {fileID: 519420028}
   ToggleMenuKeybind: 27
   ToggleInventoryKeybind: 105
   InteractKeybind: 101
@@ -56444,8 +56372,8 @@ MonoBehaviour:
   selectedPlayerSprite: 0
   droppedItemPrefab: {fileID: 8689694011063372065, guid: 176d4e0ecb60f604db5b9d3f603382b2, type: 3}
   mainCanvis: {fileID: 1442729337}
-  txtMessageDisplayPrefab: {fileID: 2879370023423898792, guid: 09244dbbd3cdcd94fa4f2fbd09782ead, type: 3}
-  txtMessageDisplayTimeout: 2
+  txtMessageDisplayPrefab: {fileID: 2269459039567235496, guid: fd9a7e94236e99340b67ccfe9ce37cf4, type: 3}
+  txtMessageDisplayTimeout: 2.5
   spritePrefab_KnightRed: {fileID: 6658781569935946399, guid: cff15b9a24449134f97ec010622ca976, type: 3}
   spritePrefab_KnightPink: {fileID: 9143784203032671997, guid: 38651bf431c6c6d459dbbeb6c2ab531e, type: 3}
   spritePrefab_KnightOriginal: {fileID: 128764186063426064, guid: 671769a6b34f46344b8e0692a89de564, type: 3}

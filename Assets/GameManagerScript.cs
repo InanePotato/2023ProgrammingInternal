@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class GameManagerScript : MonoBehaviour
 {
     public static GameManagerScript Instance;
+    public GameObject cameraObject;
+    private Camera camera;
 
     [Header("Keybinds")]
     public KeyCode ToggleMenuKeybind = KeyCode.Escape;
@@ -69,6 +71,8 @@ public class GameManagerScript : MonoBehaviour
 
         pnlPauseMenu = mainCanvis.transform.Find("PauseMenu").gameObject;
         pnlTopGUI = mainCanvis.transform.Find("TopGUI").gameObject;
+
+        camera = cameraObject.GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -106,10 +110,11 @@ public class GameManagerScript : MonoBehaviour
 
     public void DisplayMessage(string message, GameObject spawnOnObject, Color colour)
     {
-        GameObject newMessage = Instantiate(txtMessageDisplayPrefab, spawnOnObject.transform);
+        GameObject newMessage = Instantiate(txtMessageDisplayPrefab, mainCanvis.transform);
 
-        newMessage.GetComponent<TextMesh>().text = message;
-        newMessage.GetComponent<TextMesh>().color = colour;
+        newMessage.GetComponent<Text>().text = message;
+        newMessage.GetComponent<Text>().color = colour;
+        newMessage.GetComponent<RectTransform>().position = camera.WorldToScreenPoint(spawnOnObject.transform.position);
 
         Destroy(newMessage, txtMessageDisplayTimeout);
     }
