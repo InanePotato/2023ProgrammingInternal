@@ -20,6 +20,9 @@ public class Interact : MonoBehaviour
     private bool canInteract;
     private bool Interacted;
     public InteractionType interactionType;
+    private GameObject popupMessage = null;
+    public float interactMessageCooldown = 3;
+    private float interactMessageCooldownCountdown = 0;
 
     public enum InteractionType { Door, Chest, Item };
 
@@ -51,6 +54,11 @@ public class Interact : MonoBehaviour
                 ChestInteraction();
             }
         }
+
+        if (interactMessageCooldownCountdown > 0)
+        {
+            interactMessageCooldownCountdown -= Time.deltaTime;
+        }
     }
 
     private void DoorInteraction()
@@ -59,6 +67,8 @@ public class Interact : MonoBehaviour
         {
             Interacted = true;
             gameObject.GetComponent<DoorScript>().openDoor(true);
+
+            DestroyHintPopup();
         }
         else
         {
@@ -68,11 +78,16 @@ public class Interact : MonoBehaviour
 
                 Interacted = true;
                 gameObject.GetComponent<DoorScript>().openDoor(true);
+
+                DestroyHintPopup();
             }
             else
             {
-                gameManagerScript.DisplayMessage(requiredItem.itemName + " required", gameObject, Color.red);
-                Debug.Log("Can't open door");
+                if (interactMessageCooldownCountdown <= 0)
+                {
+                    gameManagerScript.DisplayMessage(requiredItem.itemName + " required", gameObject, Color.red);
+                    interactMessageCooldownCountdown = interactMessageCooldown;
+                }
             }
         }
     }
@@ -85,6 +100,8 @@ public class Interact : MonoBehaviour
             {
                 Interacted = true;
                 gameObject.GetComponent<ChestScript>().openChest(true);
+
+                DestroyHintPopup();
             }
             else
             {
@@ -94,11 +111,16 @@ public class Interact : MonoBehaviour
 
                     Interacted = true;
                     gameObject.GetComponent<ChestScript>().openChest(true);
+
+                    DestroyHintPopup();
                 }
                 else
                 {
-                    gameManagerScript.DisplayMessage(requiredItem.itemName + " required", gameObject, Color.red);
-                    Debug.Log("Can't open chest");
+                    if (interactMessageCooldownCountdown <= 0)
+                    {
+                        gameManagerScript.DisplayMessage(requiredItem.itemName + " required", gameObject, Color.red);
+                        interactMessageCooldownCountdown = interactMessageCooldown;
+                    }
                 }
             }
             
@@ -110,11 +132,27 @@ public class Interact : MonoBehaviour
         if (collision.gameObject == playerObject)
         {
             canInteract = true;
+
+            if (!Interacted)
+            {
+                popupMessage = gameManagerScript.DisplayInteractPopup(interactKeybind.ToString(), "Open " + interactionType.ToString(), gameObject);
+            }
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         canInteract = false;
+
+        DestroyHintPopup();
+    }
+
+    private void DestroyHintPopup()
+    {
+        if (popupMessage != null)
+        {
+            popupMessage.GetComponent<PopupHintMessageDisplayScript>().DestroyPopup();
+            popupMessage = null;
+        }
     }
 }

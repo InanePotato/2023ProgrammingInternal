@@ -14,6 +14,7 @@ public class EnemyScript : MonoBehaviour
     public float health;
     public float damage;
     public float attackRange;
+    public float attackCooldown;
     private bool canAttack;
     public AttackType attackType;
     private SpriteRenderer sprite;

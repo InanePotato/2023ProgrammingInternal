@@ -33,6 +33,7 @@ public class GameManagerScript : MonoBehaviour
     private GameObject pnlPauseMenu;
     private GameObject pnlTopGUI;
     public GameObject txtMessageDisplayPrefab;
+    public GameObject pnlPopupDisplayPrefab;
     public float txtMessageDisplayTimeout = 2;
 
     public enum PlayerSprites
@@ -117,5 +118,16 @@ public class GameManagerScript : MonoBehaviour
         newMessage.GetComponent<RectTransform>().position = camera.WorldToScreenPoint(spawnOnObject.transform.position);
 
         Destroy(newMessage, txtMessageDisplayTimeout);
+    }
+
+    public GameObject DisplayInteractPopup(string key, string message, GameObject spawnOnObject)
+    {
+        GameObject newPopup = Instantiate(pnlPopupDisplayPrefab, mainCanvis.transform);
+
+        newPopup.transform.Find("txtKey").GetComponent<Text>().text = key;
+        newPopup.transform.Find("txtDescription").GetComponent<Text>().text = message;
+        newPopup.GetComponent<RectTransform>().position = camera.WorldToScreenPoint(spawnOnObject.transform.position);
+
+        return newPopup;
     }
 }

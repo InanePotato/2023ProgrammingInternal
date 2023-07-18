@@ -141,6 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb0fd66ca461d745842e8703ecc1808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManagerScript: {fileID: 0}
-  keyNeeded: 1
+  requiredItem: {fileID: 0}
   interactionType: 0
+  interactMessageCooldown: 3
