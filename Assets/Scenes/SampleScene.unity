@@ -260,10 +260,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2188797665487906998, guid: c1186907bf489584ca9993314cbcb784, type: 3}
-      propertyPath: gameManagerScript
-      value: 
-      objectReference: {fileID: 1029057061}
     - target: {fileID: 5162771856548468148, guid: c1186907bf489584ca9993314cbcb784, type: 3}
       propertyPath: m_Name
       value: Vertical_Door (2)
@@ -1374,10 +1370,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horizontal_Door (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 5575983808278079597, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
-      propertyPath: gameManagerScript
-      value: 
-      objectReference: {fileID: 1029057061}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
 --- !u!1 &562652260
@@ -55591,6 +55583,7 @@ MonoBehaviour:
   health: 100
   damage: 5
   attackRange: 0.1
+  attackCooldown: 1
   attackType: 0
   enemy: {fileID: 0}
   movmentType: 0
@@ -56128,10 +56121,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horizontal_Door (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 5575983808278079597, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
-      propertyPath: gameManagerScript
-      value: 
-      objectReference: {fileID: 1029057061}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
 --- !u!1 &976289057
@@ -56373,6 +56362,7 @@ MonoBehaviour:
   droppedItemPrefab: {fileID: 8689694011063372065, guid: 176d4e0ecb60f604db5b9d3f603382b2, type: 3}
   mainCanvis: {fileID: 1442729337}
   txtMessageDisplayPrefab: {fileID: 2269459039567235496, guid: fd9a7e94236e99340b67ccfe9ce37cf4, type: 3}
+  pnlPopupDisplayPrefab: {fileID: 5125836560490387724, guid: 187586dab80d92b4486ab81cc91fbbd7, type: 3}
   txtMessageDisplayTimeout: 2.5
   spritePrefab_KnightRed: {fileID: 6658781569935946399, guid: cff15b9a24449134f97ec010622ca976, type: 3}
   spritePrefab_KnightPink: {fileID: 9143784203032671997, guid: 38651bf431c6c6d459dbbeb6c2ab531e, type: 3}
@@ -56957,14 +56947,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horizontal_Door (5)
       objectReference: {fileID: 0}
-    - target: {fileID: 5575983808278079597, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
-      propertyPath: keyNeeded
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5575983808278079597, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
-      propertyPath: gameManagerScript
-      value: 
-      objectReference: {fileID: 1029057061}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
 --- !u!4 &1499195969 stripped
@@ -57360,10 +57342,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horizontal_Door (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 5575983808278079597, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
-      propertyPath: gameManagerScript
-      value: 
-      objectReference: {fileID: 1029057061}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
 --- !u!1 &1803952320
@@ -57642,10 +57620,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Horizontal_Door (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 5575983808278079597, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
-      propertyPath: gameManagerScript
-      value: 
-      objectReference: {fileID: 1029057061}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd9e3ef024f1ffd47a464a4796a098da, type: 3}
 --- !u!1 &1852231088
@@ -75415,10 +75389,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2188797665487906998, guid: c1186907bf489584ca9993314cbcb784, type: 3}
-      propertyPath: gameManagerScript
-      value: 
-      objectReference: {fileID: 1029057061}
     - target: {fileID: 5162771856548468148, guid: c1186907bf489584ca9993314cbcb784, type: 3}
       propertyPath: m_Name
       value: Vertical_Door (3)
