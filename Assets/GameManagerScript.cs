@@ -60,9 +60,9 @@ public class GameManagerScript : MonoBehaviour
         player = GameObject.FindGameObjectsWithTag("Player").First();
 
         // sets instanciate to chosen player sprite
-        if (selectedPlayerSprite == PlayerSprites.Knight_Original) { playerSprite = Instantiate(spritePrefab_KnightOriginal, Vector2.zero, Quaternion.identity); }
-        else if (selectedPlayerSprite == PlayerSprites.Knight_Pink) { playerSprite = Instantiate(spritePrefab_KnightPink, Vector2.zero, Quaternion.identity); }
-        else { playerSprite = Instantiate(spritePrefab_KnightRed, Vector2.zero, Quaternion.identity); }
+        if (selectedPlayerSprite == PlayerSprites.Knight_Original) { playerSprite = Instantiate(spritePrefab_KnightOriginal); }
+        else if (selectedPlayerSprite == PlayerSprites.Knight_Pink) { playerSprite = Instantiate(spritePrefab_KnightPink); }
+        else { playerSprite = Instantiate(spritePrefab_KnightRed); }
 
         // adds sprite as a child of the player
         playerSprite.transform.parent = player.transform;

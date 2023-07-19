@@ -16,6 +16,8 @@ public class EnemyScript : MonoBehaviour
     public float attackRange;
     public float attackCooldown;
     private bool canAttack;
+    private bool inAttackRange;
+    private bool touchingPlayer;
     public AttackType attackType;
     private SpriteRenderer sprite;
     public GameObject enemy;
@@ -30,6 +32,7 @@ public class EnemyScript : MonoBehaviour
     private float changeWanderCooldown;
     private Vector2 wanderTarget;
     private Vector2 linearTarget;
+    private string LastMovement;
 
     public enum MovmentType { Raom, Linear };
 
@@ -39,6 +42,7 @@ public class EnemyScript : MonoBehaviour
     private GameObject target;
     private bool playerInRange;
     private Vector2 directionToTarget;
+    private float numDistanceToTarget;
 
     [Header("Animations")]
     public AnimationState currentAnimationState = AnimationState.Idle;
@@ -66,8 +70,9 @@ public class EnemyScript : MonoBehaviour
     {
         Vector2 distanceToTarget = target.transform.position - enemy.transform.position;
         directionToTarget = distanceToTarget.normalized;
+        numDistanceToTarget = distanceToTarget.magnitude;
 
-        if (distanceToTarget.magnitude <= targetingRange && canTarget)
+        if (numDistanceToTarget <= targetingRange && canTarget && numDistanceToTarget > attackRange)
         {
             playerInRange = true;
         }
@@ -76,7 +81,17 @@ public class EnemyScript : MonoBehaviour
             playerInRange = false;
         }
 
-        if (distanceToTarget.magnitude <= attackRange)
+        if (numDistanceToTarget <= attackRange)
+        {
+            inAttackRange = true;
+            rigidbody.velocity = new Vector2(0, 0);
+        }
+        else
+        {
+            inAttackRange = false;
+        }
+
+        if (inAttackRange || touchingPlayer)
         {
             canAttack = true;
         }
@@ -123,25 +138,38 @@ public class EnemyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerInRange && canTarget)
+        if (!canAttack)
         {
-            // move to player target
-            rigidbody.velocity = new Vector2(directionToTarget.x, directionToTarget.y) * speed;
+            if (playerInRange && canTarget)
+            {
+                LastMovement = "Target";
+
+                // move to player target
+                rigidbody.velocity = new Vector2(directionToTarget.x, directionToTarget.y) * speed;
+            }
+            else
+            {
+                if (movmentType == MovmentType.Raom)
+                {
+                    LastMovement = "Roam";
+
+                    // Move to wander target
+                    rigidbody.velocity = new Vector2(wanderTarget.x, wanderTarget.y) * speed;
+                }
+                else if (movmentType == MovmentType.Linear)
+                {
+                    LastMovement = "Linear";
+
+                    // Move linear target
+                    rigidbody.velocity = new Vector2(linearTarget.x, linearTarget.y) * speed;
+                }
+            }
         }
         else
         {
-            if (movmentType == MovmentType.Raom)
-            {
-                // Move to wander target
-                rigidbody.velocity = new Vector2(wanderTarget.x, wanderTarget.y) * speed;
-            }
-            else if (movmentType == MovmentType.Linear)
-            {
-                // Move linear target
-                rigidbody.velocity = new Vector2(linearTarget.x, linearTarget.y) * speed;
-            }
+            LastMovement = "Nothing";
         }
-
+        
         if (rigidbody.velocity.x > 0)
         {
             sprite.flipX = true;
@@ -170,5 +198,15 @@ public class EnemyScript : MonoBehaviour
 
         // sets new animation state
         currentAnimationState = newState;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        touchingPlayer = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        touchingPlayer = false;
     }
 }
