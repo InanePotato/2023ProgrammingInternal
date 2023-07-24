@@ -15,6 +15,8 @@ public class EnemyScript : MonoBehaviour
     public float damage;
     public float attackRange;
     public float attackCooldown;
+    private float attackCooldownCount;
+    private bool attacking;
     private bool canAttack;
     private bool inAttackRange;
     private bool touchingPlayer;
@@ -32,7 +34,6 @@ public class EnemyScript : MonoBehaviour
     private float changeWanderCooldown;
     private Vector2 wanderTarget;
     private Vector2 linearTarget;
-    private string LastMovement;
 
     public enum MovmentType { Raom, Linear };
 
@@ -63,6 +64,9 @@ public class EnemyScript : MonoBehaviour
         Vector2 linearPoint = new Vector2(transform.position.x + movementOffset.x, transform.position.y + movementOffset.y);
         Vector2 distanceToLinearTarget = ToEnemiesVector3(linearPoint) - enemy.transform.position;
         linearTarget = distanceToLinearTarget.normalized;
+
+        attacking = false;
+        attackCooldownCount = 0;
     }
 
     // Update is called once per frame
@@ -162,16 +166,47 @@ public class EnemyScript : MonoBehaviour
                 linearTarget = distanceToLinearTarget.normalized;
             }
         }
+
+        // attack player
+        if (canAttack && attackCooldownCount <= 0)
+        {
+            Debug.Log("Damaging player");
+            attackCooldownCount = attackCooldown;
+            ChangeAnimationState(AnimationState.Attack);
+
+            if (attackType == AttackType.Range)
+            {
+                RangeAttackPlayer();
+            }
+            else if (attackType == AttackType.Spell)
+            {
+                SpellAttackPlayer();
+            }
+            else
+            {
+                MeleeAttackPlayer();
+            }
+        }
+
+        if (attackCooldownCount > 0)
+        {
+            attackCooldownCount -= Time.deltaTime;
+        }
+
+        if (!AnimatorIsPlaying())
+        {
+            ChangeAnimationState(AnimationState.Idle);
+        }
     }
 
     private void FixedUpdate()
     {
         if (!canAttack)
         {
+            ChangeAnimationState(AnimationState.Walk);
+
             if (playerInRange && canTarget)
             {
-                LastMovement = "Target";
-
                 // move to player target
                 rigidbody.velocity = new Vector2(directionToTarget.x, directionToTarget.y) * speed;
             }
@@ -179,23 +214,15 @@ public class EnemyScript : MonoBehaviour
             {
                 if (movmentType == MovmentType.Raom)
                 {
-                    LastMovement = "Roam";
-
                     // Move to wander target
                     rigidbody.velocity = new Vector2(wanderTarget.x, wanderTarget.y) * speed;
                 }
                 else if (movmentType == MovmentType.Linear)
                 {
-                    LastMovement = "Linear";
-
                     // Move linear target
                     rigidbody.velocity = new Vector2(linearTarget.x, linearTarget.y) * speed;
                 }
             }
-        }
-        else
-        {
-            LastMovement = "Nothing";
         }
         
         if (rigidbody.velocity.x > 0)
@@ -226,6 +253,26 @@ public class EnemyScript : MonoBehaviour
 
         // sets new animation state
         currentAnimationState = newState;
+    }
+
+    private bool AnimatorIsPlaying()
+    {
+        return animator.GetCurrentAnimatorStateInfo(0).length > animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    }
+
+    private void MeleeAttackPlayer()
+    {
+        target.GetComponent<PlayerStats>().SubtractHealth(damage);
+    }
+
+    private void RangeAttackPlayer()
+    {
+
+    }
+
+    private void SpellAttackPlayer()
+    {
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
