@@ -68,10 +68,36 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 distanceToTarget = target.transform.position - enemy.transform.position;
-        directionToTarget = distanceToTarget.normalized;
-        numDistanceToTarget = distanceToTarget.magnitude;
+        // get closest disance
+        Vector2 distanceToRight = target.transform.Find("PlayerRightPosition").gameObject.transform.position - enemy.transform.position;
+        Vector2 distanceToMiddle = target.transform.position - enemy.transform.position;
+        Vector2 distanceToLeft = target.transform.Find("PlayerLeftPosition").position - enemy.transform.position;
 
+        Vector2 directionToRight = distanceToRight.normalized;
+        Vector2 directionToMiddle = distanceToMiddle.normalized;
+        Vector2 directionToLeft = distanceToLeft.normalized;
+
+        float numDistanceToRight = distanceToRight.magnitude;
+        float numDistanceToMiddle = distanceToMiddle.magnitude;
+        float numDistanceToLeft = distanceToLeft.magnitude;
+
+        if (numDistanceToRight <= numDistanceToMiddle && numDistanceToRight <= numDistanceToLeft)
+        {
+            directionToTarget = directionToRight;
+            numDistanceToTarget = numDistanceToRight;
+        }
+        else if (numDistanceToLeft <= numDistanceToMiddle && numDistanceToLeft <= numDistanceToRight)
+        {
+            directionToTarget = directionToLeft;
+            numDistanceToTarget = numDistanceToLeft;
+        }
+        else
+        {
+            directionToTarget = directionToMiddle;
+            numDistanceToTarget = numDistanceToMiddle;
+        }
+
+        // if the target is in targeting range
         if (numDistanceToTarget <= targetingRange && canTarget && numDistanceToTarget > attackRange)
         {
             playerInRange = true;
@@ -81,6 +107,7 @@ public class EnemyScript : MonoBehaviour
             playerInRange = false;
         }
 
+        // if the target is in attack range
         if (numDistanceToTarget <= attackRange)
         {
             inAttackRange = true;
@@ -100,6 +127,7 @@ public class EnemyScript : MonoBehaviour
             canAttack = false;
         }
 
+        // if roaming
         if (movmentType == MovmentType.Raom)
         {
             if (changeWanderCooldown <= 0)
