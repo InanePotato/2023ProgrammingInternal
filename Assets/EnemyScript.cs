@@ -46,17 +46,16 @@ public class EnemyScript : MonoBehaviour
     private float numDistanceToTarget;
 
     [Header("Animations")]
-    public AnimationState currentAnimationState = AnimationState.Idle;
-    public enum AnimationState { Idle, Walk, Attack };
-
-    Animator animator;
+    private EnemyAnimationScript animationScript;
+    //Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         enemy = gameObject.transform.GetChild(0).gameObject;
         sprite = enemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
-        animator = enemy.transform.GetChild(0).gameObject.GetComponent<Animator>();
+        //animator = enemy.transform.GetChild(0).gameObject.GetComponent<Animator>();
+        animationScript = gameObject.transform.GetChild(0).transform.GetChild(0).GetComponent<EnemyAnimationScript>();
         rigidbody = enemy.GetComponent<Rigidbody2D>();
 
         target = GameObject.FindGameObjectsWithTag("Player").First();
@@ -170,9 +169,8 @@ public class EnemyScript : MonoBehaviour
         // attack player
         if (canAttack && attackCooldownCount <= 0)
         {
-            Debug.Log("Damaging player");
             attackCooldownCount = attackCooldown;
-            ChangeAnimationState(AnimationState.Attack);
+            animationScript.ChangeAnimationState(EnemyAnimationScript.AnimationState.Attack);
 
             if (attackType == AttackType.Range)
             {
@@ -192,18 +190,13 @@ public class EnemyScript : MonoBehaviour
         {
             attackCooldownCount -= Time.deltaTime;
         }
-
-        if (!AnimatorIsPlaying())
-        {
-            ChangeAnimationState(AnimationState.Idle);
-        }
     }
 
     private void FixedUpdate()
     {
         if (!canAttack)
         {
-            ChangeAnimationState(AnimationState.Walk);
+            animationScript.ChangeAnimationState(EnemyAnimationScript.AnimationState.Walk);
 
             if (playerInRange && canTarget)
             {
@@ -240,25 +233,25 @@ public class EnemyScript : MonoBehaviour
         return new Vector3(initial.x, initial.y, enemy.transform.position.z);
     }
 
-    private void ChangeAnimationState(AnimationState newState)
-    {
-        //stop from changing if the same
-        if (newState == currentAnimationState)
-        {
-            return;
-        }
+    //private void ChangeAnimationState(AnimationState newState)
+    //{
+    //    //stop from changing if the same
+    //    if (newState == currentAnimationState)
+    //    {
+    //        return;
+    //    }
 
-        // changes animation
-        animator.Play(newState.ToString());
+    //    // changes animation
+    //    animator.Play(newState.ToString());
 
-        // sets new animation state
-        currentAnimationState = newState;
-    }
+    //    // sets new animation state
+    //    currentAnimationState = newState;
+    //}
 
-    private bool AnimatorIsPlaying()
-    {
-        return animator.GetCurrentAnimatorStateInfo(0).length > animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-    }
+    //private bool AnimatorPlaying()
+    //{
+    //    return animator.GetCurrentAnimatorStateInfo(0).length > animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    //}
 
     private void MeleeAttackPlayer()
     {
