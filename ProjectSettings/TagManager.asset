@@ -9,6 +9,7 @@ TagManager:
   - Locked_Door
   - PlayerSprite
   - Interactable
+  - Enemy
   layers:
   - Default
   - TransparentFX

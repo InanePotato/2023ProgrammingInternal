@@ -651,6 +651,7 @@ GameObject:
   - component: {fileID: 360772049}
   - component: {fileID: 360772054}
   - component: {fileID: 360772055}
+  - component: {fileID: 360772056}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -757,7 +758,7 @@ MonoBehaviour:
   chestplateArmorResistance: 0
   leggingsArmorResistance: 0
   bootsArmorResistance: 0
-  damage: 0
+  damage: 10
 --- !u!114 &360772055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,6 +777,24 @@ MonoBehaviour:
   Items: []
   sortedItems: []
   coins: 0
+--- !u!114 &360772056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360772048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476c8a28d3605bb48b358daed4b520a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManagerScript: {fileID: 0}
+  attackRange: 0.2
+  angleVariant: 0
+  targetEnemy: {fileID: 0}
+  attackCooldown: 0
+  playerStatsScript: {fileID: 0}
 --- !u!4 &376942640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1444190318740788719, guid: c1186907bf489584ca9993314cbcb784, type: 3}
@@ -55550,7 +55569,7 @@ GameObject:
   - component: {fileID: 800037796}
   m_Layer: 0
   m_Name: EnemyArea
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55567,7 +55586,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eadb0e61cca1dfb4199d22ccbef39919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  maxHealth: 50
+  healthBarPrefab: {fileID: 6345043440471717330, guid: 0e2b7172545e5d04889a25836ba22226, type: 3}
+  HealthBarYPosOffset: 0.08
   damage: 5
   attackRange: 0.15
   attackCooldown: 2
@@ -56337,6 +56358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 519420028}
+  camera: {fileID: 0}
   ToggleMenuKeybind: 27
   ToggleInventoryKeybind: 105
   InteractKeybind: 101
@@ -57839,6 +57861,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6669183816537381463, guid: 5611504580957c146b24023bc1d1f827, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a5f848ddde2de1243a642eb8af794c3e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5611504580957c146b24023bc1d1f827, type: 3}
 --- !u!1 &1981097928

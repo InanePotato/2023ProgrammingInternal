@@ -3,20 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
     [Header("Game Manager")]
-    private GameManagerScript gameManagerScript = GameManagerScript.Instance;
+    private GameManagerScript gameManagerScript;
+    private GameObject canvas;
 
     [Header("Enemy Details")]
-    public float health;
+    public float maxHealth;
+    private float health;
+    public GameObject healthBarPrefab;
+    private GameObject healthBar;
+    public float HealthBarYPosOffset;
     public float damage;
     public float attackRange;
     public float attackCooldown;
     private float attackCooldownCount;
-    private bool attacking;
     private bool canAttack;
     private bool inAttackRange;
     private bool touchingPlayer;
@@ -52,6 +57,10 @@ public class EnemyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManagerScript = GameManagerScript.Instance;
+
+        canvas = gameManagerScript.mainCanvis;
+
         enemy = gameObject.transform.GetChild(0).gameObject;
         sprite = enemy.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         //animator = enemy.transform.GetChild(0).gameObject.GetComponent<Animator>();
@@ -64,13 +73,20 @@ public class EnemyScript : MonoBehaviour
         Vector2 distanceToLinearTarget = ToEnemiesVector3(linearPoint) - enemy.transform.position;
         linearTarget = distanceToLinearTarget.normalized;
 
-        attacking = false;
         attackCooldownCount = 0;
+
+        health = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // if game paused or over, do nothing
+        if (gameManagerScript.gamePaused || gameManagerScript.gameOver)
+        {
+            return;
+        }
+
         // get closest disance
         Vector2 distanceToRight = target.transform.Find("PlayerRightPosition").gameObject.transform.position - enemy.transform.position;
         Vector2 distanceToMiddle = target.transform.position - enemy.transform.position;
@@ -194,6 +210,12 @@ public class EnemyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // if game paused or over, do nothing
+        if (gameManagerScript.gamePaused || gameManagerScript.gameOver)
+        {
+            return;
+        }
+
         if (!canAttack)
         {
             animationScript.ChangeAnimationState(EnemyAnimationScript.AnimationState.Walk);
@@ -233,25 +255,35 @@ public class EnemyScript : MonoBehaviour
         return new Vector3(initial.x, initial.y, enemy.transform.position.z);
     }
 
-    //private void ChangeAnimationState(AnimationState newState)
-    //{
-    //    //stop from changing if the same
-    //    if (newState == currentAnimationState)
-    //    {
-    //        return;
-    //    }
+    public void DamageEnemy(float damage)
+    {
+        health -= damage;
 
-    //    // changes animation
-    //    animator.Play(newState.ToString());
+        if (health <= 0)
+        {
+            Destroy(healthBar);
+            Destroy(gameObject);
+            return;
+        }
 
-    //    // sets new animation state
-    //    currentAnimationState = newState;
-    //}
+        // there is no current health bar for the enemy
+        if (healthBar == null)
+        {
+            GameObject newHealthBar = Instantiate(healthBarPrefab, canvas.transform);
+            EnemyHealthBarScript newHealthBarScript = newHealthBar.GetComponent<EnemyHealthBarScript>();
 
-    //private bool AnimatorPlaying()
-    //{
-    //    return animator.GetCurrentAnimatorStateInfo(0).length > animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-    //}
+            newHealthBarScript.maxHealth = maxHealth;
+            newHealthBarScript.currentHealth = health;
+            newHealthBarScript.enemyObject = gameObject.transform.Find("Enemy").gameObject;
+            newHealthBarScript.yPosOffSet = HealthBarYPosOffset;
+            
+            healthBar = newHealthBar;
+        }
+        else
+        {
+            healthBar.GetComponent<EnemyHealthBarScript>().DecreaseEnemyHealthBar(damage);
+        }
+    }
 
     private void MeleeAttackPlayer()
     {

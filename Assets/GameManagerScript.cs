@@ -9,7 +9,7 @@ public class GameManagerScript : MonoBehaviour
 {
     public static GameManagerScript Instance;
     public GameObject cameraObject;
-    private Camera camera;
+    public Camera camera;
 
     [Header("Keybinds")]
     public KeyCode ToggleMenuKeybind = KeyCode.Escape;
