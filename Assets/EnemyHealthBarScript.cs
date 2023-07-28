@@ -20,7 +20,7 @@ public class EnemyHealthBarScript : MonoBehaviour
 
         healthBarWidthIncrement = healthBarWidth / maxHealth;
 
-        gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentHealth * healthBarWidthIncrement);
+        gameObject.transform.GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentHealth * healthBarWidthIncrement);
     }
 
     // Update is called once per frame
@@ -33,6 +33,6 @@ public class EnemyHealthBarScript : MonoBehaviour
     public void DecreaseEnemyHealthBar(float ammount)
     {
         currentHealth -= ammount;
-        gameObject.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentHealth * healthBarWidthIncrement);
+        gameObject.transform.GetChild(0).GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentHealth * healthBarWidthIncrement);
     }
 }
