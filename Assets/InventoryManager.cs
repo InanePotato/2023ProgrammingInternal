@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
+    public PlayerStats playerStatsScript;
 
     [Header("Game Manager")]
     private GameManagerScript gameManagerScript;
@@ -39,6 +40,8 @@ public class InventoryManager : MonoBehaviour
         gameManagerScript = GameManagerScript.Instance;
         // get the keybind for inventory view toggling
         openInventoryKeybind = gameManagerScript.ToggleInventoryKeybind;
+
+        playerStatsScript = gameObject.GetComponent<PlayerStats>();
 
         // set the inventory to hidden/closed by default
         InventoryView.SetActive(false);
@@ -189,34 +192,49 @@ public class InventoryManager : MonoBehaviour
         // Description
         var itemDescription = InventoryContentInformation.transform.Find("txtItemDescription").GetComponent<Text>();
         itemDescription.gameObject.SetActive(true);
-        itemDescription.text = item.description;
+        itemDescription.text = "Effects:" + Environment.NewLine + "- " + item.primaryEffect + Environment.NewLine + "- " + item.secondaryEffect;
 
         // Effects
-        var itemEffects = InventoryContentInformation.transform.Find("txtItemEffects").GetComponent<Text>();
-        itemEffects.gameObject.SetActive(true);
-        itemEffects.text = "Effects:" + Environment.NewLine
-                            + "- " + item.primaryEffect + Environment.NewLine
-                            + "- " + item.secondaryEffect;
+        //var itemEffects = InventoryContentInformation.transform.Find("txtItemEffects").GetComponent<Text>();
+        //itemEffects.gameObject.SetActive(true);
+        //itemEffects.text = "Effects:" + Environment.NewLine
+        //                    + "- " + item.primaryEffect + Environment.NewLine
+        //                    + "- " + item.secondaryEffect;
 
-        // Equipabe
-        var itemEquipbtn = InventoryContentInformation.transform.Find("btnEquip");
+        // use
+        var itemUsebtn = InventoryContentInformation.transform.Find("btnUse");
 
-        if (item.type == Item.ItemType.weapon || item.type == Item.ItemType.armor || item.type == Item.ItemType.spell)
+        if (item.type == Item.ItemType.weapon || item.type == Item.ItemType.hat ||
+            item.type == Item.ItemType.chestplate || item.type == Item.ItemType.boots ||
+            item.type == Item.ItemType.relic || item.type == Item.ItemType.spell)
         {
-            itemEquipbtn.gameObject.SetActive(true);
+            itemUsebtn.gameObject.SetActive(true);
+            itemUsebtn.GetComponent<Button>().onClick.RemoveAllListeners();
 
             if (item.equiped)
             {
-                itemEquipbtn.transform.GetChild(0).GetComponent<Text>().text = "Un-Equip";
+                itemUsebtn.transform.GetChild(0).GetComponent<Text>().text = "Un-Equip";
+                itemUsebtn.GetComponent<Button>().onClick.AddListener(() => playerStatsScript.UnEquipItem(item.type));
             }
             else
             {
-                itemEquipbtn.transform.GetChild(0).GetComponent<Text>().text = "Equip";
+                itemUsebtn.transform.GetChild(0).GetComponent<Text>().text = "Equip";
+                itemUsebtn.GetComponent<Button>().onClick.AddListener(() => playerStatsScript.EquipItem(item));
             }
+        }
+        else if (item.type == Item.ItemType.consumable)
+        {
+            itemUsebtn.gameObject.SetActive(true);
+            itemUsebtn.GetComponent<Button>().onClick.RemoveAllListeners();
+
+            itemUsebtn.transform.GetChild(0).GetComponent<Text>().text = "Use";
+            itemUsebtn.GetComponent<Button>().onClick.AddListener(() => playerStatsScript.UseItem(item));
+            toggleInventory(false);
+            toggleInventory(true);
         }
         else
         {
-            itemEquipbtn.gameObject.SetActive(false);
+            itemUsebtn.gameObject.SetActive(false);
         }
     }
 

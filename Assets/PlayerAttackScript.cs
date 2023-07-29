@@ -80,13 +80,14 @@ public class PlayerAttackScript : MonoBehaviour
                 }
             }
 
+            // main attack keybind/using normal weapon
             if (Input.GetKeyDown(attackKeybind))// && Input.GetMouseButtonDown(0))
             {
                 //IF there is an enemy to be attacked & no cooldown time left && left click is down
                 if (targetEnemy != null && attackCooldownTime <= 0) // && Input.GetMouseButtonDown(0)
                 {
                     // attack the target enemy
-                    targetEnemy.GetComponent<EnemyScript>().DamageEnemy(playerStatsScript.damage);
+                    targetEnemy.GetComponent<EnemyScript>().DamageEnemy(playerStatsScript.weaponDamage + playerStatsScript.weaponDamageMultiplier);
                     //Debug.Log("Damaged enemy");
 
                     // once attacked, reset attack cooldown time
