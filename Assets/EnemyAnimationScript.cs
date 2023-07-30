@@ -6,7 +6,7 @@ public class EnemyAnimationScript : MonoBehaviour
 {
     [Header("Animations")]
     public AnimationState currentAnimationState = AnimationState.Idle;
-    public enum AnimationState { Idle, Walk, Attack };
+    public enum AnimationState { Idle, Walk, Attack, Damaged };
 
     Animator animator;
 

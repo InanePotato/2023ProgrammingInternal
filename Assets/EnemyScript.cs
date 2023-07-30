@@ -258,6 +258,7 @@ public class EnemyScript : MonoBehaviour
     public void DamageEnemy(float damage)
     {
         health -= damage;
+        animationScript.ChangeAnimationState(EnemyAnimationScript.AnimationState.Damaged);
 
         if (health <= 0)
         {
