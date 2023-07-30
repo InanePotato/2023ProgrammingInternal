@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e892f53463fa274e8a85b2a9edc5ab4, type: 3}
-  m_Name: redHelmet
+  m_Name: rubyHelmet
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 877ef5e1b504d2c44b1e1929543aad87, type: 3}
   itemName: Ruby Helmet
@@ -21,6 +21,6 @@ MonoBehaviour:
   ammount: 1
   equiped: 0
   damage: 0
-  protection: 0
+  protection: 5
   ability: 0
   abilityValue: 0

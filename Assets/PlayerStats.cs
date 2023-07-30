@@ -2,6 +2,7 @@ using Microsoft.Unity.VisualStudio.Editor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -16,6 +17,11 @@ public class PlayerStats : MonoBehaviour
     [Header("UI")]
     public GameObject EquippedSlotsPanel;
     private GameObject[] imgSlot = new GameObject[6];
+    public GameObject pnlStatsDisplay;
+    private GameObject statsDisplayProtection;
+    private GameObject statsDisplaySpeed;
+    private GameObject statsDisplayWeaponDamage;
+    private GameObject statsDisplaySpellDamage;
 
     [Header("Equipped Items")]
     public Item[] equippedSlot = new Item[6];
@@ -62,6 +68,13 @@ public class PlayerStats : MonoBehaviour
         imgSlot[3] = EquippedSlotsPanel.transform.Find("WeaponSlot").gameObject;
         imgSlot[4] = EquippedSlotsPanel.transform.Find("SpellSlot").gameObject;
         imgSlot[5] = EquippedSlotsPanel.transform.Find("RelicSlot").gameObject;
+
+        statsDisplayProtection = pnlStatsDisplay.transform.Find("txtProtection").gameObject;
+        statsDisplaySpeed = pnlStatsDisplay.transform.Find("txtSpeed").gameObject;
+        statsDisplayWeaponDamage = pnlStatsDisplay.transform.Find("txtWeaponDamage").gameObject;
+        statsDisplaySpellDamage = pnlStatsDisplay.transform.Find("txtSpellDamage").gameObject;
+
+        UpdateStatsDisplay();
     }
 
     // Update is called once per frame
@@ -106,11 +119,21 @@ public class PlayerStats : MonoBehaviour
         if (type == Item.ItemType.chestplate) { arrayIndex = 1; }
         else if (type == Item.ItemType.boots) { arrayIndex = 2; }
         else if (type == Item.ItemType.weapon) { arrayIndex = 3; }
-        else if (type == Item.ItemType.spell) { arrayIndex = 3; }
-        else if (type == Item.ItemType.relic) { arrayIndex = 4; }
+        else if (type == Item.ItemType.spell) { arrayIndex = 4; }
+        else if (type == Item.ItemType.relic) { arrayIndex = 5; }
 
         // unequip current item of type
         UnEquipItem(type);
+
+        // set any damage the weapon or spell does
+        if (type == Item.ItemType.weapon)
+        {
+            weaponDamage = item.damage;
+        }
+        else if (type == Item.ItemType.spell)
+        {
+            spellDamage = item.damage;
+        }
 
         // equip new item of type
         equippedSlot[arrayIndex] = item;
@@ -129,6 +152,8 @@ public class PlayerStats : MonoBehaviour
         var iconImage = imgSlot[arrayIndex].GetComponent<UnityEngine.UI.Image>();
         iconImage.sprite = item.sprite;
         iconImage.color = new Color(255, 255, 255, 255);
+
+        UpdateStatsDisplay();
     }
 
     public void UnEquipItem(Item.ItemType type)
@@ -136,9 +161,9 @@ public class PlayerStats : MonoBehaviour
         int arrayIndex = 0;
         if (type == Item.ItemType.chestplate) { arrayIndex = 1; }
         else if (type == Item.ItemType.boots) { arrayIndex = 2; }
-        else if (type == Item.ItemType.weapon) { arrayIndex = 3; }
-        else if (type == Item.ItemType.spell) { arrayIndex = 3; }
-        else if (type == Item.ItemType.relic) { arrayIndex = 4; }
+        else if (type == Item.ItemType.weapon) { arrayIndex = 3; weaponDamage = defaultDamage; }
+        else if (type == Item.ItemType.spell) { arrayIndex = 4; spellDamage = 0; }
+        else if (type == Item.ItemType.relic) { arrayIndex = 5; }
 
         // it there is not sonthing to un-equip, don't continue
         if (equippedSlot[arrayIndex] == null)
@@ -166,6 +191,8 @@ public class PlayerStats : MonoBehaviour
         // un-equip new item of type
         equippedSlot[arrayIndex].equiped = false;
         equippedSlot[arrayIndex] = null;
+
+        UpdateStatsDisplay();
     }
 
     public void UpdateProtection()
@@ -175,6 +202,8 @@ public class PlayerStats : MonoBehaviour
         {
             totalProtection += slotProtection[i];
         }
+
+        statsDisplayProtection.GetComponent<Text>().text = totalProtection.ToString();
     }
 
     public void HandleAbilityChange(Item item, bool addAbility)
@@ -193,11 +222,11 @@ public class PlayerStats : MonoBehaviour
         }
         else if (item.ability == Item.Ability.extraWeaponDamage)
         {
-            weaponDamageMultiplier = item.abilityValue * multiplier;
+            weaponDamageMultiplier -= item.abilityValue * multiplier;
         }
         else if (item.ability == Item.Ability.extraSpellDamage)
         {
-            spellDamageMultiplier = item.abilityValue * multiplier;
+            spellDamageMultiplier -= item.abilityValue * multiplier;
         }
         else if (item.ability == Item.Ability.extraSpeed)
         {
@@ -208,5 +237,13 @@ public class PlayerStats : MonoBehaviour
     public void UseItem(Item item)
     {
         item.ammount--;
+    }
+
+    private void UpdateStatsDisplay()
+    {
+        statsDisplayProtection.GetComponent<Text>().text = totalProtection.ToString();
+        statsDisplaySpeed.GetComponent<Text>().text = "0";
+        statsDisplayWeaponDamage.GetComponent<Text>().text = (weaponDamage + weaponDamageMultiplier).ToString();
+        statsDisplaySpellDamage.GetComponent<Text>().text = (spellDamage + spellDamageMultiplier).ToString();
     }
 }

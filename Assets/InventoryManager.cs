@@ -191,14 +191,20 @@ public class InventoryManager : MonoBehaviour
         // Description
         var itemDescription = InventoryContentInformation.transform.Find("txtItemDescription").GetComponent<Text>();
         itemDescription.gameObject.SetActive(true);
-        itemDescription.text = "Effects:" + Environment.NewLine + "- " + item.primaryEffect + Environment.NewLine + "- " + item.secondaryEffect;
+        itemDescription.text = "";
+        if (item.ability != Item.Ability.none)
+        {
+            string abilityName = "";
+            if (item.ability == Item.Ability.extraHealth) { abilityName = "Health"; }
+            else if (item.ability == Item.Ability.extraSpeed) { abilityName = "Speed"; }
+            else if (item.ability == Item.Ability.extraWeaponDamage) { abilityName = "Weapon Damage"; }
+            else if (item.ability == Item.Ability.extraSpellDamage) { abilityName = "Spell Damage"; }
 
-        // Effects
-        //var itemEffects = InventoryContentInformation.transform.Find("txtItemEffects").GetComponent<Text>();
-        //itemEffects.gameObject.SetActive(true);
-        //itemEffects.text = "Effects:" + Environment.NewLine
-        //                    + "- " + item.primaryEffect + Environment.NewLine
-        //                    + "- " + item.secondaryEffect;
+            itemDescription.text += "+" + item.abilityValue + " " + abilityName + Environment.NewLine;
+        }
+        itemDescription.text +=  "Damage: " + item.damage + Environment.NewLine +
+                                "Protection: " + item.protection + Environment.NewLine;
+        itemDescription.text += "Effects:" + Environment.NewLine + "- " + item.primaryEffect + Environment.NewLine + "- " + item.secondaryEffect;
 
         // use
         var itemUsebtn = InventoryContentInformation.transform.Find("btnUse");
@@ -231,8 +237,7 @@ public class InventoryManager : MonoBehaviour
             itemUsebtn.transform.GetChild(0).GetComponent<Text>().text = "Use";
             itemUsebtn.GetComponent<Button>().onClick.AddListener(() => playerStatsScript.UseItem(item));
             itemUsebtn.GetComponent<Button>().onClick.AddListener(() => ReopenInventory(item));
-            toggleInventory(false);
-            toggleInventory(true);
+            ReopenInventory(item);
         }
         else
         {

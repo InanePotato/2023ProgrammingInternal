@@ -19,8 +19,8 @@ MonoBehaviour:
   primaryEffect: 0
   secondaryEffect: 0
   ammount: 1
-  equiped: 1
-  damage: 0
+  equiped: 0
+  damage: 7
   protection: 0
   ability: 0
   abilityValue: 0

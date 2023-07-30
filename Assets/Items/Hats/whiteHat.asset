@@ -21,6 +21,6 @@ MonoBehaviour:
   ammount: 1
   equiped: 0
   damage: 0
-  protection: 0
-  ability: 0
-  abilityValue: 0
+  protection: 0.5
+  ability: 2
+  abilityValue: 1
