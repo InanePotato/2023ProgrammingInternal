@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e892f53463fa274e8a85b2a9edc5ab4, type: 3}
-  m_Name: basicHelmet
+  m_Name: silverSpellbook
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 86c853b5d1f88954cbe3fb6b496f575f, type: 3}
-  itemName: Basic Helmet
-  inventoryId: 100
-  type: 2
+  sprite: {fileID: 21300000, guid: db85e8e9ae1f36043be64ee418206e64, type: 3}
+  itemName: Silver Spelbook
+  inventoryId: 403
+  type: 6
   primaryEffect: 0
   secondaryEffect: 0
   ammount: 1

@@ -162,7 +162,6 @@ public class PlayerStats : MonoBehaviour
         var iconImage = imgSlot[arrayIndex].GetComponent<UnityEngine.UI.Image>();
         iconImage.sprite = null;
         iconImage.color = new Color32(144, 144, 144, 60);
-        Debug.Log("Reverting Colours");
 
         // un-equip new item of type
         equippedSlot[arrayIndex].equiped = false;
@@ -199,6 +198,10 @@ public class PlayerStats : MonoBehaviour
         else if (item.ability == Item.Ability.extraSpellDamage)
         {
             spellDamageMultiplier = item.abilityValue * multiplier;
+        }
+        else if (item.ability == Item.Ability.extraSpeed)
+        {
+
         }
     }
 

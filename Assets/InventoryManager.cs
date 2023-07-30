@@ -176,7 +176,6 @@ public class InventoryManager : MonoBehaviour
 
         if (item.type == Item.ItemType.key)
         {
-            //itemIcon.transform.Rotate(Vector3.forward, 45);
             itemIcon.transform.eulerAngles = new Vector3(0, 0, 45);
         }
         else
@@ -187,7 +186,7 @@ public class InventoryManager : MonoBehaviour
         // Item Name
         var itemName = InventoryContentInformation.transform.Find("txtItemName").GetComponent<Text>();
         itemName.gameObject.SetActive(true);
-        itemName.text = item.itemName + " x" + item.ammount.ToString();
+        itemName.text = item.itemName;
 
         // Description
         var itemDescription = InventoryContentInformation.transform.Find("txtItemDescription").GetComponent<Text>();

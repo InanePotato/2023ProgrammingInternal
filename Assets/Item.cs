@@ -31,6 +31,6 @@ public class Item : ScriptableObject
     }
     public enum Ability
     {
-        none, extraHealth, extraSpellDamage, extraWeaponDamage
+        none, extraHealth, extraSpellDamage, extraWeaponDamage, extraSpeed
     }
 }
