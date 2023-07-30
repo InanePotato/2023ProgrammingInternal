@@ -1,7 +1,9 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 
@@ -97,6 +99,7 @@ public class PlayerStats : MonoBehaviour
 
     public void EquipItem(Item item)
     {
+        item.equiped = true;
         Item.ItemType type = item.type;
         
         int arrayIndex = 0;
@@ -123,7 +126,9 @@ public class PlayerStats : MonoBehaviour
         }
 
         // change sprite
-        imgSlot[arrayIndex].GetComponent<Image>().sprite = item.sprite;
+        var iconImage = imgSlot[arrayIndex].GetComponent<UnityEngine.UI.Image>();
+        iconImage.sprite = item.sprite;
+        iconImage.color = new Color(255, 255, 255, 255);
     }
 
     public void UnEquipItem(Item.ItemType type)
@@ -134,6 +139,14 @@ public class PlayerStats : MonoBehaviour
         else if (type == Item.ItemType.weapon) { arrayIndex = 3; }
         else if (type == Item.ItemType.spell) { arrayIndex = 3; }
         else if (type == Item.ItemType.relic) { arrayIndex = 4; }
+
+        // it there is not sonthing to un-equip, don't continue
+        if (equippedSlot[arrayIndex] == null)
+        {
+            return;
+        }
+
+        equippedSlot[arrayIndex].equiped = false;
 
         // add any protection
         slotProtection[arrayIndex] = 0;
@@ -146,7 +159,10 @@ public class PlayerStats : MonoBehaviour
         }
 
         // change sprite
-        imgSlot[arrayIndex].GetComponent<Image>().sprite = null;
+        var iconImage = imgSlot[arrayIndex].GetComponent<UnityEngine.UI.Image>();
+        iconImage.sprite = null;
+        iconImage.color = new Color32(144, 144, 144, 60);
+        Debug.Log("Reverting Colours");
 
         // un-equip new item of type
         equippedSlot[arrayIndex].equiped = false;

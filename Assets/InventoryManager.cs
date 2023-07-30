@@ -215,11 +215,13 @@ public class InventoryManager : MonoBehaviour
             {
                 itemUsebtn.transform.GetChild(0).GetComponent<Text>().text = "Un-Equip";
                 itemUsebtn.GetComponent<Button>().onClick.AddListener(() => playerStatsScript.UnEquipItem(item.type));
+                itemUsebtn.GetComponent<Button>().onClick.AddListener(() => ReopenInventory(item));
             }
             else
             {
                 itemUsebtn.transform.GetChild(0).GetComponent<Text>().text = "Equip";
                 itemUsebtn.GetComponent<Button>().onClick.AddListener(() => playerStatsScript.EquipItem(item));
+                itemUsebtn.GetComponent<Button>().onClick.AddListener(() => ReopenInventory(item));
             }
         }
         else if (item.type == Item.ItemType.consumable)
@@ -229,6 +231,7 @@ public class InventoryManager : MonoBehaviour
 
             itemUsebtn.transform.GetChild(0).GetComponent<Text>().text = "Use";
             itemUsebtn.GetComponent<Button>().onClick.AddListener(() => playerStatsScript.UseItem(item));
+            itemUsebtn.GetComponent<Button>().onClick.AddListener(() => ReopenInventory(item));
             toggleInventory(false);
             toggleInventory(true);
         }
@@ -236,6 +239,19 @@ public class InventoryManager : MonoBehaviour
         {
             itemUsebtn.gameObject.SetActive(false);
         }
+    }
+
+    public void ReopenInventory(Item selectedItem)
+    {
+        // remove all items from inventory display
+        foreach (Transform item in InventoryContent.transform)
+        {
+            // destroy the game object
+            Destroy(item.gameObject);
+        }
+
+        toggleInventory(true);
+        ChangeInventoryItemView(selectedItem);
     }
 
     /// <summary>
@@ -256,6 +272,8 @@ public class InventoryManager : MonoBehaviour
     {
         // reset ammount back to 0
         item.ammount = 0;
+        // reset equipped value
+        item.equiped = false;
         // add a new item to the list
         Items.Add(item);
         // give the item added a default ammount
