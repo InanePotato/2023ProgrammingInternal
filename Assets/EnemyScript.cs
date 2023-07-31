@@ -1,10 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+using static UnityEditor.Progress;
 
 public class EnemyScript : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class EnemyScript : MonoBehaviour
     private float changeWanderCooldown;
     private Vector2 wanderTarget;
     private Vector2 linearTarget;
+    public bool spriteFlipped;
 
     public enum MovmentType { Raom, Linear };
 
@@ -52,7 +54,12 @@ public class EnemyScript : MonoBehaviour
 
     [Header("Animations")]
     private EnemyAnimationScript animationScript;
-    //Animator animator;
+
+    [Header("Loot")]
+    public float lootScatter;
+    public List<Item> lootDropItems = new List<Item>();
+    public List<int> lootDropAmmounts = new List<int>();
+    private GameObject droppedItemPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +83,8 @@ public class EnemyScript : MonoBehaviour
         attackCooldownCount = 0;
 
         health = maxHealth;
+
+        droppedItemPrefab = gameManagerScript.droppedItemPrefab;
     }
 
     // Update is called once per frame
@@ -242,11 +251,11 @@ public class EnemyScript : MonoBehaviour
         
         if (rigidbody.velocity.x > 0)
         {
-            sprite.flipX = true;
+            sprite.flipX = spriteFlipped;
         }
         else if (rigidbody.velocity.x < 0)
         {
-            sprite.flipX = false;
+            sprite.flipX = !spriteFlipped;
         }
     }
 
@@ -262,6 +271,22 @@ public class EnemyScript : MonoBehaviour
 
         if (health <= 0)
         {
+            // drop any loot
+            for (int i = 0; i < lootDropItems.Count; i++)
+            {
+                GameObject newItemDrop = Instantiate(droppedItemPrefab);
+
+                Vector2 enemyPosition = gameObject.transform.GetChild(0).position;
+
+                float x = Random.Range(enemyPosition.x + lootScatter, enemyPosition.x - lootScatter);
+                float y = Random.Range(enemyPosition.y + lootScatter, enemyPosition.y - lootScatter);
+                newItemDrop.transform.position = new Vector2(x, y);
+
+                newItemDrop.GetComponent<ItemPickup>().item = lootDropItems[i];
+                newItemDrop.GetComponent<ItemPickup>().ammount = lootDropAmmounts[i];
+            }
+
+            // destroy enemy and health bar
             Destroy(healthBar);
             Destroy(gameObject);
             return;
