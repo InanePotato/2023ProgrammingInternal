@@ -23,7 +23,7 @@ public class Item : ScriptableObject
     
     public enum ItemType
     {
-        currency, key, hat, weapon, consumable, misc, spell, chestplate, boots, relic
+        currency, key, hat, weapon, consumable, misc, spell, chestplate, boots, relic, mysteryBox
     }
     public enum Effects
     {

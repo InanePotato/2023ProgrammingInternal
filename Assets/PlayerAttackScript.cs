@@ -44,7 +44,8 @@ public class PlayerAttackScript : MonoBehaviour
             foreach (GameObject enemy in enemies)
             {
                 GameObject enemyObject = enemy.transform.GetChild(0).gameObject;
-                Vector2 targetDir = enemyObject.transform.position - gameObject.transform.position;
+                Vector3 enemyPosition = new Vector3(enemyObject.transform.position.x, enemyObject.transform.position.y + enemyObject.GetComponentInChildren<BoxCollider2D>().offset.y, enemyObject.transform.position.z);
+                Vector2 targetDir = enemyPosition - gameObject.transform.position;
                 float numDistanceToTarget = targetDir.magnitude;
 
                 if (numDistanceToTarget <= attackRange)

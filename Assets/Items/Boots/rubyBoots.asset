@@ -22,5 +22,5 @@ MonoBehaviour:
   equiped: 0
   damage: 0
   protection: 2
-  ability: 0
-  abilityValue: 0
+  ability: 4
+  abilityValue: 0.5

@@ -38,6 +38,10 @@ public class PlayerStats : MonoBehaviour
     public float totalProtection;
     public float[] slotProtection = new float[6];
 
+    [Header("Speed")]
+    public float defaultSpeed;
+    public float speedMultiplier;
+
     [Header("Attack")]
     public float defaultDamage;
     public float weaponDamage;
@@ -222,15 +226,15 @@ public class PlayerStats : MonoBehaviour
         }
         else if (item.ability == Item.Ability.extraWeaponDamage)
         {
-            weaponDamageMultiplier -= item.abilityValue * multiplier;
+            weaponDamageMultiplier += item.abilityValue * multiplier;
         }
         else if (item.ability == Item.Ability.extraSpellDamage)
         {
-            spellDamageMultiplier -= item.abilityValue * multiplier;
+            spellDamageMultiplier += item.abilityValue * multiplier;
         }
         else if (item.ability == Item.Ability.extraSpeed)
         {
-
+            speedMultiplier += item.abilityValue * multiplier;
         }
     }
 
