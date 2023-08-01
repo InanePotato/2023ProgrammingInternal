@@ -14,6 +14,7 @@ public class PlayerAttackScript : MonoBehaviour
     public float angleVariant;
     public GameObject targetEnemy;
     public float attackCooldown;
+    [SerializeField]
     private float attackCooldownTime;
     public PlayerStats playerStatsScript;
 
@@ -81,6 +82,13 @@ public class PlayerAttackScript : MonoBehaviour
                 }
             }
 
+            // if still cooldown time left
+            if (attackCooldownTime > 0)
+            {
+                // take time off the cooldown time
+                attackCooldownTime -= Time.deltaTime;
+            }
+
             // main attack keybind/using normal weapon
             if (Input.GetKeyDown(attackKeybind))// && Input.GetMouseButtonDown(0))
             {
@@ -93,16 +101,6 @@ public class PlayerAttackScript : MonoBehaviour
 
                     // once attacked, reset attack cooldown time
                     attackCooldownTime = attackCooldown;
-                }
-                else
-                {
-                    //Debug.LogWarning("Can't Attack: " + targetEnemy + ", " + attackCooldownTime);
-                    // if still cooldown time left
-                    if (attackCooldownTime > 0)
-                    {
-                        // take time off the cooldown time
-                        attackCooldownTime -= Time.deltaTime;
-                    }
                 }
             } 
             
