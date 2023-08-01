@@ -122,7 +122,7 @@ public class PlayerStats : MonoBehaviour
         int arrayIndex = 0;
         if (type == Item.ItemType.chestplate) { arrayIndex = 1; }
         else if (type == Item.ItemType.boots) { arrayIndex = 2; }
-        else if (type == Item.ItemType.weapon) { arrayIndex = 3; }
+        else if (type == Item.ItemType.weapon || type == Item.ItemType.rangedWeapon) { arrayIndex = 3; }
         else if (type == Item.ItemType.spell) { arrayIndex = 4; }
         else if (type == Item.ItemType.relic) { arrayIndex = 5; }
 
@@ -165,7 +165,7 @@ public class PlayerStats : MonoBehaviour
         int arrayIndex = 0;
         if (type == Item.ItemType.chestplate) { arrayIndex = 1; }
         else if (type == Item.ItemType.boots) { arrayIndex = 2; }
-        else if (type == Item.ItemType.weapon) { arrayIndex = 3; weaponDamage = defaultDamage; }
+        else if (type == Item.ItemType.weapon || type == Item.ItemType.rangedWeapon) { arrayIndex = 3; weaponDamage = defaultDamage; }
         else if (type == Item.ItemType.spell) { arrayIndex = 4; spellDamage = 0; }
         else if (type == Item.ItemType.relic) { arrayIndex = 5; }
 
@@ -236,6 +236,10 @@ public class PlayerStats : MonoBehaviour
         {
             speedMultiplier += item.abilityValue * multiplier;
         }
+        else if (item.ability == Item.Ability.fasterAttack)
+        {
+
+        }
     }
 
     public void UseItem(Item item)
@@ -246,7 +250,7 @@ public class PlayerStats : MonoBehaviour
     private void UpdateStatsDisplay()
     {
         statsDisplayProtection.GetComponent<Text>().text = totalProtection.ToString();
-        statsDisplaySpeed.GetComponent<Text>().text = "0";
+        statsDisplaySpeed.GetComponent<Text>().text = (gameObject.GetComponent<PlayerMovement>().walkSpeed + speedMultiplier).ToString();
         statsDisplayWeaponDamage.GetComponent<Text>().text = (weaponDamage + weaponDamageMultiplier).ToString();
         statsDisplaySpellDamage.GetComponent<Text>().text = (spellDamage + spellDamageMultiplier).ToString();
     }

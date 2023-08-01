@@ -23,14 +23,14 @@ public class Item : ScriptableObject
     
     public enum ItemType
     {
-        currency, key, hat, weapon, consumable, misc, spell, chestplate, boots, relic, mysteryBox
+        currency, key, hat, weapon, consumable, misc, spell, chestplate, boots, relic, mysteryBox, rangedWeapon
     }
     public enum Effects
     {
-        none, burn, invisibility, resistance, strength, regeneration
+        none, burn, invisibility, resistance, strength, regeneration, lifeSteal
     }
     public enum Ability
     {
-        none, extraHealth, extraSpellDamage, extraWeaponDamage, extraSpeed
+        none, extraHealth, extraSpellDamage, extraWeaponDamage, extraSpeed, fasterAttack, healthBack
     }
 }

@@ -192,26 +192,53 @@ public class InventoryManager : MonoBehaviour
         var itemDescription = InventoryContentInformation.transform.Find("txtItemDescription").GetComponent<Text>();
         itemDescription.gameObject.SetActive(true);
         itemDescription.text = "";
+
+        // display any abilities (if any) in the description textbox
         if (item.ability != Item.Ability.none)
         {
             string abilityName = "";
-            if (item.ability == Item.Ability.extraHealth) { abilityName = "Health"; }
+            if (item.ability == Item.Ability.extraHealth) { abilityName = "Max Health"; }
             else if (item.ability == Item.Ability.extraSpeed) { abilityName = "Speed"; }
             else if (item.ability == Item.Ability.extraWeaponDamage) { abilityName = "Weapon Damage"; }
             else if (item.ability == Item.Ability.extraSpellDamage) { abilityName = "Spell Damage"; }
+            else if (item.ability == Item.Ability.fasterAttack) { abilityName = "Attack Speed"; }
+            else if (item.ability == Item.Ability.healthBack) { abilityName = "Health"; }
 
             itemDescription.text += "+" + item.abilityValue + " " + abilityName + Environment.NewLine;
         }
-        itemDescription.text +=  "Damage: " + item.damage + Environment.NewLine +
-                                "Protection: " + item.protection + Environment.NewLine;
-        itemDescription.text += "Effects:" + Environment.NewLine + "- " + item.primaryEffect + Environment.NewLine + "- " + item.secondaryEffect;
+        // display any damage the item inflicts (if any) in the description textbox
+        if (item.damage != 0)
+        {
+            itemDescription.text += "Damage: " + item.damage + Environment.NewLine;
+        }
+        // display any protection the item gives (if any) in the description textbox
+        if (item.protection != 0)
+        {
+            itemDescription.text += "Protection: " + item.protection + Environment.NewLine;
+        }
+        // display any effects the item has (if any) in the description textbox
+        if (item.primaryEffect != Item.Effects.none || item.secondaryEffect != Item.Effects.none)
+        {
+            itemDescription.text += "Effects:" + Environment.NewLine;
+
+            if (item.primaryEffect != Item.Effects.none)
+            {
+                itemDescription.text += "- " + GetEffectDisplayText(item.primaryEffect) + Environment.NewLine;
+            }
+
+            if (item.secondaryEffect != Item.Effects.none)
+            {
+                itemDescription.text += "- " + GetEffectDisplayText(item.secondaryEffect) + Environment.NewLine;
+            }
+        }
 
         // use
         var itemUsebtn = InventoryContentInformation.transform.Find("btnUse");
 
         if (item.type == Item.ItemType.weapon || item.type == Item.ItemType.hat ||
             item.type == Item.ItemType.chestplate || item.type == Item.ItemType.boots ||
-            item.type == Item.ItemType.relic || item.type == Item.ItemType.spell)
+            item.type == Item.ItemType.relic || item.type == Item.ItemType.spell ||
+            item.type == Item.ItemType.rangedWeapon)
         {
             itemUsebtn.gameObject.SetActive(true);
             itemUsebtn.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -242,6 +269,42 @@ public class InventoryManager : MonoBehaviour
         {
             itemUsebtn.gameObject.SetActive(false);
         }
+    }
+
+
+    private string GetEffectDisplayText(Item.Effects effect)
+    {
+        if (effect == Item.Effects.strength)
+        {
+            return "Strength";
+        }
+
+        if (effect == Item.Effects.burn)
+        {
+            return "Burn";
+        }
+
+        if (effect == Item.Effects.invisibility)
+        {
+            return "Invisibility";
+        }
+
+        if (effect == Item.Effects.lifeSteal)
+        {
+            return "Life Steal";
+        }
+
+        if (effect == Item.Effects.regeneration)
+        {
+            return "Regeneration";
+        }
+
+        if (effect == Item.Effects.resistance)
+        {
+            return "Resistance";
+        }
+
+        return "";
     }
 
     public void ReopenInventory(Item selectedItem)
