@@ -237,7 +237,6 @@ public class InventoryManager : MonoBehaviour
             itemUsebtn.transform.GetChild(0).GetComponent<Text>().text = "Use";
             itemUsebtn.GetComponent<Button>().onClick.AddListener(() => playerStatsScript.UseItem(item));
             itemUsebtn.GetComponent<Button>().onClick.AddListener(() => ReopenInventory(item));
-            ReopenInventory(item);
         }
         else
         {
