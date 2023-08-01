@@ -15,8 +15,12 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: eb226e3bc401b344198d4048ea724a6d, type: 3}
   itemName: Purple Candy Cane
   inventoryId: 307
-  description: 
   type: 4
   primaryEffect: 0
   secondaryEffect: 0
   ammount: 1
+  equiped: 0
+  damage: 0
+  protection: 0
+  ability: 6
+  abilityValue: 15
