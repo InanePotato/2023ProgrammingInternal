@@ -82,13 +82,6 @@ public class PlayerAttackScript : MonoBehaviour
                 }
             }
 
-            // if still cooldown time left
-            if (attackCooldownTime > 0)
-            {
-                // take time off the cooldown time
-                attackCooldownTime -= Time.deltaTime;
-            }
-
             // main attack keybind/using normal weapon
             if (Input.GetKeyDown(attackKeybind))// && Input.GetMouseButtonDown(0))
             {
@@ -102,8 +95,14 @@ public class PlayerAttackScript : MonoBehaviour
                     // once attacked, reset attack cooldown time
                     attackCooldownTime = attackCooldown;
                 }
-            } 
-            
+            }
+
+            // if still cooldown time left
+            if (attackCooldownTime > 0)
+            {
+                // take time off the cooldown time
+                attackCooldownTime -= Time.deltaTime;
+            }
         }
     }
 
