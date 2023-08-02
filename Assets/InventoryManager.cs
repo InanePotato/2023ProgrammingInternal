@@ -56,10 +56,16 @@ public class InventoryManager : MonoBehaviour
     void Update()
     {
         // if the correct key for toggling the inventory view is pressed
-        if (Input.GetKeyDown(openInventoryKeybind) && !gameManagerScript.gameOver)
+        if (Input.GetKeyDown(openInventoryKeybind))
         {
             // toggle the inventory with the opposite of what it currently is
             toggleInventory(!inventoryOpen);
+        }
+
+        if (inventoryOpen && Input.GetKeyDown(KeyCode.Escape))
+        {
+            // close inventory
+            toggleInventory(false);
         }
     }
 

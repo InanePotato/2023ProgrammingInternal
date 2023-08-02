@@ -1151,12 +1151,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerScript: {fileID: 0}
-  attackRange: 0.2
+  attackRange: 0.25
   angleVariant: 0
   targetEnemy: {fileID: 0}
   attackCooldown: 2
   attackCooldownTime: 0
   playerStatsScript: {fileID: 0}
+  cooldownTimerPrefab: {fileID: 3769030516741220093, guid: 9fc993d0a43eac94b83b8b3b3c8ac11e, type: 3}
+  attackCooldownTimeDisplay: {fileID: 0}
 --- !u!4 &376942640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1444190318740788719, guid: c1186907bf489584ca9993314cbcb784, type: 3}

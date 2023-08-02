@@ -245,6 +245,16 @@ public class PlayerStats : MonoBehaviour
     public void UseItem(Item item)
     {
         item.ammount--;
+
+        if (item.ability == Item.Ability.healthBack)
+        {
+            AddHealth(item.abilityValue);
+        }
+
+        if (item.ammount <= 0)
+        {
+            inventoryManager.RemoveItem(item);
+        }
     }
 
     private void UpdateStatsDisplay()

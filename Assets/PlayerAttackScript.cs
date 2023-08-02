@@ -8,15 +8,19 @@ public class PlayerAttackScript : MonoBehaviour
     [Header("Game Manager")]
     public GameManagerScript gameManagerScript;
     private KeyCode attackKeybind = KeyCode.Space;
+    private GameObject canvas;
 
     [Header("Player Attack Info")]
     public float attackRange;
     public float angleVariant;
     public GameObject targetEnemy;
     public float attackCooldown;
-    [SerializeField]
-    private float attackCooldownTime;
+    public float attackCooldownTime;
     public PlayerStats playerStatsScript;
+
+    [Header("Attack UI")]
+    public GameObject cooldownTimerPrefab;
+    public GameObject attackCooldownTimeDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +29,8 @@ public class PlayerAttackScript : MonoBehaviour
         attackCooldownTime = 0;
 
         playerStatsScript = gameObject.GetComponent<PlayerStats>();
+
+        canvas = gameManagerScript.mainCanvis;
     }
 
     // Update is called once per frame
@@ -94,6 +100,17 @@ public class PlayerAttackScript : MonoBehaviour
 
                     // once attacked, reset attack cooldown time
                     attackCooldownTime = attackCooldown;
+
+                    if (attackCooldownTimeDisplay != null)
+                    {
+                        Destroy(attackCooldownTimeDisplay);
+                    }
+
+                    GameObject newCooldownTimer = Instantiate(cooldownTimerPrefab, canvas.transform);
+                    newCooldownTimer.GetComponent<AttackCooldownTimerDisplayScript>().player = gameObject;
+                    newCooldownTimer.GetComponent<AttackCooldownTimerDisplayScript>().attackCooldown = attackCooldown;
+
+                    attackCooldownTimeDisplay = newCooldownTimer;
                 }
             }
 
@@ -102,6 +119,10 @@ public class PlayerAttackScript : MonoBehaviour
             {
                 // take time off the cooldown time
                 attackCooldownTime -= Time.deltaTime;
+            }
+            else if (attackCooldownTimeDisplay != null) // cooldown must be 0 or less so can destroy the object
+            {
+                Destroy(attackCooldownTimeDisplay);
             }
         }
     }
