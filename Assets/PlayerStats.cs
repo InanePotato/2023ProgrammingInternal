@@ -39,7 +39,6 @@ public class PlayerStats : MonoBehaviour
     public float[] slotProtection = new float[6];
 
     [Header("Speed")]
-    public float defaultSpeed;
     public float speedMultiplier;
 
     [Header("Attack")]
@@ -101,7 +100,14 @@ public class PlayerStats : MonoBehaviour
 
     public void SubtractHealth(float ammount)
     {
-        health -= ammount;
+        float subtractAmmount = ammount - totalProtection;
+
+        if (subtractAmmount < 0)
+        {
+            subtractAmmount = 0;
+        }
+
+        health -= subtractAmmount;
 
         if (health <= 0)
         {

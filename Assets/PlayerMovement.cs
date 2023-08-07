@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Game Manager")]
     private GameManagerScript gameManagerScript;
 
+    private PlayerStats playerStatsScript;
+
     [Header("Movement")]
     public float walkSpeed = 1.2f;
     public float speedLimiter = 0.7f;
@@ -31,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
         gameManagerScript = GameManagerScript.Instance;
 
         rb = gameObject.GetComponent<Rigidbody2D>();
+
+        playerStatsScript = gameManagerScript.player.GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -54,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
                 inputVertical *= speedLimiter;
             }
 
-            rb.velocity = new Vector2 (inputHorizontal * walkSpeed, inputVertical * walkSpeed);
+            rb.velocity = new Vector2 (inputHorizontal * (walkSpeed + playerStatsScript.speedMultiplier), inputVertical * (walkSpeed + playerStatsScript.speedMultiplier));
             ChangeAnimationState(AnimationState.Walk);
 
             if (inputHorizontal < 0)
