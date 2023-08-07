@@ -24,7 +24,7 @@ public class Interact : MonoBehaviour
     public float interactMessageCooldown = 3;
     private float interactMessageCooldownCountdown = 0;
 
-    public enum InteractionType { Door, Chest, Item };
+    public enum InteractionType { Door, Chest, Item, NPC };
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +52,10 @@ public class Interact : MonoBehaviour
             else if (interactionType == InteractionType.Chest)
             {
                 ChestInteraction();
+            }
+            else if (interactionType == InteractionType.NPC)
+            {
+                NPCInteraction();
             }
         }
 
@@ -127,6 +131,15 @@ public class Interact : MonoBehaviour
         }
     }
 
+    private void NPCInteraction()
+    {
+        DestroyHintPopup();
+
+        NPCScript objectScript = gameObject.GetComponent<NPCScript>();
+
+        objectScript.StartInteraction();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject == playerObject)
@@ -135,7 +148,14 @@ public class Interact : MonoBehaviour
 
             if (!Interacted)
             {
-                popupMessage = gameManagerScript.DisplayInteractPopup(interactKeybind.ToString(), "Open " + interactionType.ToString(), gameObject);
+                if (interactionType ==  InteractionType.NPC)
+                {
+                    popupMessage = gameManagerScript.DisplayInteractPopup(interactKeybind.ToString(), "Talk", gameObject);
+                }
+                else
+                {
+                    popupMessage = gameManagerScript.DisplayInteractPopup(interactKeybind.ToString(), "Open " + interactionType.ToString(), gameObject);
+                }
             }
         }
     }
@@ -145,6 +165,11 @@ public class Interact : MonoBehaviour
         canInteract = false;
 
         DestroyHintPopup();
+
+        if (interactionType == InteractionType.NPC)
+        {
+            gameObject.GetComponent<NPCScript>().TerminateInteraction();
+        }
     }
 
     private void DestroyHintPopup()

@@ -771,6 +771,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyArea (Big Demon)
       objectReference: {fileID: 0}
+    - target: {fileID: 6715140816788278340, guid: bae1b9625a9c7814da8fecf064fc5726, type: 3}
+      propertyPath: movementOffset.x
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6715140816788278341, guid: bae1b9625a9c7814da8fecf064fc5726, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1112,7 +1116,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  defaultSpeed: 0
   speedMultiplier: 0
   defaultDamage: 10
   weaponDamage: 0
@@ -1152,7 +1155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManagerScript: {fileID: 0}
   attackRange: 0.25
-  angleVariant: 0
+  angleVariant: 45
   targetEnemy: {fileID: 0}
   attackCooldown: 2
   attackCooldownTime: 0
@@ -77369,3 +77372,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140981735}
   m_CullTransparentMesh: 1
+--- !u!1001 &8206880838487102014
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: messages.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: messages.Array.data[0]
+      value: Hello,
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: messages.Array.data[1]
+      value: I am Bob, Your SLAVE!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: messages.Array.data[2]
+      value: Kill me now ;)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.028
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2470404861022989946, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_Name
+      value: WizardNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 8614960144328033198, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
