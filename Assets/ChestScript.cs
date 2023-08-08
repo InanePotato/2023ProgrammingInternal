@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,19 +27,16 @@ public class ChestScript : MonoBehaviour
     public Sprite closedSprite;
 
     [Header("Required Loot")]
-    public List<Item> requiredLootItemObjects = new List<Item>();
-    public List<int> requiredLootItemAmmounts = new List<int>();
+    public List<LootItem> loot = new List<LootItem>();
+    //public List<Item> requiredLootItemObjects = new List<Item>();
+    //public List<int> requiredLootItemAmmounts = new List<int>();
 
-    public class LootItem
+    [Serializable]
+    public struct LootItem
     {
-        public GameObject itemPrefab;
-        public int ammount;
-
-        public LootItem(GameObject ItemPrefab, int Ammount)
-        {
-            itemPrefab = ItemPrefab;
-            ammount = Ammount;
-        }
+        public Item item;
+        public int minAmmount;
+        public int maxAmmount;
     }
 
     public enum ChestType
@@ -78,21 +76,19 @@ public class ChestScript : MonoBehaviour
             chestSpriteRenderer.sprite = openSprite;
 
             // release/spawn in loot
-            int count = 0;
-            foreach (Item item in requiredLootItemObjects)
+            foreach (LootItem lootItem in loot)
             {
                 GameObject newItemDrop = Instantiate(droppedItem);
 
-                float X = chestTransform.position.x + Random.Range(-lootSpawnOffsetX, lootSpawnOffsetX);
-                float Y = chestTransform.position.y + Random.Range(-lootSpawnOffsetY, lootSpawnOffsetY) - LOOT_SPAWN_DISTANCE_BELOW;
+                float X = chestTransform.position.x + UnityEngine.Random.Range(-lootSpawnOffsetX, lootSpawnOffsetX);
+                float Y = chestTransform.position.y + UnityEngine.Random.Range(-lootSpawnOffsetY, lootSpawnOffsetY) - LOOT_SPAWN_DISTANCE_BELOW;
                 newItemDrop.transform.position = new Vector2(X, Y);
 
-                newItemDrop.transform.Rotate(Vector3.forward, Random.Range(-80, 80));
+                newItemDrop.transform.Rotate(Vector3.forward, UnityEngine.Random.Range(-80, 80));
 
-                newItemDrop.GetComponent<ItemPickup>().item = item;
-                newItemDrop.GetComponent<ItemPickup>().ammount = requiredLootItemAmmounts[count];
-
-                count++;
+                newItemDrop.GetComponent<ItemPickup>().item = lootItem.item;
+                int ammount = UnityEngine.Random.Range(lootItem.minAmmount, lootItem.maxAmmount);
+                newItemDrop.GetComponent<ItemPickup>().ammount = ammount;
             }
         }
         else
