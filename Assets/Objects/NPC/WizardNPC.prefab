@@ -141,10 +141,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd09aa7dc74f6d24db4cd0342aab5682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messagePrefab: {fileID: 0}
+  messagePrefab: {fileID: 4278655554207690104, guid: 0522ac7bb592ccc43b600dbf5a7c0bf6, type: 3}
   messages: []
   messageShowTime: 2
   interacting: 0
+  tradePanelPrefab: {fileID: 4271741729494925883, guid: 89523b53850da6045ab681951f8faf5a, type: 3}
+  tradeRowPrefab: {fileID: 8313873344704035188, guid: e451f4f34bdd9df4a9bcfe3581d9fb9d, type: 3}
+  canTrade: 0
 --- !u!95 &4996951290902158324
 Animator:
   serializedVersion: 5
