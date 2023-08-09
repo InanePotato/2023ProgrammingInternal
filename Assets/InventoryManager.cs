@@ -476,4 +476,21 @@ public class InventoryManager : MonoBehaviour
         // item not found so return null
         return null;
     }
+
+    public int GetItemAmmount(Item item)
+    {
+        // search the list of items
+        foreach (Item i in Items)
+        {
+            // IF found the item
+            if (i == item)
+            {
+                // return the item found / it's details
+                return i.ammount;
+            }
+        }
+
+        // item not found so return null
+        return 0;
+    }
 }

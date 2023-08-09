@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public class NPCScript : MonoBehaviour
 {
     [Header("Defaults")]
     private GameManagerScript gameManagerScript;
-
+    public InventoryManager playerInventory;
     public GameObject messagePrefab;
 
     [Header("Message")]
@@ -38,11 +39,13 @@ public class NPCScript : MonoBehaviour
         public int purchaseItemAmmount;
         public Item costItem;
         public int costItemAmmount;
+        public int tradeStock;
     }
 
     private void Start()
     {
         gameManagerScript = GameManagerScript.Instance;
+        playerInventory = InventoryManager.Instance;
     }
 
     // Update is called once per frame
@@ -71,12 +74,12 @@ public class NPCScript : MonoBehaviour
             {
                 ChangeMessage(messageIndex - 1);
             }
-            else if (canTrade && currentTradePanel != null)
+            else if (canTrade && currentTradePanel == null)
             {
                 // show trade window
                 ShowTradingWindow();
             }
-            else if (currentTradePanel == null)
+            else if (!canTrade)
             {
                 // not interaction messages left to show & no trading so...
                 // stop interaction
@@ -161,22 +164,64 @@ public class NPCScript : MonoBehaviour
         {
             Trade trade = trades[i];
 
-            GameObject newTradingRow = Instantiate(tradeRowPrefab, gameManagerScript.mainCanvis.transform);
+            GameObject newTradingRow = Instantiate(tradeRowPrefab, tradingPanel.transform);
             // show trade Item stuff
             newTradingRow.transform.Find("imgItem").gameObject.GetComponent<Image>().sprite = trade.purchaseItem.sprite;
             newTradingRow.transform.Find("txtItemAmmount").gameObject.GetComponent<Text>().text = trade.purchaseItemAmmount.ToString();
             // show trade cost stuff
             newTradingRow.transform.Find("imgCost").gameObject.GetComponent<Image>().sprite = trade.costItem.sprite;
             newTradingRow.transform.Find("txtCostAmmount").gameObject.GetComponent<Text>().text = trade.costItemAmmount.ToString();
-            // set trade button click event
-            newTradingRow.transform.Find("btnTrade").gameObject.GetComponent<Button>().onClick.AddListener(() => PurchaseTrade(trade));
+
+            if (trade.tradeStock <= 0)
+            {
+                newTradingRow.GetComponent<Image>().color = new Color(255, 45, 5, 120);
+            }
+            else
+            {
+                // set trade button click event
+                newTradingRow.transform.Find("btnTrade").gameObject.GetComponent<Button>().onClick.AddListener(() => PurchaseTrade(ref trade, newTradingRow));
+            }
         }
     }
 
-    public void PurchaseTrade(Trade trade)
+    public void PurchaseTrade(ref Trade trade, GameObject rowObject)
     {
+        if (trade.tradeStock <= 0)
+        {
+            return;
+        }
+
+        // IF the cost item is coins, then act differently
+        if (trade.costItem.type == Item.ItemType.currency)
+        {
+            // IF player can't afford purchase
+            if (playerInventory.coins < trade.costItemAmmount)
+            {
+                Debug.Log("trade failed. Only have " + playerInventory.coins);
+                return;
+            }
+        }
+        else
+        {
+            // IF player can't afford purchase
+            if (playerInventory.GetItemAmmount(trade.costItem) < trade.costItemAmmount)
+            {
+                Debug.Log("trade failed. Only have " + playerInventory.GetItemAmmount(trade.costItem));
+                return;
+            }
+        }
+
+        trade.tradeStock--;
+        playerInventory.SubtractItemAmmount(trade.costItem, trade.costItemAmmount);
+        playerInventory.AddItemAmmount(trade.purchaseItem, trade.purchaseItemAmmount);
 
         Debug.LogWarning("Purchase Item " + trade.purchaseItem.name + "x" + trade.purchaseItemAmmount.ToString() + Environment.NewLine +
                          "Purchase Cost " + trade.costItem.name + "x" + trade.costItemAmmount.ToString());
+
+        if (trade.tradeStock <= 0)
+        {
+            //rowObject.GetComponent<Image>().color = new Color(180f, 25f, 0f, 80f);
+            rowObject.GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.15f);
+        }
     }
 }

@@ -56607,7 +56607,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2957505814109811179, guid: a5740bef5084dcf40bcdae6fc4c4f81f, type: 3}
       propertyPath: loot.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2957505814109811179, guid: a5740bef5084dcf40bcdae6fc4c4f81f, type: 3}
       propertyPath: loot.Array.data[0].item
@@ -56621,6 +56621,10 @@ PrefabInstance:
       propertyPath: loot.Array.data[2].item
       value: 
       objectReference: {fileID: 11400000, guid: 1f5d041db511d484c94779cae4e1936b, type: 2}
+    - target: {fileID: 2957505814109811179, guid: a5740bef5084dcf40bcdae6fc4c4f81f, type: 3}
+      propertyPath: loot.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: d1d17ed950f1fac4daf5257945eb16de, type: 2}
     - target: {fileID: 2957505814109811179, guid: a5740bef5084dcf40bcdae6fc4c4f81f, type: 3}
       propertyPath: loot.Array.data[0].maxAmmount
       value: 1
@@ -56644,6 +56648,14 @@ PrefabInstance:
     - target: {fileID: 2957505814109811179, guid: a5740bef5084dcf40bcdae6fc4c4f81f, type: 3}
       propertyPath: loot.Array.data[2].minAmmount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2957505814109811179, guid: a5740bef5084dcf40bcdae6fc4c4f81f, type: 3}
+      propertyPath: loot.Array.data[3].maxAmmount
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 2957505814109811179, guid: a5740bef5084dcf40bcdae6fc4c4f81f, type: 3}
+      propertyPath: loot.Array.data[3].minAmmount
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7946638716597884118, guid: a5740bef5084dcf40bcdae6fc4c4f81f, type: 3}
       propertyPath: m_RootOrder
@@ -76924,6 +76936,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: canTrade
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: messages.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -76970,6 +76990,26 @@ PrefabInstance:
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: messages.Array.data[10]
       value: ;)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[0].costItem
+      value: 
+      objectReference: {fileID: 11400000, guid: d1d17ed950f1fac4daf5257945eb16de, type: 2}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[0].tradeStock
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[0].purchaseItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 92da3222b604c734dad7141db7f12f17, type: 2}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[0].costItemAmmount
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[0].purchaseItemAmmount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: m_RootOrder
