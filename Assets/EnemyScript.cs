@@ -29,6 +29,7 @@ public class EnemyScript : MonoBehaviour
     public AttackType attackType;
     private SpriteRenderer sprite;
     public GameObject enemy;
+    public GameObject enemySpawner;
 
     public enum AttackType { Melee, Spell, Range };
 
@@ -284,6 +285,13 @@ public class EnemyScript : MonoBehaviour
 
                 newItemDrop.GetComponent<ItemPickup>().item = lootDropItems[i];
                 newItemDrop.GetComponent<ItemPickup>().ammount = lootDropAmmounts[i];
+            }
+
+            // IF this enemy is attached to a spawner
+            if (enemySpawner != null)
+            {
+                // remove this enemy from the spawners list
+                enemySpawner.GetComponent<SpawnerScript>().spawnedEnemies.Remove(gameObject);
             }
 
             // destroy enemy and health bar

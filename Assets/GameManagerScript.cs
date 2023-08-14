@@ -51,6 +51,7 @@ public class GameManagerScript : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        camera = cameraObject.GetComponent<Camera>();
     }
 
     // Start is called before the first frame update
@@ -72,8 +73,6 @@ public class GameManagerScript : MonoBehaviour
 
         pnlPauseMenu = mainCanvis.transform.Find("PauseMenu").gameObject;
         pnlTopGUI = mainCanvis.transform.Find("TopGUI").gameObject;
-
-        camera = cameraObject.GetComponent<Camera>();
     }
 
     // Update is called once per frame
