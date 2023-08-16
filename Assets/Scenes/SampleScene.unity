@@ -77013,28 +77013,46 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
-      propertyPath: trades.Array.size
-      value: 1
+      propertyPath: interacting
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
-      propertyPath: messages.Array.size
+      propertyPath: timePerWord
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: messageShowTime
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: messages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: messages.Array.data[0]
-      value: Hello,
+      value: Hello wise travler, I am old man bob. I have heard that you are an expert
+        in recovering stolen artifacts!! Would you please help me find somthing I
+        lost a while ago?
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: messages.Array.data[1]
-      value: I am Bob, Your SLAVE!!
+      value: That's great, thanks for agreeing to help me retrieve it!! I would have
+        died if you said no!!!
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: messages.Array.data[2]
-      value: Kill me now!!
+      value: The relic I am seeking is an old necklace of myne that grants special
+        healing abilities to those who wear it. This is very important to me as the
+        evil side has struck me down and I require it's abilities to stay alive.
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: messages.Array.data[3]
-      value: I have things
+      value: Your mission, if you choose to accept it is to find and bring back this
+        necklace to me and I shall reward you beyond your dreams!!
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: messages.Array.data[4]
@@ -77067,21 +77085,73 @@ PrefabInstance:
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: trades.Array.data[0].costItem
       value: 
+      objectReference: {fileID: 11400000, guid: 5a18b483fbb8c0042abef43991395fa0, type: 2}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[1].costItem
+      value: 
+      objectReference: {fileID: 11400000, guid: d1d17ed950f1fac4daf5257945eb16de, type: 2}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[2].costItem
+      value: 
       objectReference: {fileID: 11400000, guid: d1d17ed950f1fac4daf5257945eb16de, type: 2}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: trades.Array.data[0].tradeStock
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[1].tradeStock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[2].tradeStock
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[0].mustComplete
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: trades.Array.data[0].purchaseItem
       value: 
-      objectReference: {fileID: 11400000, guid: 92da3222b604c734dad7141db7f12f17, type: 2}
+      objectReference: {fileID: 11400000, guid: 5a18b483fbb8c0042abef43991395fa0, type: 2}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[1].mustComplete
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[1].purchaseItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 973f843f626b7134d89e2c16b7a531ab, type: 2}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[2].mustComplete
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[2].purchaseItem
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: trades.Array.data[0].costItemAmmount
-      value: 50
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[1].costItemAmmount
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[2].costItemAmmount
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
       propertyPath: trades.Array.data[0].purchaseItemAmmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[1].purchaseItemAmmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1588225016407981959, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}
+      propertyPath: trades.Array.data[2].purchaseItemAmmount
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1974529983888014102, guid: 5022f13182b6bec49bbc24f691dacfbd, type: 3}

@@ -11,6 +11,7 @@ public class NPCScript : MonoBehaviour
     private GameManagerScript gameManagerScript;
     public InventoryManager playerInventory;
     public GameObject messagePrefab;
+    public KeyCode skipKey = KeyCode.Tab;
 
     [Header("Message")]
     public List<string> messages = new List<string>();
@@ -18,10 +19,13 @@ public class NPCScript : MonoBehaviour
 
     private GameObject currentMessageDisplay = null;
 
-    public float messageShowTime;
-    private float messageShowTimeCountdown = 0;
+    public float timePerWord;
+    private float timePerWordCount = 0;
+    private List<string> words = new List<string>();
 
     public bool interacting = false;
+
+    public bool firstInteractionComplete = false;
 
     [Header("Trading")]
     public GameObject tradePanelPrefab;
@@ -40,6 +44,7 @@ public class NPCScript : MonoBehaviour
         public Item costItem;
         public int costItemAmmount;
         public int tradeStock;
+        public bool mustComplete;
     }
 
     private void Start()
@@ -64,33 +69,59 @@ public class NPCScript : MonoBehaviour
             return;
         }
 
-        // IF no cooldown left
-        if (interacting && messageShowTimeCountdown <= 0)
+        // IF is interacting
+        if (interacting)
         {
-            messageIndex++;
+            // IF skip key pressed
+            if (Input.GetKeyDown(skipKey) && currentMessageDisplay != null)
+            {
+                if (messageIndex >= messages.Count)
+                {
+                    CompleteInteractionMessages();
+                }
+                else
+                {
+                    messageIndex++;
+                    ChangeMessage(messageIndex);
+                }
 
-            // IF still messages to show
-            if (messageIndex <= messages.Count)
-            {
-                ChangeMessage(messageIndex - 1);
+                return;
             }
-            else if (canTrade && currentTradePanel == null)
+
+            // IF can do next word and still more words
+            if (timePerWordCount <= 0 && words.Count > 0 && currentMessageDisplay != null)
             {
-                // show trade window
-                ShowTradingWindow();
+                NextWord();
             }
-            else if (!canTrade)
+
+            // IF messages complete
+            if (messageIndex > messages.Count)
             {
-                // not interaction messages left to show & no trading so...
-                // stop interaction
-                TerminateInteraction();
+                CompleteInteractionMessages();
             }
+
+            timePerWordCount -= Time.deltaTime;
         }
-        else
+    }
+
+    private void CompleteInteractionMessages()
+    {
+        // IF this is first interaction
+        if (firstInteractionComplete == false)
         {
-            // cooldown left, so...
-            // decrease message show countdown time
-            messageShowTimeCountdown -= Time.deltaTime;
+            TerminateInteraction();
+            firstInteractionComplete = true;
+        }
+        else if (canTrade && currentTradePanel == null)
+        {
+            // show trade window
+            ShowTradingWindow();
+        }
+        else if (!canTrade)
+        {
+            // not interaction messages left to show & no trading so...
+            // stop interaction
+            TerminateInteraction();
         }
     }
 
@@ -103,11 +134,19 @@ public class NPCScript : MonoBehaviour
         // set interacting to true
         interacting = true;
         // set cooldown to nothing
-        messageShowTimeCountdown = 0;
+        timePerWordCount = 0;
+
+        //start showing messages
+        ChangeMessage(messageIndex);
     }
 
     private void ChangeMessage(int index)
     {
+        if (index > messages.Count - 1)
+        {
+            return;
+        }
+
         // destroy privious message if there is one
         if (currentMessageDisplay != null)
         {
@@ -116,14 +155,34 @@ public class NPCScript : MonoBehaviour
 
         // spawn new message display at correct location
         GameObject newMessageSpawn = Instantiate(messagePrefab, gameManagerScript.mainCanvis.transform);
-        newMessageSpawn.transform.GetChild(0).gameObject.GetComponent<Text>().text = messages[index].ToString();
-
+        newMessageSpawn.transform.GetChild(0).gameObject.GetComponent<Text>().text = "";
         currentMessageDisplay = newMessageSpawn;
+
+        words.Clear();
+
+        string[] splitMessage = messages[index].Split(" ");
+        foreach (string word in splitMessage)
+        {
+            words.Add(word);
+        }
 
         Debug.Log(messages[index].ToString());
 
         //reset show time
-        messageShowTimeCountdown = messageShowTime;
+        timePerWordCount = timePerWord;
+    }
+
+    private void NextWord()
+    {
+        timePerWordCount = timePerWord;
+
+        if (words.Count <= 0)
+        {
+            return;
+        }
+
+        currentMessageDisplay.transform.GetChild(0).gameObject.GetComponent<Text>().text += words[0] + " ";
+        words.RemoveAt(0);
     }
 
     public void TerminateInteraction()
@@ -149,6 +208,12 @@ public class NPCScript : MonoBehaviour
 
     private void ShowTradingWindow()
     {
+        bool showOne = false;
+        if (trades[0].mustComplete == true && trades[0].tradeStock > 0)
+        {
+            showOne = true;
+        }
+
         // If message display showing, destroy it
         if (currentMessageDisplay != null)
         {
@@ -163,6 +228,7 @@ public class NPCScript : MonoBehaviour
         for (int i = 0; i < trades.Count; i++)
         {
             Trade trade = trades[i];
+            Debug.Log(trade.costItem.itemName);
 
             GameObject newTradingRow = Instantiate(tradeRowPrefab, tradingPanel.transform);
             // show trade Item stuff
@@ -172,7 +238,7 @@ public class NPCScript : MonoBehaviour
             newTradingRow.transform.Find("imgCost").gameObject.GetComponent<Image>().sprite = trade.costItem.sprite;
             newTradingRow.transform.Find("txtCostAmmount").gameObject.GetComponent<Text>().text = trade.costItemAmmount.ToString();
 
-            if (trade.tradeStock <= 0)
+            if (trade.tradeStock <= 0 )
             {
                 newTradingRow.GetComponent<Image>().color = new Color(255, 45, 5, 120);
             }
@@ -180,6 +246,12 @@ public class NPCScript : MonoBehaviour
             {
                 // set trade button click event
                 newTradingRow.transform.Find("btnTrade").gameObject.GetComponent<Button>().onClick.AddListener(() => PurchaseTrade(ref trade, newTradingRow));
+            }
+
+            // if only one shold show, this will run after the first one has been added nd stop it
+            if (showOne)
+            {
+                break;
             }
         }
     }
@@ -197,6 +269,7 @@ public class NPCScript : MonoBehaviour
             // IF player can't afford purchase
             if (playerInventory.coins < trade.costItemAmmount)
             {
+                gameManagerScript.DisplayMessage("Insificient Funds", gameObject, Color.red);
                 Debug.Log("trade failed. Only have " + playerInventory.coins);
                 return;
             }
@@ -206,6 +279,7 @@ public class NPCScript : MonoBehaviour
             // IF player can't afford purchase
             if (playerInventory.GetItemAmmount(trade.costItem) < trade.costItemAmmount)
             {
+                gameManagerScript.DisplayMessage("Insificient Funds", gameObject, Color.red);
                 Debug.Log("trade failed. Only have " + playerInventory.GetItemAmmount(trade.costItem));
                 return;
             }
