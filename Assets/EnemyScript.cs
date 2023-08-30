@@ -336,11 +336,17 @@ public class EnemyScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        touchingPlayer = true;
+        if (collision.gameObject == target)
+        {
+            touchingPlayer = true;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        touchingPlayer = false;
+        if (collision.gameObject == target)
+        {
+            touchingPlayer = false;
+        }
     }
 }

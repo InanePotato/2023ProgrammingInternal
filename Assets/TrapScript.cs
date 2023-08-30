@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TrapScript : MonoBehaviour
@@ -13,6 +14,7 @@ public class TrapScript : MonoBehaviour
     [SerializeField]
     private float delayTimeCounter;
     private Animator animator;
+    private GameObject playerObject;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,8 @@ public class TrapScript : MonoBehaviour
         canAttackPlayer = false;
         active = false;
         delayTimeCounter = delayTime;
+
+        playerObject = gameManagerScript.player;
     }
 
     // Update is called once per frame
@@ -62,11 +66,17 @@ public class TrapScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        canAttackPlayer = true;
+        if (collision.gameObject == playerObject)
+        {
+            canAttackPlayer = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        canAttackPlayer = false;
+        if (collision.gameObject == playerObject)
+        {
+            canAttackPlayer = false;
+        }
     }
 }
