@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
@@ -37,7 +38,7 @@ public class NPCScript : MonoBehaviour
     public List<Trade> trades = new List<Trade>();
 
     [Serializable]
-    public struct Trade
+    public class Trade
     {
         public Item purchaseItem;
         public int purchaseItemAmmount;
@@ -245,7 +246,7 @@ public class NPCScript : MonoBehaviour
             else
             {
                 // set trade button click event
-                newTradingRow.transform.Find("btnTrade").gameObject.GetComponent<Button>().onClick.AddListener(() => PurchaseTrade(ref trade, newTradingRow));
+                newTradingRow.transform.Find("btnTrade").gameObject.GetComponent<Button>().onClick.AddListener(() => PurchaseTrade(i, newTradingRow));
             }
 
             // if only one shold show, this will run after the first one has been added nd stop it
@@ -256,18 +257,18 @@ public class NPCScript : MonoBehaviour
         }
     }
 
-    public void PurchaseTrade(ref Trade trade, GameObject rowObject)
+    public void PurchaseTrade(int tradeID, GameObject rowObject)
     {
-        if (trade.tradeStock <= 0)
+        if (trades[tradeID].tradeStock <= 0)
         {
             return;
         }
 
         // IF the cost item is coins, then act differently
-        if (trade.costItem.type == Item.ItemType.currency)
+        if (trades[tradeID].costItem.type == Item.ItemType.currency)
         {
             // IF player can't afford purchase
-            if (playerInventory.coins < trade.costItemAmmount)
+            if (playerInventory.coins < trades[tradeID].costItemAmmount)
             {
                 gameManagerScript.DisplayMessage("Insificient Funds", gameObject, Color.red);
                 Debug.Log("trade failed. Only have " + playerInventory.coins);
@@ -277,22 +278,22 @@ public class NPCScript : MonoBehaviour
         else
         {
             // IF player can't afford purchase
-            if (playerInventory.GetItemAmmount(trade.costItem) < trade.costItemAmmount)
+            if (playerInventory.GetItemAmmount(trades[tradeID].costItem) < trades[tradeID].costItemAmmount)
             {
                 gameManagerScript.DisplayMessage("Insificient Funds", gameObject, Color.red);
-                Debug.Log("trade failed. Only have " + playerInventory.GetItemAmmount(trade.costItem));
+                Debug.Log("trade failed. Only have " + playerInventory.GetItemAmmount(trades[tradeID].costItem));
                 return;
             }
         }
 
-        trade.tradeStock--;
-        playerInventory.SubtractItemAmmount(trade.costItem, trade.costItemAmmount);
-        playerInventory.AddItemAmmount(trade.purchaseItem, trade.purchaseItemAmmount);
+        trades[tradeID].tradeStock--;
+        playerInventory.SubtractItemAmmount(trades[tradeID].costItem, trades[tradeID].costItemAmmount);
+        playerInventory.AddItemAmmount(trades[tradeID].purchaseItem, trades[tradeID].purchaseItemAmmount);
 
-        Debug.LogWarning("Purchase Item " + trade.purchaseItem.name + "x" + trade.purchaseItemAmmount.ToString() + Environment.NewLine +
-                         "Purchase Cost " + trade.costItem.name + "x" + trade.costItemAmmount.ToString());
+        Debug.LogWarning("Purchase Item " + trades[tradeID].purchaseItem.name + "x" + trades[tradeID].purchaseItemAmmount.ToString() + Environment.NewLine +
+                         "Purchase Cost " + trades[tradeID].costItem.name + "x" + trades[tradeID].costItemAmmount.ToString());
 
-        if (trade.tradeStock <= 0)
+        if (trades[tradeID].tradeStock <= 0)
         {
             //rowObject.GetComponent<Image>().color = new Color(180f, 25f, 0f, 80f);
             rowObject.GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.15f);
