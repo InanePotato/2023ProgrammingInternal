@@ -35,6 +35,8 @@ public class GameManagerScript : MonoBehaviour
     public GameObject txtMessageDisplayPrefab;
     public GameObject pnlPopupDisplayPrefab;
     public float txtMessageDisplayTimeout = 2;
+    public GameObject helpMenu;
+    private bool helpMenuVisible = false;
 
     public enum PlayerSprites
     {
@@ -128,5 +130,21 @@ public class GameManagerScript : MonoBehaviour
         newPopup.GetComponent<RectTransform>().position = camera.WorldToScreenPoint(spawnOnObject.transform.position);
 
         return newPopup;
+    }
+
+    public void ToggleHelpMenu()
+    {
+        Animator animator = helpMenu.GetComponent<Animator>();
+
+        if (helpMenuVisible)
+        {
+            animator.Play("helpMenuHide");
+            helpMenuVisible = false;
+        }
+        else
+        {
+            animator.Play("helpMenuShow");
+            helpMenuVisible = true;
+        }
     }
 }
