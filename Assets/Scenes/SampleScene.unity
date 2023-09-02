@@ -1199,7 +1199,7 @@ MonoBehaviour:
   - 0
   - 0
   speedMultiplier: 0
-  defaultDamage: 10
+  defaultDamage: 5
   weaponDamage: 0
   weaponDamageMultiplier: 0
   spellDamage: 0
