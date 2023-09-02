@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -30,6 +31,8 @@ public class EnemyScript : MonoBehaviour
     private SpriteRenderer sprite;
     public GameObject enemy;
     public GameObject enemySpawner;
+    public int killScore;
+    public UnityEngine.Color scoreAdditionPopupColour;
 
     public enum AttackType { Melee, Spell, Range };
 
@@ -58,9 +61,19 @@ public class EnemyScript : MonoBehaviour
 
     [Header("Loot")]
     public float lootScatter;
-    public List<Item> lootDropItems = new List<Item>();
-    public List<int> lootDropAmmounts = new List<int>();
+    public List<LootDrop> lootDrops = new List<LootDrop>();
     private GameObject droppedItemPrefab;
+    public LootTable lootTable;
+    public int minItemsFromLootTable;
+    public int maxItemsFromLootTable;
+
+    [Serializable]
+    public struct LootDrop
+    {
+        public Item item;
+        public int minAmmount;
+        public int maxAmmount;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -272,20 +285,42 @@ public class EnemyScript : MonoBehaviour
 
         if (health <= 0)
         {
-            // drop any loot
-            for (int i = 0; i < lootDropItems.Count; i++)
+            // drop any special loot drops
+            foreach (LootDrop item in lootDrops)
             {
-                GameObject newItemDrop = Instantiate(droppedItemPrefab);
-
-                Vector2 enemyPosition = gameObject.transform.GetChild(0).position;
-
-                float x = Random.Range(enemyPosition.x + lootScatter, enemyPosition.x - lootScatter);
-                float y = Random.Range(enemyPosition.y + lootScatter, enemyPosition.y - lootScatter);
-                newItemDrop.transform.position = new Vector2(x, y);
-
-                newItemDrop.GetComponent<ItemPickup>().item = lootDropItems[i];
-                newItemDrop.GetComponent<ItemPickup>().ammount = lootDropAmmounts[i];
+                int ammount = UnityEngine.Random.Range(item.minAmmount, item.maxAmmount);
+                DropItem(item.item, ammount);
             }
+
+            // prepare for loot table loot drops
+            List<int> LootTableItemIDS = new List<int>();
+            for (int id = 0; id < lootTable.lootTable.Count(); id++)
+            {
+                for (int i = 0; i < lootTable.lootTable[id].rarity; i++)
+                {
+                    LootTableItemIDS.Add(id);
+                }
+            }
+
+            // drop loot table loot
+            int numItemsFromLootTable = UnityEngine.Random.Range(minItemsFromLootTable, maxItemsFromLootTable);
+            for (int i = 0; i < numItemsFromLootTable; i++)
+            {
+                //get a random id to drop
+                int randomID = LootTableItemIDS[UnityEngine.Random.Range(0, LootTableItemIDS.Count() - 1)];
+                Debug.Log(randomID.ToString());
+                Debug.Log(lootTable.lootTable[randomID].minAmmountPerDrop.ToString() + " - " + lootTable.lootTable[randomID].maxAmmountPerDrop.ToString());
+
+                // get ammount
+                int ammount = UnityEngine.Random.Range(lootTable.lootTable[randomID].minAmmountPerDrop, lootTable.lootTable[randomID].maxAmmountPerDrop);
+                // get Item
+                Item item = lootTable.lootTable[randomID].item;
+
+                DropItem(item, ammount);
+            }
+
+            target.GetComponent<PlayerStats>().ChangeScore(killScore);
+            gameManagerScript.DisplayMessage(killScore.ToString(), gameObject, scoreAdditionPopupColour);
 
             // IF this enemy is attached to a spawner
             if (enemySpawner != null)
@@ -317,6 +352,20 @@ public class EnemyScript : MonoBehaviour
         {
             healthBar.GetComponent<EnemyHealthBarScript>().DecreaseEnemyHealthBar(damage);
         }
+    }
+
+    private void DropItem(Item item, int ammount)
+    {
+        GameObject newItemDrop = Instantiate(droppedItemPrefab);
+
+        Vector2 enemyPosition = gameObject.transform.GetChild(0).position;
+
+        float x = UnityEngine.Random.Range(enemyPosition.x + lootScatter, enemyPosition.x - lootScatter);
+        float y = UnityEngine.Random.Range(enemyPosition.y + lootScatter, enemyPosition.y - lootScatter);
+        newItemDrop.transform.position = new Vector2(x, y);
+
+        newItemDrop.GetComponent<ItemPickup>().item = item;
+        newItemDrop.GetComponent<ItemPickup>().ammount = ammount;
     }
 
     private void MeleeAttackPlayer()

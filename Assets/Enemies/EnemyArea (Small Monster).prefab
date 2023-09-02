@@ -134,15 +134,26 @@ MonoBehaviour:
   attackCooldown: 4
   attackType: 0
   enemy: {fileID: 0}
+  enemySpawner: {fileID: 0}
+  killScore: 120
+  scoreAdditionPopupColour: {r: 0.6039216, g: 0.7411765, b: 0.79607844, a: 0.78431374}
   movmentType: 0
   speed: 0.2
   movementOffset: {x: 0.2, y: 0.4}
   spriteFlipped: 0
   canTarget: 1
   targetingRange: 0.4
-  lootDropItems:
-  - {fileID: 11400000, guid: d1d17ed950f1fac4daf5257945eb16de, type: 2}
-  lootDropAmmounts: 64000000
+  lootScatter: 0.1
+  lootDrops:
+  - item: {fileID: 11400000, guid: d1d17ed950f1fac4daf5257945eb16de, type: 2}
+    minAmmount: 190
+    maxAmmount: 300
+  - item: {fileID: 11400000, guid: 818ad09c7f7b7d5478c167e38969cded, type: 2}
+    minAmmount: 1
+    maxAmmount: 3
+  lootTable: {fileID: 0}
+  minItemsFromLootTable: 0
+  maxItemsFromLootTable: 0
 --- !u!1001 &2234023738021064423
 PrefabInstance:
   m_ObjectHideFlags: 0

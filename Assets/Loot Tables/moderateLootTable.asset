@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b368258ddb56a7b459922bfccd499f2b, type: 3}
+  m_Name: moderateLootTable
+  m_EditorClassIdentifier: 
+  lootTable:
+  - item: {fileID: 11400000, guid: 368e0363cca82f84ea53600e158e7a70, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 80
+  - item: {fileID: 11400000, guid: 6d5d806c9fd5330439dc9ee55ddbc8f7, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 80
+  - item: {fileID: 11400000, guid: 621039726f2aab047afc887e02b314b3, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 80
+  - item: {fileID: 11400000, guid: 83e737240870021489cfc9d45048b19e, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 80
+  - item: {fileID: 11400000, guid: edf3ab34412b75e46b925a9d20cf59ab, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 40
+  - item: {fileID: 11400000, guid: d1d17ed950f1fac4daf5257945eb16de, type: 2}
+    minAmmountPerDrop: 100
+    maxAmmountPerDrop: 200
+    maxTimesDropable: 1000
+    rarity: 50
+  - item: {fileID: 11400000, guid: b323758dc7efeae48a2013b11dfe4bef, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 5
+  - item: {fileID: 11400000, guid: cc8be9a9a7658ea4eb9cd88b79526201, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 5
+  - item: {fileID: 11400000, guid: 5f2c2a720d514d744abb44d02549124c, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 5
+  - item: {fileID: 11400000, guid: f3cf16b0c73f4674088e8b41aa466147, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 1
+  - item: {fileID: 11400000, guid: 388dc85e30e81514b91c1d894a72c484, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 1
+  - item: {fileID: 11400000, guid: 4905f97a8c720304ca1c159672ad5f2d, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 1
+  - item: {fileID: 11400000, guid: 3625582c7e6f5c3428e9e2621db15d24, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 30
+  - item: {fileID: 11400000, guid: fbf951fb9a2430341bccaa17fcecbf7e, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 30
+  - item: {fileID: 11400000, guid: 30db1e62d1c40f942b9ee13a2aa14b41, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 2
+  - item: {fileID: 11400000, guid: d14934e7ff80b874b9b549413ef653e5, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 2
+  - item: {fileID: 11400000, guid: 9b26c5cf5b5a4274191417f1a895f661, type: 2}
+    minAmmountPerDrop: 5
+    maxAmmountPerDrop: 10
+    maxTimesDropable: 10000
+    rarity: 50
+  - item: {fileID: 11400000, guid: 818ad09c7f7b7d5478c167e38969cded, type: 2}
+    minAmmountPerDrop: 10
+    maxAmmountPerDrop: 15
+    maxTimesDropable: 10000
+    rarity: 50
+  - item: {fileID: 11400000, guid: 818ad09c7f7b7d5478c167e38969cded, type: 2}
+    minAmmountPerDrop: 12
+    maxAmmountPerDrop: 20
+    maxTimesDropable: 10000
+    rarity: 25
+  - item: {fileID: 11400000, guid: 9b26c5cf5b5a4274191417f1a895f661, type: 2}
+    minAmmountPerDrop: 10
+    maxAmmountPerDrop: 15
+    maxTimesDropable: 10000
+    rarity: 25
+  - item: {fileID: 11400000, guid: 22779e9bb5569a14f8cfe18020925d3f, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 10
+  - item: {fileID: 11400000, guid: 3ec8397a7a4f9f147a646e3f651b87b1, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 5
+  - item: {fileID: 11400000, guid: a491106668afa5c4881cb0b817240b70, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 2
+  - item: {fileID: 11400000, guid: 98f2fea1be905ff47813fda8ed9a3cac, type: 2}
+    minAmmountPerDrop: 1
+    maxAmmountPerDrop: 1
+    maxTimesDropable: 1
+    rarity: 1

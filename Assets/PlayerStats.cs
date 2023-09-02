@@ -257,6 +257,12 @@ public class PlayerStats : MonoBehaviour
 
     public void UseItem(Item item)
     {
+        // don't use if have none
+        if (item.ammount <= 0)
+        {
+            return;
+        }
+
         item.ammount--;
 
         if (item.ability == Item.Ability.healthBack)

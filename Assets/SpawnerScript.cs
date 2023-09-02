@@ -16,6 +16,9 @@ public class SpawnerScript : MonoBehaviour
     public Vector2 spawnRange;
     public int maxSpawnEnemies;
     public List<GameObject> spawnedEnemies = new List<GameObject>();
+    public LootTable spawnEnemyLootTable;
+    public int spawnEnemyMinItemsFromLootTable;
+    public int spawnEnemyMaxItemsFromLootTable;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +69,11 @@ public class SpawnerScript : MonoBehaviour
             newEnemy.transform.GetChild(0).position = new Vector2(gameObject.transform.position.x + Random.Range(-spawnRange.x, spawnRange.x), gameObject.transform.position.y + Random.Range(-spawnRange.y, spawnRange.y));
             // make sure the enemy is above the spawner
             newEnemy.transform.position = new Vector3(newEnemy.transform.position.x, newEnemy.transform.position.y, newEnemy.transform.position.z - 0.01f);
+
+            // give the new enemy loot table info
+            newEnemy.GetComponent<EnemyScript>().lootTable = spawnEnemyLootTable;
+            newEnemy.GetComponent<EnemyScript>().minItemsFromLootTable = spawnEnemyMinItemsFromLootTable;
+            newEnemy.GetComponent<EnemyScript>().maxItemsFromLootTable = spawnEnemyMaxItemsFromLootTable;
 
             // add new enemy to list of enemies
             spawnedEnemies.Add(newEnemy);
