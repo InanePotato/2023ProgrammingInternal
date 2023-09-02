@@ -135,19 +135,38 @@ public class InventoryManager : MonoBehaviour
             // add items, ammounts, and icons to inventory display for each of the items in the item list
             foreach (var item in sortedItems)
             {
+                // if none then skip this item
+                if (item.ammount <= 0)
+                {
+                    continue;
+                }
+
                 // spwan in a new item display
                 GameObject newInventoryDisplayItem = Instantiate(InventoryItemDisplay, InventoryContent.transform);
 
                 // Assign the button's script the item that it is
                 newInventoryDisplayItem.GetComponent<InventoryDiaplayItemScript>().item = item;
 
-                // get the ammount variable for the display
-                var itemAmmount = newInventoryDisplayItem.transform.Find("Ammount").GetComponent<Text>();
+                if (item.type == Item.ItemType.weapon || item.type == Item.ItemType.hat ||
+                    item.type == Item.ItemType.chestplate || item.type == Item.ItemType.boots ||
+                    item.type == Item.ItemType.relic || item.type == Item.ItemType.spell ||
+                    item.type == Item.ItemType.rangedWeapon)
+                {
+                    // get the ammount variable for the display
+                    GameObject txtItemAmmount = newInventoryDisplayItem.transform.Find("Ammount").gameObject;
+                    txtItemAmmount.SetActive(false);
+                }
+                else
+                {
+                    // get the ammount variable for the display
+                    var itemAmmount = newInventoryDisplayItem.transform.Find("Ammount").GetComponent<Text>();
+                    // set the ammount to the items ammount
+                    itemAmmount.text = item.ammount.ToString();
+                }
+
+
                 // get the icon variable for the display
                 var itemIcon = newInventoryDisplayItem.transform.Find("Image").GetComponent<Image>();
-
-                // set the ammount to the items ammount
-                itemAmmount.text = item.ammount.ToString();
                 // set the sprite to the items image
                 itemIcon.sprite = item.sprite;
 

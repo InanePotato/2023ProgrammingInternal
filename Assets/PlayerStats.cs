@@ -248,7 +248,10 @@ public class PlayerStats : MonoBehaviour
         }
         else if (item.ability == Item.Ability.fasterAttack)
         {
+            float preChange = gameObject.GetComponent<PlayerAttackScript>().attackCooldown;
+            gameObject.GetComponent<PlayerAttackScript>().attackCooldown -= item.abilityValue * multiplier;
 
+            UnityEngine.Debug.Log("Attack cooldown change: " + preChange + " => " + gameObject.GetComponent<PlayerAttackScript>().attackCooldown);
         }
     }
 
