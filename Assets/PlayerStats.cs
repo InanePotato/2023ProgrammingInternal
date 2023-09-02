@@ -34,6 +34,10 @@ public class PlayerStats : MonoBehaviour
     private float initialHealthBarWidth;
     private float healthBarWidthIncrement;
 
+    [Header("Score")]
+    public int score;
+    public GameObject txtScore;
+
     [Header("Protection")]
     public float totalProtection;
     public float[] slotProtection = new float[6];
@@ -269,5 +273,11 @@ public class PlayerStats : MonoBehaviour
         statsDisplaySpeed.GetComponent<Text>().text = (gameObject.GetComponent<PlayerMovement>().walkSpeed + speedMultiplier).ToString();
         statsDisplayWeaponDamage.GetComponent<Text>().text = (weaponDamage + weaponDamageMultiplier).ToString();
         statsDisplaySpellDamage.GetComponent<Text>().text = (spellDamage + spellDamageMultiplier).ToString();
+    }
+
+    public void ChangeScore(int ammount)
+    {
+        score += ammount;
+        txtScore.GetComponent<Text>().text = "Score: " + score.ToString();
     }
 }

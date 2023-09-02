@@ -1188,6 +1188,8 @@ MonoBehaviour:
   - {fileID: 0}
   maxHealth: 100
   pnlHealthBar: {fileID: 56297479}
+  score: 0
+  txtScore: {fileID: 444252722}
   totalProtection: 0
   slotProtection:
   - 0
