@@ -8,8 +8,15 @@ public class SpawnerScript : MonoBehaviour
     public GameObject spawnerIconPrefab;
     private GameObject currentIcon;
 
-    [Header("Spawner Information")]
+    [Header("Spawn Enemy")]
     public GameObject EnemyToSpawn;
+    public float maxHealth;
+    public float damage;
+    public float attackRange;
+    public float attackCooldown;
+    public float targetingRange;
+
+    [Header("Spawner Information")]
     public bool canSpawn;
     public float spawnCooldown;
     private float spawnCooldownCount;
@@ -26,6 +33,11 @@ public class SpawnerScript : MonoBehaviour
         gameManagerScript = GameManagerScript.Instance;
 
         currentIcon = Instantiate(spawnerIconPrefab, gameManagerScript.mainCanvis.transform);
+        var iconImage = currentIcon.GetComponent<UnityEngine.UI.Image>();
+        iconImage.sprite = EnemyToSpawn.GetComponentInChildren<SpriteRenderer>().sprite;
+        //iconImage.sprite = EnemyToSpawn.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite;
+
+        // move to appropriate place on screen
         currentIcon.GetComponent<RectTransform>().position = gameManagerScript.camera.WorldToScreenPoint(gameObject.transform.position);
 
         spawnCooldownCount = spawnCooldown;
@@ -55,11 +67,14 @@ public class SpawnerScript : MonoBehaviour
         {
             // spawn enemy in
             GameObject newEnemy = Instantiate(EnemyToSpawn);
-            
+
+            // get the new enemies script
+            EnemyScript newEnemiesScript = newEnemy.GetComponent<EnemyScript>();
+
             // change the enemies range
-            newEnemy.GetComponent<EnemyScript>().movementOffset = spawnRange;
+            newEnemiesScript.movementOffset = spawnRange;
             // assign this spawner to the enemy
-            newEnemy.GetComponent<EnemyScript>().enemySpawner = gameObject;
+            newEnemiesScript.enemySpawner = gameObject;
             // move the enemy's 'home' location to the spawner
             newEnemy.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z - 0.01f);
 
@@ -71,9 +86,16 @@ public class SpawnerScript : MonoBehaviour
             newEnemy.transform.position = new Vector3(newEnemy.transform.position.x, newEnemy.transform.position.y, newEnemy.transform.position.z - 0.01f);
 
             // give the new enemy loot table info
-            newEnemy.GetComponent<EnemyScript>().lootTable = spawnEnemyLootTable;
-            newEnemy.GetComponent<EnemyScript>().minItemsFromLootTable = spawnEnemyMinItemsFromLootTable;
-            newEnemy.GetComponent<EnemyScript>().maxItemsFromLootTable = spawnEnemyMaxItemsFromLootTable;
+            newEnemiesScript.lootTable = spawnEnemyLootTable;
+            newEnemiesScript.minItemsFromLootTable = spawnEnemyMinItemsFromLootTable;
+            newEnemiesScript.maxItemsFromLootTable = spawnEnemyMaxItemsFromLootTable;
+
+            // changes enemies stats if required
+            if (maxHealth > 0) { newEnemiesScript.maxHealth = maxHealth; }
+            if (damage > 0) { newEnemiesScript.damage = damage; }
+            if (attackRange > 0) { newEnemiesScript.attackRange = attackRange; }
+            if (attackCooldown > 0) { newEnemiesScript.attackCooldown = attackCooldown; }
+            if (targetingRange > 0) { newEnemiesScript.targetingRange = targetingRange; }
 
             // add new enemy to list of enemies
             spawnedEnemies.Add(newEnemy);
