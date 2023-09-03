@@ -126,13 +126,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestType: 1
+  chestOpen: 0
   lootSpawnOffsetY: 0.05
   lootSpawnOffsetX: 0.05
+  lootSpawnDistanceBelow: 0.2
   openSprite: {fileID: 21300000, guid: 08fcc04d5feff6248a75b71bc85637aa, type: 2}
   closedSprite: {fileID: 21300000, guid: 50017b5f1167b814f88e78465a741228, type: 2}
-  requiredLootItemObjects: []
-  requiredLootItemAmmounts: 
-  numberOfRandoms: 0
+  loot:
+  - item: {fileID: 11400000, guid: 7f5706fef1ff43d47a960335aae5b47f, type: 2}
+    minAmmount: 1
+    maxAmmount: 1
+  lootTable: {fileID: 0}
+  minLootTableDrops: 0
+  maxLootTableDrops: 0
 --- !u!114 &6682833775975755425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,5 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceb0fd66ca461d745842e8703ecc1808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyNeeded: 3
+  requiredItem: {fileID: 11400000, guid: 3dad2d0876ee58a4faa55a2cc6a16549, type: 2}
   interactionType: 1
+  interactMessageCooldown: 3
