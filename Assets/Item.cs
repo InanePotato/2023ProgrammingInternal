@@ -9,6 +9,7 @@ public class Item : ScriptableObject
 {
     public Sprite sprite;
     public string itemName;
+    public string description;
     public int inventoryId;
     //public string description;
     public ItemType type;

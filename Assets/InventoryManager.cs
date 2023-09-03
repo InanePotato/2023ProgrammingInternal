@@ -256,6 +256,11 @@ public class InventoryManager : MonoBehaviour
                 itemDescription.text += "- " + GetEffectDisplayText(item.secondaryEffect) + Environment.NewLine;
             }
         }
+        // if any extra description information then display
+        if (item.description != "")
+        {
+            itemDescription.text += item.description;
+        }
 
         // use
         var itemUsebtn = InventoryContentInformation.transform.Find("btnUse");
