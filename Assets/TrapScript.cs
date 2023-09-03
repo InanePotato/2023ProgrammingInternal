@@ -9,7 +9,8 @@ public class TrapScript : MonoBehaviour
 
     public bool active;
     public bool canAttackPlayer;
-    public float delayTime;
+    public float minDelayTime;
+    public float maxDelayTime;
     public float damagePerSecond;
     [SerializeField]
     private float delayTimeCounter;
@@ -25,7 +26,7 @@ public class TrapScript : MonoBehaviour
 
         canAttackPlayer = false;
         active = false;
-        delayTimeCounter = delayTime;
+        delayTimeCounter = UnityEngine.Random.Range(minDelayTime, maxDelayTime);
 
         playerObject = gameManagerScript.player;
     }
@@ -40,7 +41,7 @@ public class TrapScript : MonoBehaviour
 
         if (delayTimeCounter <= 0)
         {
-            delayTimeCounter = delayTime;
+            delayTimeCounter = UnityEngine.Random.Range(minDelayTime, maxDelayTime);
             active = !active;
             
             if (active)

@@ -101,7 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 0
   canAttackPlayer: 0
-  delayTime: 5
+  minDelayTime: 2
+  maxDelayTime: 2
   damagePerSecond: 5
   delayTimeCounter: 0
 --- !u!61 &6390466880150139751
