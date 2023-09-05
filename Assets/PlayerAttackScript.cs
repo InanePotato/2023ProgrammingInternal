@@ -106,7 +106,7 @@ public class PlayerAttackScript : MonoBehaviour
                         Destroy(attackCooldownTimeDisplay);
                     }
 
-                    GameObject newCooldownTimer = Instantiate(cooldownTimerPrefab, canvas.transform);
+                    GameObject newCooldownTimer = Instantiate(cooldownTimerPrefab, canvas.transform.Find("LevelSpawns"));
                     newCooldownTimer.GetComponent<AttackCooldownTimerDisplayScript>().player = gameObject;
                     newCooldownTimer.GetComponent<AttackCooldownTimerDisplayScript>().attackCooldown = attackCooldown;
 

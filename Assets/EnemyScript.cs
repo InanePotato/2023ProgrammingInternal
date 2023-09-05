@@ -423,7 +423,7 @@ public class EnemyScript : MonoBehaviour
         if (healthBar == null)
         {
             // Create new health bar using prefab
-            GameObject newHealthBar = Instantiate(healthBarPrefab, canvas.transform);
+            GameObject newHealthBar = Instantiate(healthBarPrefab, canvas.transform.Find("LevelSpawns"));
             EnemyHealthBarScript newHealthBarScript = newHealthBar.GetComponent<EnemyHealthBarScript>();
 
             // Set health, max health, enemy object, and y offset values in the health bar script

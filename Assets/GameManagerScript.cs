@@ -112,7 +112,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void DisplayMessage(string message, GameObject spawnOnObject, Color colour)
     {
-        GameObject newMessage = Instantiate(txtMessageDisplayPrefab, mainCanvis.transform);
+        GameObject newMessage = Instantiate(txtMessageDisplayPrefab, mainCanvis.transform.Find("LevelSpawns"));
 
         newMessage.GetComponent<Text>().text = message;
         newMessage.GetComponent<Text>().color = colour;
@@ -123,7 +123,7 @@ public class GameManagerScript : MonoBehaviour
 
     public GameObject DisplayInteractPopup(string key, string message, GameObject spawnOnObject)
     {
-        GameObject newPopup = Instantiate(pnlPopupDisplayPrefab, mainCanvis.transform);
+        GameObject newPopup = Instantiate(pnlPopupDisplayPrefab, mainCanvis.transform.Find("LevelSpawns"));
 
         newPopup.transform.Find("txtKey").GetComponent<Text>().text = key;
         newPopup.transform.Find("txtDescription").GetComponent<Text>().text = message;

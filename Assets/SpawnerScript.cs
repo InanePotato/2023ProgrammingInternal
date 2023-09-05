@@ -32,7 +32,7 @@ public class SpawnerScript : MonoBehaviour
     {
         gameManagerScript = GameManagerScript.Instance;
 
-        currentIcon = Instantiate(spawnerIconPrefab, gameManagerScript.mainCanvis.transform);
+        currentIcon = Instantiate(spawnerIconPrefab, gameManagerScript.mainCanvis.transform.Find("LevelSpawns"));
         var iconImage = currentIcon.GetComponent<UnityEngine.UI.Image>();
         iconImage.sprite = EnemyToSpawn.GetComponentInChildren<SpriteRenderer>().sprite;
         //iconImage.sprite = EnemyToSpawn.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite;

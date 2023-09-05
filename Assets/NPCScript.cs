@@ -155,7 +155,7 @@ public class NPCScript : MonoBehaviour
         }
 
         // spawn new message display at correct location
-        GameObject newMessageSpawn = Instantiate(messagePrefab, gameManagerScript.mainCanvis.transform);
+        GameObject newMessageSpawn = Instantiate(messagePrefab, gameManagerScript.mainCanvis.transform.Find("LevelSpawns"));
         newMessageSpawn.transform.GetChild(0).gameObject.GetComponent<Text>().text = "";
         currentMessageDisplay = newMessageSpawn;
 
