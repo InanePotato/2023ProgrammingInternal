@@ -32,14 +32,14 @@ public class LevelLoader : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync(buildIndex);
 
         // Play loading animation
-        transition.SetTrigger("Loading");
+        //transition.SetTrigger("Loading");
 
-        while (!operation.isDone)
-        {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            Debug.Log(progress);
+        //while (!operation.isDone)
+        //{
+        //    float progress = Mathf.Clamp01(operation.progress / 0.9f);
+        //    Debug.Log(progress);
 
-            yield return null;
-        }
+        //    yield return null;
+        //}
     }
 }
