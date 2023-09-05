@@ -194,6 +194,11 @@ public class InventoryManager : MonoBehaviour
 
     public void ChangeInventoryItemView(Item item)
     {
+        if (item.ammount <= 0)
+        {
+            return;
+        }
+
         // Item Image
         var itemIcon = InventoryContentInformation.transform.Find("imgItemImage").GetComponent<Image>();
         itemIcon.gameObject.SetActive(true);
