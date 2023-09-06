@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
     private GameObject InventoryContent;
     private GameObject InventoryContentInformation;
     public GameObject InventoryItemDisplay;
-    private bool inventoryOpen = false;
+    public bool inventoryOpen = false;
 
     [Header("Inventory")]
     public List<Item> Items = new List<Item>();
@@ -62,11 +62,11 @@ public class InventoryManager : MonoBehaviour
             toggleInventory(!inventoryOpen);
         }
 
-        if (inventoryOpen && Input.GetKeyDown(KeyCode.Escape))
-        {
-            // close inventory
-            toggleInventory(false);
-        }
+        //if (inventoryOpen && Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    // close inventory
+        //    toggleInventory(false);
+        //}
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        if (Items.Count <= 0)
+        if (Items.Count <= 0 && isOpen)
         {
             // Make sure inventory is hidden
             InventoryView.SetActive(false);

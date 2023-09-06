@@ -64,11 +64,11 @@ public class NPCScript : MonoBehaviour
         }
 
         // if escape pressed, stop interaction
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            TerminateInteraction();
-            return;
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    TerminateInteraction();
+        //    return;
+        //}
 
         // IF is interacting
         if (interacting)

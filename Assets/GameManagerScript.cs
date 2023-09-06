@@ -81,6 +81,15 @@ public class GameManagerScript : MonoBehaviour
         pnlTopGUI = mainCanvis.transform.Find("TopGUI").gameObject;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(ToggleMenuKeybind)) // && !player.GetComponent<InventoryManager>().inventoryOpen
+        {
+            Debug.Log(gamePaused);
+            TogglePauseScreen(!gamePaused);
+        }
+    }
+
     /// <summary>
     /// Handles end game/game over instances
     /// </summary>
@@ -109,11 +118,13 @@ public class GameManagerScript : MonoBehaviour
         // IF the game isn’t over
         if (!gameOver)
         {
-            // Set paused game bool using given bool
-            gamePaused = showScreen;
-
             // Make sure the players inventory is hidden
             player.GetComponent<InventoryManager>().toggleInventory(false);
+
+            Debug.Log(showScreen);
+            // Set paused game bool using given bool
+            gamePaused = showScreen;
+            Debug.Log(gamePaused);
 
             // Toggle visibility of pause button
             pnlTopGUI.transform.Find("btnPause").gameObject.SetActive(!showScreen);
