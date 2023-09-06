@@ -12,6 +12,8 @@ public class AttackCooldownTimerDisplayScript : MonoBehaviour
     public GameObject player;
     public float yPosOffSet;
     public float attackCooldown;
+    [SerializeField]
+    private float increment;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,9 @@ public class AttackCooldownTimerDisplayScript : MonoBehaviour
 
         // Get and set player attack script reference
         attackScript = player.GetComponent<PlayerAttackScript>();
+
+        // Calculate fill ammount per second
+        increment = 1 / attackCooldown;
     }
 
     // Update is called once per frame
@@ -34,11 +39,11 @@ public class AttackCooldownTimerDisplayScript : MonoBehaviour
         {
             // Destroy this object
             Destroy(gameObject);
+            return;
         }
 
         // Calculate change in cooldown to change fill amount by
-        float increment = 1/attackCooldown;
-        float deduction = increment * attackScript.attackCooldownTime * Time.deltaTime;
+        float deduction = increment * Time.deltaTime;
 
         // IF Change leads to less than 0
         if (imageComponent.fillAmount - deduction < 0)
