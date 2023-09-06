@@ -449,6 +449,7 @@ public class EnemyScript : MonoBehaviour
     /// <param name="ammount"></param>
     private void DropItem(Item item, int ammount)
     {
+        // make sure nothing is dropped if the ammount is 0
         if (ammount <= 0)
         {
             return;
