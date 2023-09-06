@@ -155,7 +155,7 @@ public class NPCScript : MonoBehaviour
         }
 
         // spawn new message display at correct location
-        GameObject newMessageSpawn = Instantiate(messagePrefab, gameManagerScript.mainCanvis.transform.Find("LevelSpawns"));
+        GameObject newMessageSpawn = Instantiate(messagePrefab, gameManagerScript.mainCanvis.transform.Find("NPCSpawns"));
         newMessageSpawn.transform.GetChild(0).gameObject.GetComponent<Text>().text = "";
         currentMessageDisplay = newMessageSpawn;
 
@@ -222,7 +222,7 @@ public class NPCScript : MonoBehaviour
         }
 
         // show trading panel
-        GameObject tradingPanel = Instantiate(tradePanelPrefab, gameManagerScript.mainCanvis.transform);
+        GameObject tradingPanel = Instantiate(tradePanelPrefab, gameManagerScript.mainCanvis.transform.Find("NPCSpawns"));
         currentTradePanel = tradingPanel;
 
         // fill trading panel with trades
