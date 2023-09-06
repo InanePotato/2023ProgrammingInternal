@@ -56,7 +56,7 @@ public class InventoryManager : MonoBehaviour
     void Update()
     {
         // if the correct key for toggling the inventory view is pressed
-        if (Input.GetKeyDown(openInventoryKeybind))
+        if (Input.GetKeyDown(openInventoryKeybind) && !gameManagerScript.gameOver)
         {
             // toggle the inventory with the opposite of what it currently is
             toggleInventory(!inventoryOpen);
@@ -192,6 +192,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// handles changing item view info when an item is selected
+    /// </summary>
+    /// <param name="item"></param>
     public void ChangeInventoryItemView(Item item)
     {
         if (item.ammount <= 0)
@@ -306,7 +310,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// returns the name of an effect given
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <returns></returns>
     private string GetEffectDisplayText(Item.Effects effect)
     {
         if (effect == Item.Effects.strength)
@@ -342,6 +350,10 @@ public class InventoryManager : MonoBehaviour
         return "";
     }
 
+    /// <summary>
+    /// handles closing and reopenign the inventory to refresh info
+    /// </summary>
+    /// <param name="selectedItem"></param>
     public void ReopenInventory(Item selectedItem)
     {
         // remove all items from inventory display
