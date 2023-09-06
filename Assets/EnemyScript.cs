@@ -449,6 +449,11 @@ public class EnemyScript : MonoBehaviour
     /// <param name="ammount"></param>
     private void DropItem(Item item, int ammount)
     {
+        if (ammount <= 0)
+        {
+            return;
+        }
+
         // Spawn in a new dropped item
         GameObject newItemDrop = Instantiate(droppedItemPrefab);
 
