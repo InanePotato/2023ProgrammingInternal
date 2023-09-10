@@ -49,34 +49,53 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //rb.MovePosition(rb.position + new Vector2(inputHorizontal, inputVertical) * walkSpeed * Time.fixedDeltaTime);
+        // IF paused or over
+        if (gameManagerScript.gamePaused || gameManagerScript.gameOver)
+        {
+            // don't continue / return
+            return;
+        }
+
+        // IF inputs are not 0
         if (inputHorizontal != 0 || inputVertical != 0)
         {
+            // IF both are not 0
             if (inputHorizontal != 0 && inputVertical != 0)
             {
+                // times by speed limiter
                 inputHorizontal *= speedLimiter;
                 inputVertical *= speedLimiter;
             }
 
+            // add velocity in input directions
             rb.velocity = new Vector2 (inputHorizontal * (walkSpeed + playerStatsScript.speedMultiplier), inputVertical * (walkSpeed + playerStatsScript.speedMultiplier));
+            // change to walking animation
             ChangeAnimationState(AnimationState.Walk);
 
+            // IF moving left then flip the sprite
             if (inputHorizontal < 0)
             {
                 childSpriteRenderer.flipX = true;
             }
             else if (inputHorizontal > 0)
             {
+                // ELSE IF moving right then don't flip the sprite
                 childSpriteRenderer.flipX = false;
             }
         }
         else
         {
+            // ELSE set velocity to 0 in both directions
             rb.velocity = new Vector2(0, 0);
+            // set animation to idle
             ChangeAnimationState(AnimationState.Idle);
         }
     }
 
+    /// <summary>
+    /// Handles changing of animations
+    /// </summary>
+    /// <param name="newState"></param>
     private void ChangeAnimationState(AnimationState newState)
     {
         //stop from changing if the same
@@ -92,12 +111,18 @@ public class PlayerMovement : MonoBehaviour
         currentAnimationState = newState;
     }
 
+    /// <summary>
+    /// Handles sprite changes
+    /// </summary>
     public void setPlayerSprite()
     {
+        // get references to sprite renderer and animatior
         animator = gameManagerScript.playerSprite.GetComponent<Animator>();
         childSpriteRenderer = gameManagerScript.playerSprite.GetComponent<SpriteRenderer>();
 
+        // set animation ststus
         currentAnimationState = AnimationState.Idle;
+        // play the animation
         animator.Play(currentAnimationState.ToString());
     }
 }

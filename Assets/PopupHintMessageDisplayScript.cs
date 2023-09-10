@@ -12,12 +12,9 @@ public class PopupHintMessageDisplayScript : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Handles destroying the hunt popup + animating hiding
+    /// </summary>
     public void DestroyPopup()
     {
         animator.Play("pnlPopupHintMessageHide");

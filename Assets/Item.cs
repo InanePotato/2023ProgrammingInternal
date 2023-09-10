@@ -11,7 +11,6 @@ public class Item : ScriptableObject
     public string itemName;
     public string description;
     public int inventoryId;
-    //public string description;
     public ItemType type;
     public Effects primaryEffect;
     public Effects secondaryEffect;

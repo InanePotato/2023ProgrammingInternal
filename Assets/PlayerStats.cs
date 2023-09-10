@@ -53,20 +53,24 @@ public class PlayerStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // get and set refereences to game and inventoyr manager scripts
         gameManagerScript = GameManagerScript.Instance;
         inventoryManager = gameObject.GetComponent<InventoryManager>();
         inventoryItemsList = inventoryManager.Items;
 
+        // set default stats
         health = maxHealth;
-
         totalProtection = 0;
 
+        // set references to UI objects
         pnlHealthBarDisplay = pnlHealthBar.transform.GetChild(0).gameObject;
         initialHealthBarWidth = pnlHealthBarDisplay.GetComponent<RectTransform>().sizeDelta.x;
         healthBarWidthIncrement = initialHealthBarWidth / maxHealth;
 
+        // set default damage
         weaponDamage = defaultDamage;
 
+        // get references to each eqipped item slot
         imgSlot[0] = EquippedSlotsPanel.transform.Find("HatSlot").gameObject;
         imgSlot[1] = EquippedSlotsPanel.transform.Find("ChestplateSlot").gameObject;
         imgSlot[2] = EquippedSlotsPanel.transform.Find("BootsSlot").gameObject;
@@ -74,20 +78,20 @@ public class PlayerStats : MonoBehaviour
         imgSlot[4] = EquippedSlotsPanel.transform.Find("SpellSlot").gameObject;
         imgSlot[5] = EquippedSlotsPanel.transform.Find("RelicSlot").gameObject;
 
+        // het references to stat display text boxes
         statsDisplayProtection = pnlStatsDisplay.transform.Find("txtProtection").gameObject;
         statsDisplaySpeed = pnlStatsDisplay.transform.Find("txtSpeed").gameObject;
         statsDisplayWeaponDamage = pnlStatsDisplay.transform.Find("txtWeaponDamage").gameObject;
         statsDisplaySpellDamage = pnlStatsDisplay.transform.Find("txtSpellDamage").gameObject;
 
+        // call on update displays method
         UpdateStatsDisplay();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Handles additions to player health
+    /// </summary>
+    /// <param name="ammount"></param>
     public void AddHealth(float ammount)
     {
         health += ammount;
@@ -100,6 +104,10 @@ public class PlayerStats : MonoBehaviour
         pnlHealthBarDisplay.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, health * healthBarWidthIncrement);
     }
 
+    /// <summary>
+    /// Handles subtractions to player health
+    /// </summary>
+    /// <param name="ammount"></param>
     public void SubtractHealth(float ammount)
     {
         float subtractAmmount = ammount - totalProtection;
@@ -122,6 +130,10 @@ public class PlayerStats : MonoBehaviour
         pnlHealthBarDisplay.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, health * healthBarWidthIncrement);
     }
 
+    /// <summary>
+    /// Handles equipping of items
+    /// </summary>
+    /// <param name="item"></param>
     public void EquipItem(Item item)
     {
         item.equiped = true;
@@ -168,6 +180,10 @@ public class PlayerStats : MonoBehaviour
         UpdateStatsDisplay();
     }
 
+    /// <summary>
+    ///  Handeles un-equipping of items
+    /// </summary>
+    /// <param name="type"></param>
     public void UnEquipItem(Item.ItemType type)
     {
         int arrayIndex = 0;
@@ -207,22 +223,36 @@ public class PlayerStats : MonoBehaviour
         UpdateStatsDisplay();
     }
 
+    /// <summary>
+    /// handles changes to protection
+    /// </summary>
     public void UpdateProtection()
     {
+        // default protection to 0
         totalProtection = 0;
+        // FOP number of protection providing slots
         for (int i = 0; i < slotProtection.Length; i++)
         {
+            // add protection to total protection
             totalProtection += slotProtection[i];
         }
 
+        // set display protection value
         statsDisplayProtection.GetComponent<Text>().text = totalProtection.ToString();
     }
 
+    /// <summary>
+    /// Handles adding and subtracting of variables
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="addAbility"></param>
     public void HandleAbilityChange(Item item, bool addAbility)
     {
+        // default multiplier to 1
         float multiplier = 1;
         if (addAbility == false)
         {
+            // if subtracting ability change multiplier to -1
             multiplier = -1;
         }
 
@@ -248,11 +278,13 @@ public class PlayerStats : MonoBehaviour
         {
             float preChange = gameObject.GetComponent<PlayerAttackScript>().attackCooldown;
             gameObject.GetComponent<PlayerAttackScript>().attackCooldown -= item.abilityValue * multiplier;
-
-            UnityEngine.Debug.Log("Attack cooldown change: " + preChange + " => " + gameObject.GetComponent<PlayerAttackScript>().attackCooldown);
         }
     }
 
+    /// <summary>
+    /// handles using of items
+    /// </summary>
+    /// <param name="item"></param>
     public void UseItem(Item item)
     {
         // don't use if have none
@@ -261,19 +293,27 @@ public class PlayerStats : MonoBehaviour
             return;
         }
 
+        // subtract from ammount
         item.ammount--;
 
+        // IF has ability health back
         if (item.ability == Item.Ability.healthBack)
         {
+            // add to health
             AddHealth(item.abilityValue);
         }
 
+        // IF ammount is now 0
         if (item.ammount <= 0)
         {
+            // remove from inventory
             inventoryManager.RemoveItem(item);
         }
     }
 
+    /// <summary>
+    /// Handles display updates to sats diaplay ammounts
+    /// </summary>
     private void UpdateStatsDisplay()
     {
         statsDisplayProtection.GetComponent<Text>().text = totalProtection.ToString();
@@ -282,6 +322,10 @@ public class PlayerStats : MonoBehaviour
         statsDisplaySpellDamage.GetComponent<Text>().text = (spellDamage + spellDamageMultiplier).ToString();
     }
 
+    /// <summary>
+    /// Handles changes (additions/subtractions) from the p[layers score and updates display
+    /// </summary>
+    /// <param name="ammount"></param>
     public void ChangeScore(int ammount)
     {
         score += ammount;

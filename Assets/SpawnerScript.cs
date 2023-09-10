@@ -61,6 +61,9 @@ public class SpawnerScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles spawning of enemies
+    /// </summary>
     public void SpawnEnemy()
     {
         if (spawnedEnemies.Count < maxSpawnEnemies)

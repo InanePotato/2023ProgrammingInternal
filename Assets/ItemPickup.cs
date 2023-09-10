@@ -37,9 +37,12 @@ public class ItemPickup : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // IF colided with player object
         if (collision.gameObject == playerObject)
         {
+            // add item ammount to inventory items
             playerInventory.AddItemAmmount(item, ammount);
+            // destroy this object after cooldown period
             Destroy(gameObject, pickupCooldwon);
         }
     }

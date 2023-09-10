@@ -518,6 +518,11 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    ///  handles getting and returning amounts of a given item
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public int GetItemAmmount(Item item)
     {
         // search the list of items

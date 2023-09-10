@@ -63,48 +63,41 @@ public class NPCScript : MonoBehaviour
             return;
         }
 
-        // if escape pressed, stop interaction
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    TerminateInteraction();
-        //    return;
-        //}
-
-        // IF is interacting
-        if (interacting)
+        // IF skip key pressed
+        if (Input.GetKeyDown(skipKey) && currentMessageDisplay != null)
         {
-            // IF skip key pressed
-            if (Input.GetKeyDown(skipKey) && currentMessageDisplay != null)
-            {
-                if (messageIndex >= messages.Count)
-                {
-                    CompleteInteractionMessages();
-                }
-                else
-                {
-                    messageIndex++;
-                    ChangeMessage(messageIndex);
-                }
-
-                return;
-            }
-
-            // IF can do next word and still more words
-            if (timePerWordCount <= 0 && words.Count > 0 && currentMessageDisplay != null)
-            {
-                NextWord();
-            }
-
-            // IF messages complete
-            if (messageIndex > messages.Count)
+            if (messageIndex >= messages.Count)
             {
                 CompleteInteractionMessages();
             }
+            else
+            {
+                messageIndex++;
+                ChangeMessage(messageIndex);
+            }
 
-            timePerWordCount -= Time.deltaTime;
+            return;
         }
+
+        // IF can do next word and still more words
+        if (timePerWordCount <= 0 && words.Count > 0 && currentMessageDisplay != null)
+        {
+            NextWord();
+        }
+
+        // IF messages complete
+        if (messageIndex > messages.Count)
+        {
+            CompleteInteractionMessages();
+        }
+
+        timePerWordCount -= Time.deltaTime;
+
     }
 
+    /// <summary>
+    /// Handles the ending of interaction messages
+    /// </summary>
     private void CompleteInteractionMessages()
     {
         // IF this is first interaction
@@ -126,6 +119,9 @@ public class NPCScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the starting/setup of each interaction
+    /// </summary>
     public void StartInteraction()
     {
         // pause game
@@ -141,8 +137,13 @@ public class NPCScript : MonoBehaviour
         ChangeMessage(messageIndex);
     }
 
+    /// <summary>
+    /// Handles gameges to messages
+    /// </summary>
+    /// <param name="index"></param>
     private void ChangeMessage(int index)
     {
+        // IF there are no messages left
         if (index > messages.Count - 1)
         {
             return;
@@ -167,12 +168,13 @@ public class NPCScript : MonoBehaviour
             words.Add(word);
         }
 
-        Debug.Log(messages[index].ToString());
-
         //reset show time
         timePerWordCount = timePerWord;
     }
 
+    /// <summary>
+    /// Handles adding words to the messages
+    /// </summary>
     private void NextWord()
     {
         timePerWordCount = timePerWord;
@@ -186,6 +188,9 @@ public class NPCScript : MonoBehaviour
         words.RemoveAt(0);
     }
 
+    /// <summary>
+    /// Handles the ending of interactions
+    /// </summary>
     public void TerminateInteraction()
     {
         // set interacting to false
@@ -207,6 +212,9 @@ public class NPCScript : MonoBehaviour
         gameManagerScript.gamePaused = false;
     }
 
+    /// <summary>
+    /// Handles the spawning in the trading window
+    /// </summary>
     private void ShowTradingWindow()
     {
         bool showOne = false;
@@ -229,7 +237,6 @@ public class NPCScript : MonoBehaviour
         for (int i = 0; i < trades.Count; i++)
         {
             Trade trade = trades[i];
-            Debug.Log(trade.costItem.itemName);
 
             GameObject newTradingRow = Instantiate(tradeRowPrefab, tradingPanel.transform);
             // show trade Item stuff
@@ -241,7 +248,7 @@ public class NPCScript : MonoBehaviour
 
             if (trade.tradeStock <= 0 )
             {
-                newTradingRow.GetComponent<Image>().color = new Color(255, 45, 5, 120);
+                newTradingRow.GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.15f);
             }
             else
             {
@@ -257,6 +264,11 @@ public class NPCScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the purchasing of trades
+    /// </summary>
+    /// <param name="tradeID"></param>
+    /// <param name="rowObject"></param>
     public void PurchaseTrade(int tradeID, GameObject rowObject)
     {
         if (trades[tradeID].tradeStock <= 0)
@@ -271,7 +283,6 @@ public class NPCScript : MonoBehaviour
             if (playerInventory.coins < trades[tradeID].costItemAmmount)
             {
                 gameManagerScript.DisplayMessage("Insificient Funds", gameObject, Color.red);
-                Debug.Log("trade failed. Only have " + playerInventory.coins);
                 return;
             }
         }
@@ -281,7 +292,6 @@ public class NPCScript : MonoBehaviour
             if (playerInventory.GetItemAmmount(trades[tradeID].costItem) < trades[tradeID].costItemAmmount)
             {
                 gameManagerScript.DisplayMessage("Insificient Funds", gameObject, Color.red);
-                Debug.Log("trade failed. Only have " + playerInventory.GetItemAmmount(trades[tradeID].costItem));
                 return;
             }
         }
@@ -289,9 +299,6 @@ public class NPCScript : MonoBehaviour
         trades[tradeID].tradeStock--;
         playerInventory.SubtractItemAmmount(trades[tradeID].costItem, trades[tradeID].costItemAmmount);
         playerInventory.AddItemAmmount(trades[tradeID].purchaseItem, trades[tradeID].purchaseItemAmmount);
-
-        Debug.LogWarning("Purchase Item " + trades[tradeID].purchaseItem.name + "x" + trades[tradeID].purchaseItemAmmount.ToString() + Environment.NewLine +
-                         "Purchase Cost " + trades[tradeID].costItem.name + "x" + trades[tradeID].costItemAmmount.ToString());
 
         if (trades[tradeID].tradeStock <= 0)
         {

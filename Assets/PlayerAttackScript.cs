@@ -127,6 +127,10 @@ public class PlayerAttackScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// handles finding out what direction the player is facing
+    /// </summary>
+    /// <returns></returns>
     public bool FacingLeft()
     {
         return gameManagerScript.playerSprite.GetComponent<SpriteRenderer>().flipX;
