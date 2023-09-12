@@ -42,6 +42,7 @@ public class GameManagerScript : MonoBehaviour
     public float txtMessageDisplayTimeout = 2;
     public GameObject helpMenu;
     private bool helpMenuVisible = false;
+    private GameObject gameOverPanel;
 
     public enum PlayerSprites
     {
@@ -79,6 +80,10 @@ public class GameManagerScript : MonoBehaviour
         // Get and set references to pause and topGUI canvas panels
         pnlPauseMenu = mainCanvis.transform.Find("PauseMenu").gameObject;
         pnlTopGUI = mainCanvis.transform.Find("TopGUI").gameObject;
+
+        // get and default hide game over panel
+        gameOverPanel = mainCanvis.transform.Find("GameOverPanel").gameObject;
+        gameOverPanel.SetActive(false);
     }
 
     void Update()
@@ -94,7 +99,7 @@ public class GameManagerScript : MonoBehaviour
     /// Handles end game/game over instances
     /// </summary>
     /// <param name="reason"></param>
-    public void EndGame(string reason)
+    public void EndGame(string title, string message)
     {
         // Make sure pause screen is hidden
         TogglePauseScreen(false);
@@ -103,10 +108,15 @@ public class GameManagerScript : MonoBehaviour
         gameOver = true;
 
         // Show game over screen
+        gameOverPanel.SetActive(true);
 
+        // Display Game over text
+        gameOverPanel.transform.Find("txtTitle").GetComponent<Text>().text = title;
+        gameOverPanel.transform.Find("txtMessage").GetComponent<Text>().text = message;
 
-        // Display Game over reason
-
+        // animate appearence
+        Animator panelAnimator = gameOverPanel.GetComponent<Animator>();
+        panelAnimator.Play("GameOverShow");
     }
 
     /// <summary>

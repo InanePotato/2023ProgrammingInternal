@@ -108,7 +108,7 @@ public class PlayerStats : MonoBehaviour
     /// Handles subtractions to player health
     /// </summary>
     /// <param name="ammount"></param>
-    public void SubtractHealth(float ammount)
+    public void SubtractHealth(float ammount, string attackedBy)
     {
         float subtractAmmount = ammount - totalProtection;
 
@@ -122,7 +122,19 @@ public class PlayerStats : MonoBehaviour
         if (health <= 0)
         {
             // Player dead
-            gameManagerScript.EndGame("Player died");
+            if (attackedBy == "enemy")
+            {
+                gameManagerScript.EndGame("Game Over", "Player (you, if you didn't know that already) was slain by a week little beast that they should have defeated... but don't tell them that.");
+            }
+            else if (attackedBy == "trap")
+            {
+                gameManagerScript.EndGame("Game Over", "A slightly less intelligent player slipped and fell into some deadly spikes expecting to find some free Macca's but died instead... maybe don't try for that free happy meal next time.");
+            }
+            else
+            {
+                gameManagerScript.EndGame("Game Over", "For some reason or another, you died... happy holidays ;)");
+            }
+            
             return;
         }
 

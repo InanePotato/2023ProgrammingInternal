@@ -33,6 +33,7 @@ public class EnemyScript : MonoBehaviour
     public GameObject enemySpawner;
     public int killScore;
     public UnityEngine.Color scoreAdditionPopupColour;
+    public bool finalBoss = false;
 
     public enum AttackType { Melee, Spell, Range };
 
@@ -411,6 +412,11 @@ public class EnemyScript : MonoBehaviour
                 enemySpawner.GetComponent<SpawnerScript>().spawnedEnemies.Remove(gameObject);
             }
 
+            if (finalBoss)
+            {
+                gameManagerScript.EndGame("You Win", "Congratulations brave (but possibly slightly stupid) traveler, you have slain the terrifying beast, charles. You have achieved your lifes goal.... oh, wait... he was actually a very nice guy.. woppsie, sorry charles.");
+            }
+
             // Destroy the enemies health bar
             Destroy(healthBar);
             // Destroy the enemy
@@ -475,7 +481,7 @@ public class EnemyScript : MonoBehaviour
     private void MeleeAttackPlayer()
     {
         // Directly call on the targets stats script’s SubtractHealth method with the damage
-        target.GetComponent<PlayerStats>().SubtractHealth(damage);
+        target.GetComponent<PlayerStats>().SubtractHealth(damage, "enemy");
     }
 
     private void RangeAttackPlayer()

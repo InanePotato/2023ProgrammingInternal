@@ -514,7 +514,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Player Movement:
 
-    - W,A,S,D
+    - W A S D
 
     - Arrow Keys'
 --- !u!222 &601237512

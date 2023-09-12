@@ -72,7 +72,7 @@ public class TrapScript : MonoBehaviour
             // calculate damage based on damage per second
             float damage = Time.deltaTime * damagePerSecond;
             // damage player
-            gameManagerScript.player.GetComponent<PlayerStats>().SubtractHealth(damage);
+            gameManagerScript.player.GetComponent<PlayerStats>().SubtractHealth(damage, "trap");
         }
     }
 
