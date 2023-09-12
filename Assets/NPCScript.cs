@@ -33,6 +33,7 @@ public class NPCScript : MonoBehaviour
     public GameObject tradeRowPrefab;
 
     public bool canTrade;
+    [SerializeField]
     private GameObject currentTradePanel;
 
     public List<Trade> trades = new List<Trade>();
@@ -60,6 +61,13 @@ public class NPCScript : MonoBehaviour
         // IF not interacting don't do anything
         if (!interacting)
         {
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameManagerScript.TogglePauseScreen(false);
+            TerminateInteraction();
             return;
         }
 
@@ -101,12 +109,13 @@ public class NPCScript : MonoBehaviour
     private void CompleteInteractionMessages()
     {
         // IF this is first interaction
-        if (firstInteractionComplete == false)
-        {
-            TerminateInteraction();
-            firstInteractionComplete = true;
-        }
-        else if (canTrade && currentTradePanel == null)
+        //if (firstInteractionComplete == false)
+        //{
+        //    TerminateInteraction();
+        //    firstInteractionComplete = true;
+        //}
+        //else
+        if (canTrade && currentTradePanel == null)
         {
             // show trade window
             ShowTradingWindow();
@@ -217,11 +226,11 @@ public class NPCScript : MonoBehaviour
     /// </summary>
     private void ShowTradingWindow()
     {
-        bool showOne = false;
-        if (trades[0].mustComplete == true && trades[0].tradeStock > 0)
-        {
-            showOne = true;
-        }
+        //bool showOne = false;
+        //if (trades[0].mustComplete == true && trades[0].tradeStock > 0)
+        //{
+        //    showOne = true;
+        //}
 
         // If message display showing, destroy it
         if (currentMessageDisplay != null)
@@ -236,31 +245,32 @@ public class NPCScript : MonoBehaviour
         // fill trading panel with trades
         for (int i = 0; i < trades.Count; i++)
         {
-            Trade trade = trades[i];
+            //Trade trade = trades[i];
 
             GameObject newTradingRow = Instantiate(tradeRowPrefab, tradingPanel.transform);
             // show trade Item stuff
-            newTradingRow.transform.Find("imgItem").gameObject.GetComponent<Image>().sprite = trade.purchaseItem.sprite;
-            newTradingRow.transform.Find("txtItemAmmount").gameObject.GetComponent<Text>().text = trade.purchaseItemAmmount.ToString();
+            newTradingRow.transform.Find("imgItem").gameObject.GetComponent<Image>().sprite = trades[i].purchaseItem.sprite;
+            newTradingRow.transform.Find("txtItemAmmount").gameObject.GetComponent<Text>().text = trades[i].purchaseItemAmmount.ToString();
             // show trade cost stuff
-            newTradingRow.transform.Find("imgCost").gameObject.GetComponent<Image>().sprite = trade.costItem.sprite;
-            newTradingRow.transform.Find("txtCostAmmount").gameObject.GetComponent<Text>().text = trade.costItemAmmount.ToString();
+            newTradingRow.transform.Find("imgCost").gameObject.GetComponent<Image>().sprite = trades[i].costItem.sprite;
+            newTradingRow.transform.Find("txtCostAmmount").gameObject.GetComponent<Text>().text = trades[i].costItemAmmount.ToString();
 
-            if (trade.tradeStock <= 0 )
+            if (trades[i].tradeStock <= 0 )
             {
                 newTradingRow.GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.15f);
             }
             else
             {
                 // set trade button click event
-                newTradingRow.transform.Find("btnTrade").gameObject.GetComponent<Button>().onClick.AddListener(() => PurchaseTrade(i, newTradingRow));
+                int toGive = i;
+                newTradingRow.transform.Find("btnTrade").gameObject.GetComponent<Button>().onClick.AddListener(() => PurchaseTrade(toGive, newTradingRow));
             }
 
             // if only one shold show, this will run after the first one has been added nd stop it
-            if (showOne)
-            {
-                break;
-            }
+            //if (showOne)
+            //{
+            //    break;
+            //}
         }
     }
 

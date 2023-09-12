@@ -237,7 +237,7 @@ public class Interact : MonoBehaviour
             DestroyHintPopup();
 
             // IF interaction type is an NPC
-            if (interactionType == InteractionType.NPC)
+            if (interactionType == InteractionType.NPC )
             {
                 // Call on the objects NPC script’s TerminateInteraction method
                 gameObject.GetComponent<NPCScript>().TerminateInteraction();
