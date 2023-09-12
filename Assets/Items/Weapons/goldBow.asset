@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 692fb3ac6f3b68d4c8687d353eec014c, type: 3}
   itemName: Gold Bow
+  description: 
   inventoryId: 502
   type: 11
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 0
   ability: 0
   abilityValue: 0
+  minScoreRequirement: 1000

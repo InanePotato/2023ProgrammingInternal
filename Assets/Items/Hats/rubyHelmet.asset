@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 877ef5e1b504d2c44b1e1929543aad87, type: 3}
   itemName: Ruby Helmet
+  description: 
   inventoryId: 104
   type: 2
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 5
   ability: 0
   abilityValue: 0
+  minScoreRequirement: 3000

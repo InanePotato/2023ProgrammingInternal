@@ -153,7 +153,7 @@ public class GameManagerScript : MonoBehaviour
     public void DisplayMessage(string message, GameObject spawnOnObject, Color colour)
     {
         // Spawn in a new message game object as a child of the canvas
-        GameObject newMessage = Instantiate(txtMessageDisplayPrefab, mainCanvis.transform.Find("LevelSpawns"));
+        GameObject newMessage = Instantiate(txtMessageDisplayPrefab, mainCanvis.transform);
 
         // Set message and text colour appropriately
         newMessage.GetComponent<Text>().text = message;

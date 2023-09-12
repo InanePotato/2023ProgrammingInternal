@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 3923c59c32b893741a2a86e4ba7294cf, type: 3}
   itemName: White Hat
+  description: 
   inventoryId: 111
   type: 2
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 0.5
   ability: 2
   abilityValue: 1
+  minScoreRequirement: 500

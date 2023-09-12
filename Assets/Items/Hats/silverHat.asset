@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 1b53571e9de99ba41acaabccd4a23b48, type: 3}
   itemName: Silver Hat
+  description: 
   inventoryId: 112
   type: 2
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 0
   ability: 2
   abilityValue: 2
+  minScoreRequirement: 500

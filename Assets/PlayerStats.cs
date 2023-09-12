@@ -33,7 +33,7 @@ public class PlayerStats : MonoBehaviour
     private float healthBarWidthIncrement;
 
     [Header("Score")]
-    public int score;
+    public int score = 0;
     public GameObject txtScore;
 
     [Header("Protection")]
@@ -148,6 +148,12 @@ public class PlayerStats : MonoBehaviour
     /// <param name="item"></param>
     public void EquipItem(Item item)
     {
+        if (score < item.minScoreRequirement)
+        {
+            gameManagerScript.DisplayMessage(item.minScoreRequirement.ToString() + " score required", gameObject, Color.red);
+            return;
+        }
+
         item.equiped = true;
         Item.ItemType type = item.type;
         
@@ -302,6 +308,12 @@ public class PlayerStats : MonoBehaviour
         // don't use if have none
         if (item.ammount <= 0)
         {
+            return;
+        }
+
+        if (score < item.minScoreRequirement)
+        {
+            gameManagerScript.DisplayMessage(item.minScoreRequirement.ToString() + " score required", gameObject, Color.red);
             return;
         }
 

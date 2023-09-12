@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 131141246b7547841a29b3e4148271e7, type: 3}
   itemName: Brown Hat
+  description: 
   inventoryId: 110
   type: 2
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 0
   ability: 2
   abilityValue: 0.5
+  minScoreRequirement: 2000

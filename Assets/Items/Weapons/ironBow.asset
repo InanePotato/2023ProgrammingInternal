@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 7b36c624b2184604fa2b50c8e7072f9e, type: 3}
   itemName: Iron Bow
+  description: 
   inventoryId: 501
   type: 11
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 0
   ability: 0
   abilityValue: 0
+  minScoreRequirement: 500

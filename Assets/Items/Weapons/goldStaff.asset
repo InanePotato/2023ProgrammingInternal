@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: c2deeb79eb7937e46957218da2ff4ecf, type: 3}
   itemName: Golden Staff
+  description: 
   inventoryId: 512
   type: 3
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 0
   ability: 2
   abilityValue: 4
+  minScoreRequirement: 1000

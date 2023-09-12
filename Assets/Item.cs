@@ -20,6 +20,7 @@ public class Item : ScriptableObject
     public float protection;
     public Ability ability;
     public float abilityValue;
+    public int minScoreRequirement = 0;
     
     public enum ItemType
     {

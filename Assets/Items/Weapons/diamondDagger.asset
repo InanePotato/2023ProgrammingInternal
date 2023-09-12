@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 59dc586a87053724083f9e3d95bd9fd6, type: 3}
   itemName: Diamond Dagger
+  description: 
   inventoryId: 523
   type: 3
   primaryEffect: 6
   secondaryEffect: 0
-  ammount: 0
+  ammount: 1
   equiped: 0
   damage: 16
   protection: 0
   ability: 5
   abilityValue: 1
+  minScoreRequirement: 2000

@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 79928b4a595ff9f4c811516b9fabac6a, type: 3}
   itemName: Ruby Dagger
+  description: 
   inventoryId: 524
   type: 3
   primaryEffect: 1
   secondaryEffect: 6
-  ammount: 0
+  ammount: 1
   equiped: 0
   damage: 18
   protection: 0
   ability: 5
   abilityValue: 1
+  minScoreRequirement: 3000

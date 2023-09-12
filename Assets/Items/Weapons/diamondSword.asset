@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: e65b9fa2e611f4e449059c27fd9ead51, type: 3}
   itemName: Diamond Sword
+  description: 
   inventoryId: 533
   type: 3
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 0
   ability: 0
   abilityValue: 0
+  minScoreRequirement: 2000

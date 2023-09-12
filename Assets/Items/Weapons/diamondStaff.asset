@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 42c36b2e32b914740a49b21ceb214a10, type: 3}
   itemName: Diamond Staff
+  description: 
   inventoryId: 514
   type: 3
   primaryEffect: 0
@@ -24,3 +25,4 @@ MonoBehaviour:
   protection: 0
   ability: 2
   abilityValue: 8
+  minScoreRequirement: 2000

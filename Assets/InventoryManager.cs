@@ -240,10 +240,15 @@ public class InventoryManager : MonoBehaviour
 
             itemDescription.text += "+" + item.abilityValue + " " + abilityName + Environment.NewLine;
         }
+        // display any required score the irem requires (if any) in the description textbox
+        if (item.minScoreRequirement != 0)
+        {
+            itemDescription.text += "Score requirement: " + item.minScoreRequirement.ToString() + Environment.NewLine;
+        }
         // display any damage the item inflicts (if any) in the description textbox
         if (item.damage != 0)
         {
-            itemDescription.text += "Damage: " + item.damage + Environment.NewLine;
+            itemDescription.text += "Damage: " + item.damage.ToString() + Environment.NewLine;
         }
         // display any protection the item gives (if any) in the description textbox
         if (item.protection != 0)

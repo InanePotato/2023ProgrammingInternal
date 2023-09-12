@@ -27,6 +27,7 @@ public class Interact : MonoBehaviour
     private GameObject popupMessage = null;
     public float interactMessageCooldown = 3;
     private float interactMessageCooldownCountdown = 0;
+    public int minScoreRequirement = 0;
 
     public enum InteractionType { Door, Chest, Item, NPC };
 
@@ -53,23 +54,30 @@ public class Interact : MonoBehaviour
         // IF interact keybind pressed, can and haven’t interacted, and game is still running
         if (Input.GetKeyDown(interactKeybind) && canInteract && !Interacted && !gameManagerScript.gamePaused && !gameManagerScript.gameOver)
         {
-            // IF interaction  type is door
-            if (interactionType == InteractionType.Door)
+            if (playerObject.GetComponent<PlayerStats>().score >= minScoreRequirement)
             {
-                // Call on door interact method
-                DoorInteraction();
+                // IF interaction  type is door
+                if (interactionType == InteractionType.Door)
+                {
+                    // Call on door interact method
+                    DoorInteraction();
+                }
+                else if (interactionType == InteractionType.Chest)
+                {
+                    // ELSE IF interaction type is chest
+                    // Call on chest interact method
+                    ChestInteraction();
+                }
+                else if (interactionType == InteractionType.NPC)
+                {
+                    // ELSE IF interaction type is NPC
+                    // Call on npc interact method
+                    NPCInteraction();
+                }
             }
-            else if (interactionType == InteractionType.Chest)
+            else
             {
-                // ELSE IF interaction type is chest
-                // Call on chest interact method
-                ChestInteraction();
-            }
-            else if (interactionType == InteractionType.NPC)
-            {
-                // ELSE IF interaction type is NPC
-                // Call on npc interact method
-                NPCInteraction();
+                gameManagerScript.DisplayMessage(minScoreRequirement.ToString() + " score required", gameObject, Color.red);
             }
         }
 
