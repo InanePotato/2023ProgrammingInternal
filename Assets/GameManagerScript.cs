@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -113,6 +114,31 @@ public class GameManagerScript : MonoBehaviour
         // Display Game over text
         gameOverPanel.transform.Find("txtTitle").GetComponent<Text>().text = title;
         gameOverPanel.transform.Find("txtMessage").GetComponent<Text>().text = message;
+
+        if (title == "You Win")
+        {
+            GlobalVariables.Highscore newScore;
+            newScore.name = GlobalVariables.playerName;
+            newScore.score = player.GetComponent<PlayerStats>().score;
+
+            GlobalVariables.highscores.Add(newScore);
+
+            string filePath = Application.streamingAssetsPath + "/HighScores.txt";
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                System.IO.File.CreateText(filePath);
+            }
+
+            StreamWriter writer = new StreamWriter(filePath);
+
+            foreach (GlobalVariables.Highscore score in GlobalVariables.highscores)
+            {
+                writer.WriteLine(score.name + "," + score.score);
+            }
+
+            writer.Close();
+        }
 
         // animate appearence
         Animator panelAnimator = gameOverPanel.GetComponent<Animator>();
