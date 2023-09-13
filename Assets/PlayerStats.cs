@@ -124,7 +124,7 @@ public class PlayerStats : MonoBehaviour
             // Player dead
             if (attackedBy == "enemy")
             {
-                gameManagerScript.EndGame("Game Over", "Player (you, if you didn't know that already) was slain by a week little beast that they should have defeated... but don't tell them that.");
+                gameManagerScript.EndGame("Game Over", "Player was slain by a week little beast that they should have defeated... but don't tell them that.");
             }
             else if (attackedBy == "trap")
             {

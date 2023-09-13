@@ -414,7 +414,7 @@ public class EnemyScript : MonoBehaviour
 
             if (finalBoss)
             {
-                gameManagerScript.EndGame("You Win", "Congratulations brave (but possibly slightly stupid) traveler, you have slain the terrifying beast, charles. You have achieved your lifes goal.... oh, wait... he was actually a very nice guy.. woppsie, sorry charles.");
+                gameManagerScript.EndGame("You Win", "Congratulations brave (but possibly slightly stupid) traveler, you have slain the terrifying beast, Charlie. You have achieved your lifes goal.... oh, wait... he was actually a very nice guy.. woppsie, sorry Charlie.");
             }
 
             // Destroy the enemies health bar
