@@ -360,6 +360,42 @@ public class EnemyScript : MonoBehaviour
         // IF health is 0 or less (enemy dead)
         if (health <= 0)
         {
+            // call on method to kill & destroy enemy + handle loot drops
+            KillEnemy();
+            // Don’t continue (return)
+            return;
+        }
+
+        // IF enemy has no health bar
+        if (healthBar == null)
+        {
+            // Create new health bar using prefab
+            GameObject newHealthBar = Instantiate(healthBarPrefab, canvas.transform.Find("LevelSpawns"));
+            EnemyHealthBarScript newHealthBarScript = newHealthBar.GetComponent<EnemyHealthBarScript>();
+
+            // Set health, max health, enemy object, and y offset values in the health bar script
+            newHealthBarScript.maxHealth = maxHealth;
+            newHealthBarScript.currentHealth = health;
+            newHealthBarScript.enemyObject = gameObject.transform.Find("Enemy").gameObject;
+            newHealthBarScript.yPosOffSet = HealthBarYPosOffset;
+
+            // Set created health bar to created object
+            healthBar = newHealthBar;
+        }
+        else
+        {
+            // Decrease the health bar value by the damage
+            healthBar.GetComponent<EnemyHealthBarScript>().DecreaseEnemyHealthBar(damage);
+        }
+    }
+
+    /// <summary>
+    /// handles loot drops and killing/destroying of enemy
+    /// </summary>
+    public void KillEnemy()
+    {
+        if (lootDrops != null)
+        {
             // FOREACH specified drop item
             foreach (LootDrop item in lootDrops)
             {
@@ -368,7 +404,11 @@ public class EnemyScript : MonoBehaviour
                 // Call on the DropItem method with the item and amount
                 DropItem(item.item, ammount);
             }
+        }
+        
 
+        if (lootTable != null)
+        {
             // Declare list for loot table ID’s based on rarity
             List<int> LootTableItemIDS = new List<int>();
             // FOR amount of items in loot table
@@ -398,53 +438,29 @@ public class EnemyScript : MonoBehaviour
                 // Call on the DropItem method with item and amount
                 DropItem(item, ammount);
             }
-
-            // Add kill score to players score
-            target.GetComponent<PlayerStats>().ChangeScore(killScore);
-            // Display a popup message with the kill score
-            gameManagerScript.DisplayMessage(killScore.ToString(), gameObject, scoreAdditionPopupColour);
-
-            // IF enemy is part of a spawner
-            if (enemySpawner != null)
-            {
-                // Delete enemy from spawners spawned enemies list
-                enemySpawner.GetComponent<SpawnerScript>().spawnedEnemies.Remove(gameObject);
-            }
-
-            if (finalBoss)
-            {
-                gameManagerScript.EndGame("You Win", "Congratulations brave (but possibly slightly stupid) traveler, you have slain the terrifying beast, Charlie. You have achieved your lifes goal.... oh, wait... he was actually a very nice guy.. woppsie, sorry Charlie.");
-            }
-
-            // Destroy the enemies health bar
-            Destroy(healthBar);
-            // Destroy the enemy
-            Destroy(gameObject);
-            // Don’t continue (return)
-            return;
         }
 
-        // IF enemy has no health bar
-        if (healthBar == null)
+        // Add kill score to players score
+        target.GetComponent<PlayerStats>().ChangeScore(killScore);
+        // Display a popup message with the kill score
+        gameManagerScript.DisplayMessage(killScore.ToString(), gameObject, scoreAdditionPopupColour);
+
+        // IF enemy is part of a spawner
+        if (enemySpawner != null)
         {
-            // Create new health bar using prefab
-            GameObject newHealthBar = Instantiate(healthBarPrefab, canvas.transform.Find("LevelSpawns"));
-            EnemyHealthBarScript newHealthBarScript = newHealthBar.GetComponent<EnemyHealthBarScript>();
-
-            // Set health, max health, enemy object, and y offset values in the health bar script
-            newHealthBarScript.maxHealth = maxHealth;
-            newHealthBarScript.currentHealth = health;
-            newHealthBarScript.enemyObject = gameObject.transform.Find("Enemy").gameObject;
-            newHealthBarScript.yPosOffSet = HealthBarYPosOffset;
-
-            // Set created health bar to created object
-            healthBar = newHealthBar;
+            // Delete enemy from spawners spawned enemies list
+            enemySpawner.GetComponent<SpawnerScript>().spawnedEnemies.Remove(gameObject);
         }
-        else
+
+        if (finalBoss)
         {
-            // Decrease the health bar value by the damage
-            healthBar.GetComponent<EnemyHealthBarScript>().DecreaseEnemyHealthBar(damage);
+            gameManagerScript.EndGame("You Win", "Congratulations brave (but possibly slightly stupid) traveler, you have slain the terrifying beast, Charlie. You have achieved your lifes goal.... oh, wait... he was actually a very nice guy.. woppsie, sorry Charlie.");
         }
+
+        // Destroy the enemies health bar
+        Destroy(healthBar);
+        // Destroy the enemy
+        Destroy(gameObject);
     }
 
     /// <summary>
