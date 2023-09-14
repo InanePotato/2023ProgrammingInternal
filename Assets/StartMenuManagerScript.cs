@@ -4,9 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class StartMenuManagerScript : MonoBehaviour
 {
+    public GameObject confimationMessage;
+    public GameObject canvas;
+
     private void Start()
     {
         if (GameObject.Find("txtHighScores") != null)
@@ -52,7 +56,7 @@ public class StartMenuManagerScript : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+        Instantiate(confimationMessage, canvas.transform);
     }
 
     public void PlayGame(InputField input)

@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
+    public GameObject menuConfirmPrefab;
+
     // Declare class scope static variable for referencing this instance of the script
     public static GameManagerScript Instance;
     public GameObject cameraObject;
@@ -236,5 +238,10 @@ public class GameManagerScript : MonoBehaviour
             // Set visible to true
             helpMenuVisible = true;
         }
+    }
+
+    public void LoadMenuScene()
+    {
+        Instantiate(menuConfirmPrefab, mainCanvis.transform);
     }
 }
