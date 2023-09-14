@@ -59,12 +59,16 @@ public class StartMenuManagerScript : MonoBehaviour
         Instantiate(confimationMessage, canvas.transform);
     }
 
-    public void PlayGame(InputField input)
+    public void PlayGame(GameObject input)
     {
-        if (input.text != "" && !input.text.Contains(","))
+        if (input.GetComponent<InputField>().text != "" && !input.GetComponent<InputField>().text.Contains(","))
         {
-            GlobalVariables.playerName = input.text;
+            GlobalVariables.playerName = input.GetComponent<InputField>().text;
             GameObject.Find("Level Loader Transition").GetComponent<LevelLoader>().LoadNewScene(2);
+        }
+        else
+        {
+            input.GetComponent<Animator>().SetTrigger("MessageError");
         }
     }
 }
