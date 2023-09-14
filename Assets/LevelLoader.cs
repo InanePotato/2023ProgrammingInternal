@@ -9,6 +9,10 @@ public class LevelLoader : MonoBehaviour
     public Animator transition;
     public float transitionTime = 1.334f;
 
+    /// <summary>
+    /// Called on to start loading the new scene with the animation
+    /// </summary>
+    /// <param name="buildIndex"></param>
     public void LoadNewScene(int buildIndex)
     {
         StartCoroutine(LoadScene(buildIndex));
