@@ -1,4 +1,0 @@
-Ryan,500
-Sam,100
-Ben,2
-bobby,1000
