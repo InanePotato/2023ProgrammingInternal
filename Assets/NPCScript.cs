@@ -66,8 +66,8 @@ public class NPCScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameManagerScript.TogglePauseScreen(false);
             TerminateInteraction();
+            gameManagerScript.TogglePauseScreen(false);
             return;
         }
 

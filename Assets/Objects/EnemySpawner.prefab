@@ -106,7 +106,7 @@ MonoBehaviour:
   attackCooldown: 0
   targetingRange: 0
   canSpawn: 1
-  spawnCooldown: 2
+  spawnCooldown: 5
   spawnRange: {x: 0.2, y: 0.2}
   maxSpawnEnemies: 5
   spawnedEnemies: []

@@ -159,10 +159,8 @@ public class GameManagerScript : MonoBehaviour
             // Make sure the players inventory is hidden
             player.GetComponent<InventoryManager>().toggleInventory(false);
 
-            Debug.Log(showScreen);
             // Set paused game bool using given bool
             gamePaused = showScreen;
-            Debug.Log(gamePaused);
 
             // Toggle visibility of pause button
             pnlTopGUI.transform.Find("btnPause").gameObject.SetActive(!showScreen);

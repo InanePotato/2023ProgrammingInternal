@@ -46,6 +46,7 @@ public class EnemyScript : MonoBehaviour
     private float changeWanderCooldown;
     private Vector2 wanderTarget;
     private Vector2 linearTarget;
+    private Vector2 linearPoint;
     public bool spriteFlipped;
 
     public enum MovmentType { Raom, Linear };
@@ -99,7 +100,7 @@ public class EnemyScript : MonoBehaviour
         target = GameObject.FindGameObjectsWithTag("Player").First();
 
         // Set location for linear movement target
-        Vector2 linearPoint = new Vector2(transform.position.x + movementOffset.x, transform.position.y + movementOffset.y);
+        linearPoint = new Vector2(transform.position.x + movementOffset.x, transform.position.y + movementOffset.y);
         Vector2 distanceToLinearTarget = ToEnemiesVector3(linearPoint) - enemy.transform.position;
         linearTarget = distanceToLinearTarget.normalized;
 
@@ -231,22 +232,20 @@ public class EnemyScript : MonoBehaviour
             if (enemy.transform.position.x >= transform.position.x + movementOffset.x && enemy.transform.position.y >= transform.position.y + movementOffset.y)
             {
                 // Get left linear point
-                Vector2 linearPoint = new Vector2(transform.position.x - movementOffset.x, transform.position.y - movementOffset.y);
-                // Get difference in location to left linear point
-                Vector2 distanceToLinearTarget = ToEnemiesVector3(linearPoint) - enemy.transform.position;
-                // Get distance to left linear point
-                linearTarget = distanceToLinearTarget.normalized;
+                linearPoint = new Vector2(transform.position.x - movementOffset.x, transform.position.y - movementOffset.y);
             }
             else if (enemy.transform.position.x <= transform.position.x - movementOffset.x && enemy.transform.position.y <= transform.position.y - movementOffset.y)
             {
                 // ELSE IF enemy is at left linear point
                 // Get right linear point
-                Vector2 linearPoint = new Vector2(transform.position.x + movementOffset.x, transform.position.y + movementOffset.y);
-                // Get difference in location to right linear point
-                Vector2 distanceToLinearTarget = ToEnemiesVector3(linearPoint) - enemy.transform.position;
-                // Get distance to right linear point
-                linearTarget = distanceToLinearTarget.normalized;
+                linearPoint = new Vector2(transform.position.x + movementOffset.x, transform.position.y + movementOffset.y);
+                
             }
+
+            // Get difference in location to right linear point
+            Vector2 distanceToLinearTarget = ToEnemiesVector3(linearPoint) - enemy.transform.position;
+            // Get distance to right linear point
+            linearTarget = distanceToLinearTarget.normalized;
         }
 
         // IF player can attack and no cooldown left
