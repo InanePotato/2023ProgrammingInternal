@@ -22,7 +22,7 @@ MonoBehaviour:
   ammount: 1
   equiped: 0
   damage: 0
-  protection: 4
+  protection: 3
   ability: 0
   abilityValue: 0
   minScoreRequirement: 500
