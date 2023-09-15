@@ -103,7 +103,7 @@ MonoBehaviour:
   canAttackPlayer: 0
   minDelayTime: 2
   maxDelayTime: 2
-  damagePerSecond: 5
+  damagePerSecond: 15
   delayTimeCounter: 0
 --- !u!61 &6390466880150139751
 BoxCollider2D:
